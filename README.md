@@ -14,7 +14,7 @@ The only requirements are to download [this repository](https://github.com/field
 docker compose up
 ```
 
-On first run, spatial data is automatically downloaded to the `inputs` directory, where they're processed to the `outputs` directory. Afterwards, runs will reuse data in place, meant to facilitate making manual edits to local sources and seeing merged results. It's possible to use custom land polygons or custom adm0 lines, so long as they follow the same naming conventions and schemas of the originals. If files are missing from either `inputs/adm0` or `inputs/land` on subsequent runs, the missing parts will be downloaded. For example, it would be useful to delete OpenStreetMap land polygons periodically to refresh with an updated version.
+On first run, spatial data is automatically downloaded to the `inputs` directory, where it's processed to the `outputs` directory. Afterwards, runs will reuse data in place, meant to facilitate making manual edits to local sources and seeing merged results. It's possible to use custom land polygons or custom adm0 lines, so long as they follow the same naming conventions and schemas of the originals. If files are missing from either `inputs/adm0` or `inputs/land` on subsequent runs, the missing parts will be downloaded. For example, it would be useful to delete OpenStreetMap land polygons periodically to refresh with an updated version.
 
 ## Upgrading
 
