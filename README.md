@@ -2,9 +2,9 @@
 
 ![](https://img.fieldmaps.io/adm0-template/wld_00.png)
 
-This tool provides a flexible way to manage ADM0 boundaries, using a separation of concerns for physical and cultural layers. For physical boundaries, OpenStreetMap coastlines provide the basis for land polygons. This is taken as-is from [osmdata.openstreetmap.de](https://osmdata.openstreetmap.de/download/land-polygons-complete-4326.zip) without further modification. Cultural boundaries are deliniated with a derivative of the UNmap (Global International Boundaries) layer from [data.humdata.org](https://data.humdata.org/dataset/united-nations-map). This source provides exact detail about border statuses, defining multiple classifications and guidance for proper visualization.
+This tool provides a flexible way to manage ADM0 boundaries, using a separation of concerns for physical and cultural layers. For physical boundaries, OpenStreetMap coastlines provide the basis for land polygons. This is taken as-is from [osmdata.openstreetmap.de](https://osmdata.openstreetmap.de/download/land-polygons-complete-4326.zip) without further modification. Cultural boundaries are delineated with a derivative of the UNmap (Global International Boundaries) layer from [data.humdata.org](https://data.humdata.org/dataset/united-nations-map). This source provides exact detail about border statuses, defining multiple classifications and guidance for proper visualization.
 
-The rational for creating a hybrid source layer is to address one of the shortcommings of using the UNmap source itself for very high resolution print and web maps. Coastline precision for this layer is approximately 500m in most places, making it less than ideal for maps going down to street level around shores. OpenStreetMap provides about 36x more coastline detail (1,100 MB vs 30 MB), and is also purpose built to be aligned with the rest of OSM data.
+The rational for creating a hybrid source layer is to address one of the shortcomings of using the UNmap source itself for very high-resolution print and web maps. Coastline precision for this layer is approximately 500m in most places, making it less than ideal for maps going down to street level around shores. OpenStreetMap provides about 36x more coastline detail (1,100 MB vs 30 MB), and is also purpose built to be aligned with the rest of OSM data.
 
 ## Usage
 
@@ -36,7 +36,7 @@ Due to the complexity of boundaries, international divisions are stored solely a
 | :----------------------------------------------------: | :----------------------------------------------------: |
 | ![](https://img.fieldmaps.io/adm0-template/wld_01.png) | ![](https://img.fieldmaps.io/adm0-template/wld_02.png) |
 
-**Input Layers:** Storing boundary divisions as lines is also useful for practical purposes. With polygons, manual edits introduce the possibility of topology errors from gaps and overlaps, something much less likely to occur when editing divisions as a single line. These kind of small manual adjustments are commonly made around coastal islands and inlets when overlaying them on top of land polygons. A companion point layer is also included that provides the ISO3 code for the area represented by lines.
+**Input Layers:** Storing boundary divisions as lines is also useful for practical purposes. With polygons, manual edits introduce the possibility of topology errors from gaps and overlaps, something much less likely to occur when editing divisions as a single line. These kinds of small manual adjustments are commonly made around coastal islands and inlets when overlaying them on top of land polygons. A companion point layer is also included that provides the ISO3 code for the area represented by lines.
 
 |                 ADM0 Polygon Template                  |              Land with Internal Divisions              |
 | :----------------------------------------------------: | :----------------------------------------------------: |
@@ -48,7 +48,7 @@ Due to the complexity of boundaries, international divisions are stored solely a
 | :----------------------------------------------------: | :----------------------------------------------------: |
 | ![](https://img.fieldmaps.io/adm0-template/wld_05.png) | ![](https://img.fieldmaps.io/adm0-template/wld_06.png) |
 
-**Outputs:** The resulting ADM0 polygons are also used to create derivitave layers. For making cartographic maps, polygons are actually not as useful as points and lines used together. Lines are clipped to represent only boundaries across land, so they can be styled separately from coastlines. Points are generated at the center of each polygon using a pole of inaccessibility algorithm, ideal for placing labels at.
+**Outputs:** The resulting ADM0 polygons are also used to create derivative layers. For some cartographic maps, polygons are not as useful as points and lines used together. Output lines are clipped to represent only boundaries across land, so they can be styled separately from coastlines. Points are generated at the center of each polygon using a pole of inaccessibility algorithm, ideal for placing labels at.
 
 |                       All Inputs                       |                      All Outputs                       |
 | :----------------------------------------------------: | :----------------------------------------------------: |
