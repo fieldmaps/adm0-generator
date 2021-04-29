@@ -15,11 +15,9 @@ query_1 = """
     CREATE TABLE {table_out} AS
     SELECT
         fid,
-        ST_Transform((ST_Dump(
-            ST_CollectionExtract(ST_MakeValid(
-                ST_Force2D(ST_SnapToGrid(geom, 0.000000001))
-            ), {geom_num})
-        )).geom, 4326)::GEOMETRY({geom_str}, 4326) as geom
+        (ST_Dump(ST_Transform(
+            ST_Force2D(ST_SnapToGrid(geom, 0.000000001))
+        , 4326))).geom::GEOMETRY({geom_str}, 4326) as geom
     FROM {table_in};
 """
 query_2 = """
@@ -46,6 +44,7 @@ drop_tmp = """
 def main(name, file, geometry):
     subprocess.run([
         'ogr2ogr',
+        '-makevalid',
         '-overwrite',
         '-lco', 'FID=fid',
         '-lco', 'GEOMETRY_NAME=geom',

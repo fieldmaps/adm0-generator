@@ -9,13 +9,21 @@ logger = logging.getLogger(__name__)
 cwd = Path(__file__).parent
 input_files = (cwd / '../inputs').resolve()
 output_files = (cwd / '../outputs').resolve()
+(input_files / 'adm0').mkdir(exist_ok=True, parents=True)
+(input_files / 'land').mkdir(exist_ok=True, parents=True)
+output_files.mkdir(exist_ok=True, parents=True)
 
 
 def download_inputs():
-    if not (input_files / 'land/land_polygons.shp').is_file():
-        download.main(LAND_URL, input_files / 'land')
     if not (input_files / 'adm0/adm0_lines.gpkg').is_file():
         download.main(ADM0_URL, input_files / 'adm0')
+    if not (input_files / 'land/land_polygons.shp').is_file():
+        download.main(LAND_URL, input_files / 'land')
+
+
+def import_attributes():
+    file = input_files / 'adm0/adm0_attributes.xlsx'
+    attributes.main(file)
 
 
 def import_inputs():
@@ -34,11 +42,6 @@ def import_inputs():
     pool.join()
     for result in results:
         result.get()
-
-
-def import_attributes():
-    file = input_files / 'adm0/adm0_attributes.xlsx'
-    attributes.main(file)
 
 
 def export_outputs():
@@ -78,8 +81,8 @@ def export_cleanup():
 if __name__ == '__main__':
     logger.info('Starting processing')
     download_inputs()
-    import_inputs()
     import_attributes()
+    import_inputs()
     polygonize.main()
     intersection.main()
     points.main()
