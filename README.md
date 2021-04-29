@@ -32,7 +32,7 @@ docker compose up
 
 Due to the complexity of boundaries, international divisions are stored solely as line geometries, not polygons. The example above illustrated why this is useful, as the border status can vary at points between two adm0 areas. To obtain the input lines with a voronoi-like global coverage, a [companion tool](https://github.com/fieldmaps/polygon-voronoi) is run on the original UNmap dataset and uploaded [here](https://data.fieldmaps.io/adm0_template.zip).
 
-|                     Land Polygons                      |              ADM0 Lines & Points Template              |
+|                     Land Polygons                      |               ADM0 Line & Point Template               |
 | :----------------------------------------------------: | :----------------------------------------------------: |
 | ![](https://img.fieldmaps.io/adm0-template/wld_01.png) | ![](https://img.fieldmaps.io/adm0-template/wld_02.png) |
 
