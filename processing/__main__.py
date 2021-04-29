@@ -1,6 +1,6 @@
 from pathlib import Path
 from multiprocessing import Pool
-from . import (inputs, attributes, polygonize,
+from . import (download, inputs, attributes, polygonize,
                intersection, points, lines, outputs, cleanup)
 from .utils import logging
 
@@ -9,6 +9,12 @@ logger = logging.getLogger(__name__)
 cwd = Path(__file__).parent
 input_files = (cwd / '../inputs').resolve()
 output_files = (cwd / '../outputs').resolve()
+
+
+def download_inputs():
+    output = input_files / 'land'
+    if not (output / 'land_polygons.shp').is_file():
+        download.main(output)
 
 
 def import_inputs():
@@ -70,6 +76,7 @@ def export_cleanup():
 
 if __name__ == '__main__':
     logger.info('Starting processing')
+    download_inputs()
     import_inputs()
     import_attributes()
     polygonize.main()
