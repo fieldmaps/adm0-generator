@@ -42,7 +42,7 @@ Due to the complexity of boundaries, international divisions are stored solely a
 | :----------------------------------------------------: | :----------------------------------------------------: |
 | ![](https://img.fieldmaps.io/adm0-template/wld_03.png) | ![](https://img.fieldmaps.io/adm0-template/wld_04.png) |
 
-**Intersection:** Lines are polygonized into an adm0 layer suitable for intersecting with land. Points are joined by location to add attribute information. Since polygon-polygon intersections are a very costly spatial operation, only land polygons with internal boundary divisions are used here to save time. Islands wholly contained within an adm0 polygon are added afterwards in a quick operation.
+**Intersection:** Lines are polygonized into an adm0 layer suitable for intersecting with land. Points are joined by location to add attribute information. Since polygon-polygon intersections are a very costly spatial operation, only land polygons with internal boundary divisions are used here for efficiency. Islands wholly contained within an adm0 polygon are added afterwards in a quick operation.
 
 |                     ADM0 Polygons                      |                  ADM0 Lines & Points                   |
 | :----------------------------------------------------: | :----------------------------------------------------: |
