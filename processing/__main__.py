@@ -2,7 +2,7 @@ from pathlib import Path
 from multiprocessing import Pool
 from . import (download, inputs, attributes, polygonize,
                intersection, points, lines, outputs, cleanup)
-from .utils import logging
+from .utils import logging, LAND_URL, ADM0_URL
 
 logger = logging.getLogger(__name__)
 
@@ -12,16 +12,17 @@ output_files = (cwd / '../outputs').resolve()
 
 
 def download_inputs():
-    output = input_files / 'land'
-    if not (output / 'land_polygons.shp').is_file():
-        download.main(output)
+    if not (input_files / 'land/land_polygons.shp').is_file():
+        download.main(LAND_URL, input_files / 'land')
+    if not (input_files / 'adm0/adm0_lines.gpkg').is_file():
+        download.main(ADM0_URL, input_files / 'adm0')
 
 
 def import_inputs():
     layers = [
         ('land_polygons', 'land/land_polygons.shp', 3),
-        ('adm0_lines', 'voronoi/adm0_lines.gpkg', 2),
-        ('adm0_points', 'voronoi/adm0_points.gpkg', 1),
+        ('adm0_lines', 'adm0/adm0_lines.gpkg', 2),
+        ('adm0_points', 'adm0/adm0_points.gpkg', 1),
     ]
     results = []
     pool = Pool()
@@ -36,7 +37,7 @@ def import_inputs():
 
 
 def import_attributes():
-    file = input_files / 'attributes/adm0_attributes.xlsx'
+    file = input_files / 'adm0/adm0_attributes.xlsx'
     attributes.main(file)
 
 
