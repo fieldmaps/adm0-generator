@@ -18,31 +18,29 @@ query_2 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        b.adm0_fid,
+        b.id,
         a.geom
     FROM {table_in1} AS a
     JOIN {table_in3} AS b
     ON ST_Within(a.geom, b.geom)
     UNION ALL
     SELECT
-        b.adm0_fid,
-        (ST_Dump(ST_CollectionExtract(
-            ST_Intersection(a.geom, b.geom), 3
-        ))).geom::GEOMETRY(Polygon, 4326) AS geom
+        b.id,
+        (ST_Dump(
+            ST_CollectionExtract(ST_Intersection(a.geom, b.geom), 3)
+        )).geom::GEOMETRY(Polygon, 4326) AS geom
     FROM {table_in2} AS a
     JOIN {table_in3} AS b
     ON ST_Intersects(a.geom, b.geom);
-    CREATE INDEX ON {table_out} USING GIST(geom);
 """
 query_3 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        adm0_fid,
+        id,
         ST_Collect(geom)::GEOMETRY(MultiPolygon, 4326) as geom
     FROM {table_in}
-    GROUP BY adm0_fid;
-    CREATE INDEX ON {table_out} USING GIST(geom);
+    GROUP BY id;
 """
 query_4 = """
     DROP TABLE IF EXISTS {table_out};
@@ -52,8 +50,8 @@ query_4 = """
         a.geom
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
-    ON a.adm0_fid = b.adm0_fid
-    ORDER BY a.adm0_fid;
+    ON a.id = b.id
+    ORDER BY a.id;
     CREATE INDEX ON {table_out} USING GIST(geom);
 """
 drop_tmp = """

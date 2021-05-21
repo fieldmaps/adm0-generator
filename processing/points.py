@@ -8,12 +8,11 @@ query_1 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        adm0_fid,
+        id,
         (
             ST_MaximumInscribedCircle(geom)
         ).center::GEOMETRY(Point, 4326) AS geom
     FROM {table_in};
-    CREATE INDEX ON {table_out} USING GIST(geom);
 """
 query_2 = """
     DROP TABLE IF EXISTS {table_out};
@@ -23,9 +22,8 @@ query_2 = """
         a.geom
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
-    ON a.adm0_fid = b.adm0_fid
-    ORDER BY a.adm0_fid;
-    CREATE INDEX ON {table_out} USING GIST(geom);
+    ON a.id = b.id
+    ORDER BY a.id;
 """
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};

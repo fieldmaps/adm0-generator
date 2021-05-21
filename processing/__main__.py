@@ -36,14 +36,14 @@ def import_attributes():
 
 def import_inputs():
     layers = [
-        ('land_polygons', 'land/land_polygons.shp', 3),
-        ('adm0_lines', 'adm0/adm0_lines.gpkg', 2),
-        ('adm0_points', 'adm0/adm0_points.gpkg', 1),
+        ('land_polygons', 'land/land_polygons.shp'),
+        ('adm0_lines', 'adm0/adm0_lines.gpkg'),
+        ('adm0_points', 'adm0/adm0_points.gpkg'),
     ]
     results = []
     pool = Pool()
-    for name, layer, geometry in layers:
-        args = [name, input_files / layer, geometry]
+    for name, layer in layers:
+        args = [name, input_files / layer]
         result = pool.apply_async(inputs.main, args=args)
         results.append(result)
     pool.close()
@@ -70,24 +70,8 @@ def export_outputs():
         result.get()
 
 
-def export_cleanup():
-    layers = [
-        'adm0_attributes',
-        'adm0_lines_00',
-        'adm0_lines_01',
-        'adm0_lines_02',
-        'adm0_points_00',
-        'adm0_points_01',
-        'adm0_polygons_00',
-        'adm0_polygons_01',
-        'land_polygons_00',
-        'land_polygons_01',
-    ]
-    cleanup.main(layers)
-
-
 if __name__ == '__main__':
-    logger.info('Starting processing')
+    logger.info('starting')
     download_inputs()
     import_attributes()
     import_inputs()
@@ -96,4 +80,4 @@ if __name__ == '__main__':
     points.main()
     lines.main()
     export_outputs()
-    export_cleanup()
+    cleanup.main()

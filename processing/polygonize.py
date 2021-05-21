@@ -28,7 +28,7 @@ query_3 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        b.adm0_fid,
+        b.id,
         a.geom
     FROM {table_in1} as a
     JOIN {table_in2} as b
