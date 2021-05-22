@@ -1,6 +1,6 @@
 from pathlib import Path
 from multiprocessing import Pool
-from . import (download, inputs, attributes, polygonize,
+from . import (download, inputs, attributes, polygons, land,
                intersection, points, lines, outputs, cleanup)
 from .utils import logging, LAND_URL, ADM0_URL
 
@@ -75,7 +75,8 @@ if __name__ == '__main__':
     download_inputs()
     import_attributes()
     import_inputs()
-    polygonize.main()
+    polygons.main()
+    land.main()
     intersection.main()
     points.main()
     lines.main()

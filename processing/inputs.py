@@ -8,6 +8,7 @@ def main(name, file):
     subprocess.run([
         'ogr2ogr',
         '-overwrite',
+        '-makevalid',
         '-dim', 'XY',
         '-t_srs', 'EPSG:4326',
         '-lco', 'FID=fid',

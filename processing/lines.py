@@ -24,8 +24,8 @@ query_2 = """
         a.id,
         a.type,
         (ST_Dump(ST_CollectionExtract(
-            ST_Intersection(a.geom, b.geom), 2
-        ))).geom::GEOMETRY(LineString, 4326) AS geom
+            ST_Intersection(a.geom, b.geom)
+        , 2))).geom::GEOMETRY(LineString, 4326) AS geom
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
     ON ST_Intersects(a.geom, b.geom);

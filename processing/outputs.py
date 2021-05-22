@@ -9,6 +9,7 @@ def main(name, input, output):
     subprocess.run([
         'ogr2ogr',
         '-overwrite',
+        '-makevalid',
         '-nln', name,
         output,
         f'PG:dbname={DATABASE}', input,
