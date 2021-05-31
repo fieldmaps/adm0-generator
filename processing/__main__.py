@@ -15,18 +15,22 @@ output_files.mkdir(exist_ok=True, parents=True)
 
 
 def download_inputs():
-    adm0_lines = (input_files / 'adm0/adm0_lines.gpkg').is_file()
-    adm0_points = (input_files / 'adm0/adm0_points.gpkg').is_file()
-    adm0_attributes = (input_files / 'adm0/adm0_attributes.xlsx').is_file()
+    adm0_lines = (input_files / 'adm0/adm0_lines.gpkg')
+    adm0_points = (input_files / 'adm0/adm0_points.gpkg')
+    adm0_attributes = (input_files / 'adm0/adm0_attributes.xlsx')
     land_cpg = (input_files / 'land/land_polygons.cpg').is_file()
     land_dbf = (input_files / 'land/land_polygons.dbf').is_file()
     land_prj = (input_files / 'land/land_polygons.prj').is_file()
     land_shp = (input_files / 'land/land_polygons.shp').is_file()
     land_shx = (input_files / 'land/land_polygons.shx').is_file()
-    if not adm0_lines or not adm0_points or not adm0_attributes:
-        download.main(ADM0_URL, input_files / 'adm0')
+    if not adm0_lines.is_file():
+        download.get_file(f'{ADM0_URL}/adm0_lines.gpkg', adm0_lines)
+    if not adm0_points.is_file():
+        download.get_file(f'{ADM0_URL}/adm0_points.gpkg', adm0_points)
+    if not adm0_attributes.is_file():
+        download.get_file(f'{ADM0_URL}/adm0_attributes.xlsx', adm0_attributes)
     if not land_cpg or not land_dbf or not land_prj or not land_shp or not land_shx:
-        download.main(LAND_URL, input_files / 'land')
+        download.get_zip(LAND_URL, input_files / 'land')
 
 
 def import_attributes():
