@@ -30,7 +30,7 @@ docker compose up
 
 ![](https://img.fieldmaps.io/adm0-template/wld_09.png)
 
-Due to the complexity of boundaries, international divisions are stored solely as line geometries, not polygons. The example above illustrated why this is useful, as the border status can vary at points between two adm0 areas. To obtain the input lines with a voronoi-like global coverage, a [companion tool](https://github.com/fieldmaps/polygon-voronoi) is run on the original UNmap dataset and uploaded [here](https://data.fieldmaps.io/adm0_template.zip).
+Due to the complexity of boundaries, international divisions are stored solely as line geometries, not polygons. The example above illustrated why this is useful, as the border status can vary at points between two adm0 areas. To obtain the input lines with a voronoi-like global coverage, a [companion tool](https://github.com/fieldmaps/polygon-voronoi) is run on the original UNmap dataset and uploaded here as [lines](https://data.fieldmaps.io/adm0-template/adm0_lines.gpkg), [points](https://data.fieldmaps.io/adm0-template/adm0_points.gpkg), and [attributes](https://data.fieldmaps.io/adm0-template/adm0_attributes.xlsx).
 
 |                     Land Polygons                      |               ADM0 Line & Point Template               |
 | :----------------------------------------------------: | :----------------------------------------------------: |
