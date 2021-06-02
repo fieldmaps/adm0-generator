@@ -1,41 +1,18 @@
 from pathlib import Path
 from multiprocessing import Pool
+from psycopg2 import connect
 from . import (download, inputs, attributes, polygons, land,
                intersection, points, lines, outputs, cleanup)
-from .utils import logging, LAND_URL, ADM0_URL
+from .utils import logging, DATABASE
 
 logger = logging.getLogger(__name__)
 
 cwd = Path(__file__).parent
-input_files = (cwd / '../inputs').resolve()
-output_files = (cwd / '../outputs').resolve()
-(input_files / 'adm0').mkdir(exist_ok=True, parents=True)
-(input_files / 'land').mkdir(exist_ok=True, parents=True)
-output_files.mkdir(exist_ok=True, parents=True)
-
-
-def download_inputs():
-    adm0_lines = (input_files / 'adm0/adm0_lines.gpkg')
-    adm0_points = (input_files / 'adm0/adm0_points.gpkg')
-    adm0_attributes = (input_files / 'adm0/adm0_attributes.xlsx')
-    land_cpg = (input_files / 'land/land_polygons.cpg').is_file()
-    land_dbf = (input_files / 'land/land_polygons.dbf').is_file()
-    land_prj = (input_files / 'land/land_polygons.prj').is_file()
-    land_shp = (input_files / 'land/land_polygons.shp').is_file()
-    land_shx = (input_files / 'land/land_polygons.shx').is_file()
-    if not adm0_lines.is_file():
-        download.get_file(f'{ADM0_URL}/adm0_lines.gpkg', adm0_lines)
-    if not adm0_points.is_file():
-        download.get_file(f'{ADM0_URL}/adm0_points.gpkg', adm0_points)
-    if not adm0_attributes.is_file():
-        download.get_file(f'{ADM0_URL}/adm0_attributes.xlsx', adm0_attributes)
-    if not land_cpg or not land_dbf or not land_prj or not land_shp or not land_shx:
-        download.get_zip(LAND_URL, input_files / 'land')
-
-
-def import_attributes():
-    file = input_files / 'adm0/adm0_attributes.xlsx'
-    attributes.main(file)
+input_dir = (cwd / '../inputs').resolve()
+output_dir = (cwd / '../outputs').resolve()
+(input_dir / 'adm0').mkdir(exist_ok=True, parents=True)
+(input_dir / 'land').mkdir(exist_ok=True, parents=True)
+output_dir.mkdir(exist_ok=True, parents=True)
 
 
 def import_inputs():
@@ -47,7 +24,7 @@ def import_inputs():
     results = []
     pool = Pool()
     for name, layer in layers:
-        args = [name, input_files / layer]
+        args = [name, input_dir / layer]
         result = pool.apply_async(inputs.main, args=args)
         results.append(result)
     pool.close()
@@ -65,7 +42,7 @@ def export_outputs():
     results = []
     pool = Pool()
     for name, layer in layers:
-        args = [name, f'{name}_{layer}', output_files / f'{name}.gpkg']
+        args = [name, f'{name}_{layer}', output_dir / f'{name}.gpkg']
         result = pool.apply_async(outputs.main, args=args)
         results.append(result)
     pool.close()
@@ -76,13 +53,18 @@ def export_outputs():
 
 if __name__ == '__main__':
     logger.info('starting')
-    download_inputs()
-    import_attributes()
+    download.main(input_dir)
+    attributes.main(input_dir / 'adm0/adm0_attributes.xlsx')
     import_inputs()
-    polygons.main()
-    land.main()
-    intersection.main()
-    points.main()
-    lines.main()
+    con = connect(database=DATABASE)
+    con.set_session(autocommit=True)
+    cur = con.cursor()
+    polygons.main(cur)
+    land.main(cur)
+    intersection.main(cur)
+    points.main(cur)
+    lines.main(cur)
     export_outputs()
-    cleanup.main()
+    cleanup.main(cur)
+    cur.close()
+    con.close()
