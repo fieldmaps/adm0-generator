@@ -4,16 +4,15 @@ from .utils import logging
 logger = logging.getLogger(__name__)
 
 layers = [
-    'adm0_attributes',
-    'adm0_lines_00',
-    'adm0_lines_01',
-    'adm0_lines_02',
-    'adm0_points_00',
-    'adm0_points_01',
-    'adm0_polygons_00',
-    'adm0_polygons_01',
-    'land_polygons_00',
-    'land_polygons_01',
+    'attributes',
+    'lines_00',
+    'lines_01',
+    'lines_02',
+    'points_00',
+    'points_01',
+    'polygons_00',
+    'polygons_01',
+    'land_01',
 ]
 
 drop_tmp = """
@@ -21,9 +20,10 @@ drop_tmp = """
 """
 
 
-def main(cur):
-    for layer in layers:
+def main(cur, name, prefix):
+    layer = f'{prefix}{name}'
+    for l in layers:
         cur.execute(SQL(drop_tmp).format(
-            table_tmp1=Identifier(layer),
+            table_tmp1=Identifier(f'{layer}_{l}'),
         ))
-    logger.info(f'cleanup')
+    logger.info(layer)

@@ -50,24 +50,25 @@ drop_tmp = """
 """
 
 
-def main(cur):
+def main(cur, name, prefix):
+    layer = f'{prefix}{name}'
     cur.execute(SQL(query_1).format(
-        table_in1=Identifier('land_polygons_00'),
-        table_in2=Identifier('land_polygons_01'),
-        table_in3=Identifier('adm0_polygons_00'),
-        table_out=Identifier('adm0_polygons_tmp1'),
+        table_in1=Identifier(f'{prefix}land_00'),
+        table_in2=Identifier(f'{layer}_land_01'),
+        table_in3=Identifier(f'{layer}_polygons_00'),
+        table_out=Identifier(f'{layer}_polygons_tmp1'),
     ))
     cur.execute(SQL(query_2).format(
-        table_in=Identifier('adm0_polygons_tmp1'),
-        table_out=Identifier('adm0_polygons_tmp2'),
+        table_in=Identifier(f'{layer}_polygons_tmp1'),
+        table_out=Identifier(f'{layer}_polygons_tmp2'),
     ))
     cur.execute(SQL(query_3).format(
-        table_in1=Identifier('adm0_polygons_tmp2'),
-        table_in2=Identifier('adm0_attributes'),
-        table_out=Identifier('adm0_polygons_01'),
+        table_in1=Identifier(f'{layer}_polygons_tmp2'),
+        table_in2=Identifier(f'{layer}_attributes'),
+        table_out=Identifier(f'{layer}_polygons_01'),
     ))
     cur.execute(SQL(drop_tmp).format(
-        table_tmp1=Identifier('adm0_polygons_tmp1'),
-        table_tmp2=Identifier('adm0_polygons_tmp2'),
+        table_tmp1=Identifier(f'{layer}_polygons_tmp1'),
+        table_tmp2=Identifier(f'{layer}_polygons_tmp2'),
     ))
-    logger.info('adm0_polygons')
+    logger.info(layer)

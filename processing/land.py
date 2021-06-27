@@ -15,10 +15,11 @@ query_1 = """
 """
 
 
-def main(cur):
+def main(cur, name, prefix):
+    layer = f'{prefix}{name}'
     cur.execute(SQL(query_1).format(
-        table_in1=Identifier('land_polygons_00'),
-        table_in2=Identifier('adm0_lines_01'),
-        table_out=Identifier('land_polygons_01'),
+        table_in1=Identifier(f'{prefix}land_00'),
+        table_in2=Identifier(f'{layer}_lines_01'),
+        table_out=Identifier(f'{layer}_land_01'),
     ))
-    logger.info('land_polygons')
+    logger.info(layer)
