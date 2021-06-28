@@ -2,9 +2,13 @@
 
 ![](https://img.fieldmaps.io/adm0-template/wld_00.png)
 
-This tool provides a flexible way to manage adm0 boundaries, using a separation of concerns for physical and political layers. For physical boundaries, OpenStreetMap coastlines provide the basis for land polygons. This is taken as-is from [osmdata.openstreetmap.de](https://osmdata.openstreetmap.de/data/land-polygons.html) without further modification. Political boundaries are delineated with a derivative of the UNmap (Global International Boundaries) layer from [data.humdata.org](https://data.humdata.org/dataset/united-nations-map). This source provides exact detail about border statuses, defining multiple classifications and guidance for proper visualization.
+This tool provides a flexible way to manage ADM0 boundaries, using a separation of concerns for physical and political layers. For physical boundaries, OpenStreetMap coastlines (original and simplified) provide the basis for land polygons. This is taken as-is from [osmdata.openstreetmap.de](https://osmdata.openstreetmap.de/data/land-polygons.html) without further modification. Political boundaries are delineated with an extension of the U.S. Department of State Large Scale International Boundaries (LSIB) layer from [hiu.state.gov/data](https://hiu.state.gov/data/). This source provides exact detail about border statuses, defining multiple classifications and guidance for proper visualization.
 
-The rational for creating a hybrid source layer is to address one of the shortcomings of using the UNmap source itself for very high-resolution print and web maps. Coastline precision for this layer is approximately 500m in most places, making it less than ideal for maps going down to street level around shores. OpenStreetMap provides about 36x more coastline detail (1,100 MB vs 30 MB), and is also purpose built to be aligned with the rest of OSM data.
+| Layer Type | Original                                                     | Simplified                                                   |
+| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Polygons   | [Original Polygons](https://data.fieldmaps.io/adm0/open/adm0_polygons.gpkg.zip) | [Simplified Polygons](https://data.fieldmaps.io/adm0/open/simplified_adm0_polygons.gpkg.zip) |
+| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/open/adm0_lines.gpkg.zip) | [Simplified Lines](https://data.fieldmaps.io/adm0/open/simplified_adm0_lines.gpkg.zip) |
+| Points     | [Original Points](https://data.fieldmaps.io/adm0/open/adm0_points.gpkg.zip) | [Simplified Points](https://data.fieldmaps.io/adm0/open/simplified_adm0_points.gpkg.zip) |
 
 ## Usage
 
@@ -14,7 +18,7 @@ The only requirements are to download [this repository](https://github.com/field
 docker compose up
 ```
 
-On first run, spatial data is automatically downloaded to the `inputs` directory, where it's processed to the `outputs` directory. Afterwards, runs will reuse data in place, meant to facilitate making manual edits to local sources and seeing merged results. It's possible to use custom land polygons or custom adm0 lines, so long as they follow the same naming conventions and schemas of the originals. If files are missing from either `inputs/adm0` or `inputs/land` on subsequent runs, the missing parts will be downloaded. For example, it would be useful to delete OpenStreetMap land polygons periodically to refresh with an updated version.
+On first run, spatial data is automatically downloaded to the `inputs` directory, where it's processed to the `outputs` directory. Afterwards, runs will reuse data in place, meant to facilitate making manual edits to local sources and seeing merged results. It's possible to use custom land polygons or custom ADM0 lines, so long as they follow the same naming conventions and schemas of the originals. If files are missing from any inputs sub-directory on subsequent runs, the missing parts will be downloaded. For example, it would be useful to delete OpenStreetMap land polygons periodically to refresh with an updated version.
 
 ## Upgrading
 
@@ -30,7 +34,7 @@ docker compose up
 
 ![](https://img.fieldmaps.io/adm0-template/wld_09.png)
 
-Due to the complexity of boundaries, international divisions are stored solely as line geometries, not polygons. The example above illustrated why this is useful, as the border status can vary at points between two adm0 areas. To obtain the input lines with a voronoi-like global coverage, a [companion tool](https://github.com/fieldmaps/polygon-voronoi) is run on the original UNmap dataset and uploaded here as [lines](https://data.fieldmaps.io/adm0-template/adm0_lines.gpkg), [points](https://data.fieldmaps.io/adm0-template/adm0_points.gpkg), and [attributes](https://data.fieldmaps.io/adm0-template/adm0_attributes.xlsx).
+Due to the complexity of boundaries, international divisions are stored solely as line geometries, not polygons. The example above illustrated why this is useful, as the border status can vary at points between two ADM0 areas. To obtain the input lines with a voronoi-like global coverage, a [companion tool](https://github.com/fieldmaps/polygon-voronoi) is run on the original LSIB dataset and uploaded here as [lines](https://data.fieldmaps.io/adm0-template/open/adm0_lines.gpkg), [points](https://data.fieldmaps.io/adm0-template/open/adm0_points.gpkg), and [attributes](https://data.fieldmaps.io/adm0-template/open/adm0_attributes.xlsx).
 
 |                     Land Polygons                      |               ADM0 Line & Point Template               |
 | :----------------------------------------------------: | :----------------------------------------------------: |
@@ -42,13 +46,13 @@ Due to the complexity of boundaries, international divisions are stored solely a
 | :----------------------------------------------------: | :----------------------------------------------------: |
 | ![](https://img.fieldmaps.io/adm0-template/wld_03.png) | ![](https://img.fieldmaps.io/adm0-template/wld_04.png) |
 
-**Intersection:** Lines are polygonized into an adm0 layer suitable for intersecting with land. Points are joined by location to add attribute information. Since polygon-polygon intersections are a very costly spatial operation, only land polygons with internal boundary divisions are used here for efficiency. Islands wholly contained within an adm0 polygon are added afterwards in a quick operation.
+**Intersection:** Lines are polygonized into an ADM0 layer suitable for intersecting with land. Points are joined by location to add attribute information. Since polygon-polygon intersections are a very costly spatial operation, only land polygons with internal boundary divisions are used here for efficiency. Islands wholly contained within an ADM0 polygon are added afterwards in a quick operation.
 
 |                     ADM0 Polygons                      |                  ADM0 Lines & Points                   |
 | :----------------------------------------------------: | :----------------------------------------------------: |
 | ![](https://img.fieldmaps.io/adm0-template/wld_05.png) | ![](https://img.fieldmaps.io/adm0-template/wld_06.png) |
 
-**Outputs:** The resulting adm0 polygons are also used to create derivative layers. For some cartographic maps, polygons are not as useful as points and lines used together. Output lines are clipped to represent only boundaries across land, so they can be styled separately from coastlines. Points are generated at the center of each polygon using a pole of inaccessibility algorithm, ideal for placing labels at.
+**Outputs:** The resulting ADM0 polygons are also used to create derivative layers. For some cartographic maps, polygons are not as useful as points and lines used together. Output lines are clipped to represent only boundaries across land, so they can be styled separately from coastlines. Points are generated at the center of each polygon using a pole of inaccessibility algorithm, ideal for placing labels at.
 
 |                       All Inputs                       |                      All Outputs                       |
 | :----------------------------------------------------: | :----------------------------------------------------: |

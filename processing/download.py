@@ -3,7 +3,7 @@ import requests
 from pathlib import Path
 from zipfile import ZipFile
 from io import BytesIO
-from .utils import logging, FILE_URL, LAND_URL, SIMPLE_LAND_URL, LSIB_URL
+from .utils import logging, names, FILE_URL, LAND_URL, SIMPLE_LAND_URL, LSIB_URL
 
 logger = logging.getLogger(__name__)
 
@@ -47,13 +47,11 @@ def get_shp(dir, name, url):
 
 
 def main():
-    get_file('open', 'adm0_attributes.xlsx')
-    get_file('open', 'adm0_points.gpkg')
-    get_file('open', 'adm0_lines.gpkg')
-    get_file('humanitarian', 'adm0_attributes.xlsx')
-    get_file('humanitarian', 'adm0_points.gpkg')
-    get_file('humanitarian', 'adm0_lines.gpkg')
+    for name in names:
+        get_file(name, 'adm0_attributes.xlsx')
+        get_file(name, 'adm0_points.gpkg')
+        get_file(name, 'adm0_lines.gpkg')
     get_shp('lsib', 'LSIB', LSIB_URL)
     get_shp('land', 'simplified_land_polygons', SIMPLE_LAND_URL)
     get_shp('land', 'land_polygons', LAND_URL)
-    logger.info('downloads')
+    logger.info('download')

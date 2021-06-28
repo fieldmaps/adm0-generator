@@ -9,27 +9,29 @@ cwd = Path(__file__).parent
 output_dir = (cwd / '../outputs').resolve()
 
 layers = [
-    ('polygons', 'polygons_01'),
     ('lines', 'lines_02'),
     ('points', 'points_01'),
+    ('polygons', 'polygons_01'),
 ]
 
 
 def main(_, name, prefix):
     layer = f'{prefix}{name}'
     for n, l in layers:
-        file = (output_dir / f'{name}/{prefix}adm0_{n}.gpkg')
-        file.unlink(missing_ok=True)
+        file_name = f'{prefix}adm0_{n}'
+        gpkg = (output_dir / f'{name}/{file_name}.gpkg')
+        gpkg.unlink(missing_ok=True)
         subprocess.run([
             'ogr2ogr',
             '-overwrite',
             '-makevalid',
-            file,
+            '-nln', file_name,
+            gpkg,
             f'PG:dbname={DATABASE}', f'{layer}_{l}',
         ])
-        file_zip = (output_dir / f'{name}/{prefix}adm0_{n}.gpkg.zip')
+        file_zip = (output_dir / f'{name}/{file_name}.gpkg.zip')
         file_zip.unlink(missing_ok=True)
         with ZipFile(file_zip, 'w', ZIP_DEFLATED) as z:
-            z.write(file, file.name)
-        file.unlink(missing_ok=True)
+            z.write(gpkg, gpkg.name)
+        gpkg.unlink(missing_ok=True)
     logger.info(layer)

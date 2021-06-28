@@ -3,7 +3,7 @@ import subprocess
 
 cwd = Path(__file__).parent
 
-layers = ['open', 'humanitarian']
+layers = ['open']
 
 if __name__ == '__main__':
     subprocess.run([
