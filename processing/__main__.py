@@ -1,7 +1,8 @@
 from multiprocessing import Pool
 from . import (download, preprocessing, inputs, attributes, polygons, land,
-               intersection, points, lines, outputs, cleanup, postprocessing)
-from .utils import logging, apply_funcs
+               intersection, points, lines, outputs, cleanup, postprocessing,
+               meta)
+from .utils import logging, names, prefixes, apply_funcs
 
 logger = logging.getLogger(__name__)
 
@@ -14,8 +15,8 @@ if __name__ == '__main__':
     preprocessing.main()
     results = []
     pool = Pool()
-    for name in ['open', 'humanitarian']:
-        for prefix in ['', 'simplified_']:
+    for name in names:
+        for prefix in prefixes:
             args = [name, prefix, *funcs]
             result = pool.apply_async(apply_funcs, args=args)
             results.append(result)
@@ -24,3 +25,4 @@ if __name__ == '__main__':
     for result in results:
         result.get()
     postprocessing.main()
+    meta.main()
