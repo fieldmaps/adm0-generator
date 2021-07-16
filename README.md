@@ -1,4 +1,4 @@
-# ADM0 Template
+# ADM0 Generator
 
 ![](https://img.fieldmaps.io/adm0-template/wld_00.png)
 
