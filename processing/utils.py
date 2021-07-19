@@ -1,7 +1,7 @@
 import logging
 from psycopg2 import connect
 
-DATABASE = 'adm0_template'
+DATABASE = 'adm0_generator'
 DATA_URL = 'https://data.fieldmaps.io/adm0'
 FILE_URL = 'https://data.fieldmaps.io/adm0-template'
 LAND_URL = 'https://osmdata.openstreetmap.de/download/land-polygons-complete-4326.zip'
