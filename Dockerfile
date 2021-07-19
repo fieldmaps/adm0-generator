@@ -15,8 +15,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B827C12C2D425E227E
   && rm -rf /var/lib/apt/lists/*
 
 RUN /etc/init.d/postgresql start \
-  && su postgres -c 'createdb adm0_template' \
-  && su postgres -c 'psql -d adm0_template -c "CREATE EXTENSION postgis;"'
+  && su postgres -c 'createdb adm0_generator' \
+  && su postgres -c 'psql -d adm0_generator -c "CREATE EXTENSION postgis;"'
 
 WORKDIR /usr/src/app
 
