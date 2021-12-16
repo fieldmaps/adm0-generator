@@ -1,6 +1,6 @@
 from multiprocessing import Pool
 from . import (download, preprocessing, inputs, attributes, polygonize,
-               continents, intersection, dissolve, points, lines, outputs,
+               continents, intersection, polygons, points, lines, outputs,
                cleanup, meta)
 from .utils import logging, prefixes, world_views, apply_funcs
 
@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 funcs_1 = [attributes.main, inputs.main, polygonize.main,
            continents.main, intersection.main]
-funcs_2 = [dissolve.main, points.main, lines.main, outputs.main, cleanup.main]
+funcs_2 = [polygons.main, points.main, lines.main, outputs.main, cleanup.main]
 
 
 def run_pool(world_views, funcs):

@@ -25,6 +25,16 @@ query_2 = """
     WHERE b.label IS NOT NULL
     ORDER BY a.id;
 """
+query_3 = """
+    UPDATE {table_out}
+    SET iso_grp = COALESCE (iso_grp, iso3);
+    ALTER TABLE {table_out}
+    DROP COLUMN IF EXISTS wld_all
+    DROP COLUMN IF EXISTS wld_intl
+    DROP COLUMN IF EXISTS wld_usa
+    DROP COLUMN IF EXISTS wld_chn
+    DROP COLUMN IF EXISTS wld_ind;
+"""
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};
 """
@@ -38,6 +48,9 @@ def main(cur, prefix, world):
     cur.execute(SQL(query_2).format(
         table_in1=Identifier(f'{prefix}points_tmp1_{world}'),
         table_in2=Identifier(f'{prefix}attributes_points'),
+        table_out=Identifier(f'{prefix}points_01_{world}'),
+    ))
+    cur.execute(SQL(query_3).format(
         table_out=Identifier(f'{prefix}points_01_{world}'),
     ))
     cur.execute(SQL(drop_tmp).format(

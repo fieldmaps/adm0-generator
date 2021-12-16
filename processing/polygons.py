@@ -33,6 +33,16 @@ query_3 = """
     ON a.id = b.id
     ORDER BY a.id;
 """
+query_4 = """
+    UPDATE {table_out}
+    SET iso_grp = COALESCE (iso_grp, iso3);
+    ALTER TABLE {table_out}
+    DROP COLUMN IF EXISTS wld_all
+    DROP COLUMN IF EXISTS wld_intl
+    DROP COLUMN IF EXISTS wld_usa
+    DROP COLUMN IF EXISTS wld_chn
+    DROP COLUMN IF EXISTS wld_ind;
+"""
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};
     DROP TABLE IF EXISTS {table_tmp2};
@@ -52,6 +62,9 @@ def main(cur, prefix, world):
     cur.execute(SQL(query_3).format(
         table_in1=Identifier(f'{prefix}polygons_tmp2_{world}'),
         table_in2=Identifier(f'{prefix}attributes_points'),
+        table_out=Identifier(f'{prefix}polygons_02_{world}'),
+    ))
+    cur.execute(SQL(query_4).format(
         table_out=Identifier(f'{prefix}polygons_02_{world}'),
     ))
     cur.execute(SQL(drop_tmp).format(

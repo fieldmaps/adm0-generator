@@ -33,6 +33,12 @@ query_2 = """
 query_3 = """
     UPDATE {table_out}
     SET rank = COALESCE ({rank}, rank);
+    ALTER TABLE {table_out}
+    DROP COLUMN IF EXISTS rank_all
+    DROP COLUMN IF EXISTS rank_intl
+    DROP COLUMN IF EXISTS rank_usa
+    DROP COLUMN IF EXISTS rank_chn
+    DROP COLUMN IF EXISTS rank_ind;
 """
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};
