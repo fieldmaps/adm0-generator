@@ -39,22 +39,21 @@ drop_tmp = """
 """
 
 
-def main(cur, name, prefix):
-    layer = f'{prefix}{name}'
+def main(cur, prefix, _):
     cur.execute(SQL(query_1).format(
-        table_in=Identifier(f'{layer}_lines_00'),
-        table_out=Identifier(f'{layer}_lines_01'),
+        table_in=Identifier(f'{prefix}lines_00'),
+        table_out=Identifier(f'{prefix}lines_01'),
     ))
     cur.execute(SQL(query_2).format(
-        table_in=Identifier(f'{layer}_lines_01'),
-        table_out=Identifier(f'{layer}_polygons_tmp1'),
+        table_in=Identifier(f'{prefix}lines_01'),
+        table_out=Identifier(f'{prefix}polygons_tmp1'),
     ))
     cur.execute(SQL(query_3).format(
-        table_in1=Identifier(f'{layer}_polygons_tmp1'),
-        table_in2=Identifier(f'{layer}_points_00'),
-        table_out=Identifier(f'{layer}_polygons_00'),
+        table_in1=Identifier(f'{prefix}polygons_tmp1'),
+        table_in2=Identifier(f'{prefix}points_00'),
+        table_out=Identifier(f'{prefix}polygons_00'),
     ))
     cur.execute(SQL(drop_tmp).format(
-        table_tmp1=Identifier(f'{layer}_polygons_tmp1'),
+        table_tmp1=Identifier(f'{prefix}polygons_tmp1'),
     ))
-    logger.info(layer)
+    logger.info(prefix)

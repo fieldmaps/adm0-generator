@@ -5,14 +5,13 @@ from .utils import logging, DATABASE
 logger = logging.getLogger(__name__)
 
 cwd = Path(__file__).parent
-input_dir = (cwd / '../inputs').resolve()
+input_dir = (cwd / '../inputs/lsib_extension').resolve()
 
 
-def main(_, name, prefix):
-    layer = f'{prefix}{name}'
+def main(_, prefix, __):
     layers = [
-        (f'{layer}_lines', f'{name}/adm0_lines.gpkg'),
-        (f'{layer}_points', f'{name}/adm0_points.gpkg'),
+        (f'{prefix}lines', 'adm0_lines.gpkg'),
+        (f'{prefix}points', 'adm0_points.gpkg'),
     ]
     for l, file in layers:
         subprocess.run([
@@ -28,12 +27,12 @@ def main(_, name, prefix):
             '-f', 'PostgreSQL', f'PG:dbname={DATABASE}',
             (input_dir / file),
         ])
-        if l == f'{prefix}open_lines':
+        if l == f'{prefix}lines':
             subprocess.run([
                 'ogr2ogr',
                 '-append',
-                '-nln', f'{prefix}open_lines_00',
+                '-nln', f'{prefix}lines_00',
                 '-f', 'PostgreSQL', f'PG:dbname={DATABASE}',
                 f'PG:dbname={DATABASE}', 'lsib_00',
             ])
-    logger.info(layer)
+    logger.info(prefix)

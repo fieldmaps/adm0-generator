@@ -7,63 +7,55 @@ query_1 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        rank,
-        ST_Multi(
-            ST_Union(geom)
-        )::GEOMETRY(MultiLineString, 4326) as geom
-    FROM {table_in}
-    GROUP BY rank;
-    CREATE INDEX ON {table_out} USING GIST(geom);
+        a.fid_1,
+        ST_Multi(ST_Union(
+            ST_CollectionExtract(
+                ST_Intersection(a.geom, b.geom)
+            , 2)
+        ))::GEOMETRY(MultiLineString, 4326) AS geom
+    FROM {table_in1} AS a
+    JOIN {table_in2} AS b
+    ON ST_Intersects(a.geom, b.geom)
+    GROUP BY fid_1;
 """
 query_2 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        a.rank,
-        (ST_Dump(ST_CollectionExtract(
-            ST_Intersection(a.geom, b.geom)
-        , 2))).geom::GEOMETRY(LineString, 4326) AS geom
+        b.*,
+        a.geom
     FROM {table_in1} AS a
-    JOIN {table_in2} AS b
-    ON ST_Intersects(a.geom, b.geom);
+    LEFT JOIN {table_in2} AS b
+    ON a.fid_1 = b.fid_1
+    WHERE COALESCE ({rank}, rank) > 0
+    ORDER BY a.fid_1;
 """
 query_3 = """
-    DROP TABLE IF EXISTS {table_out};
-    CREATE TABLE {table_out} AS
-    SELECT
-        rank,
-        ST_Multi(ST_Union(
-            ST_Difference(geom, ST_Boundary(
-                ST_MakeEnvelope(-180, -90, 180, 90, 4326)
-            ))
-        ))::GEOMETRY(MultiLineString, 4326) AS geom
-    FROM {table_in}
-    GROUP BY rank
-    ORDER BY rank;
+    UPDATE {table_out}
+    SET rank = COALESCE ({rank}, rank);
 """
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};
-    DROP TABLE IF EXISTS {table_tmp2};
 """
 
 
-def main(cur, name, prefix):
-    layer = f'{prefix}{name}'
+def main(cur, prefix, world):
     cur.execute(SQL(query_1).format(
-        table_in=Identifier(f'{layer}_lines_00'),
-        table_out=Identifier(f'{layer}_lines_tmp1'),
+        table_in1=Identifier(f'{prefix}lines_00'),
+        table_in2=Identifier(f'{prefix}land_01'),
+        table_out=Identifier(f'{prefix}lines_tmp1_{world}'),
     ))
     cur.execute(SQL(query_2).format(
-        table_in1=Identifier(f'{layer}_lines_tmp1'),
-        table_in2=Identifier(f'{layer}_land_01'),
-        table_out=Identifier(f'{layer}_lines_tmp2'),
+        table_in1=Identifier(f'{prefix}lines_tmp1_{world}'),
+        table_in2=Identifier(f'{prefix}attributes_lines'),
+        rank=Identifier(f'rank_{world}'),
+        table_out=Identifier(f'{prefix}lines_02_{world}'),
     ))
     cur.execute(SQL(query_3).format(
-        table_in=Identifier(f'{layer}_lines_tmp2'),
-        table_out=Identifier(f'{layer}_lines_02'),
+        rank=Identifier(f'rank_{world}'),
+        table_out=Identifier(f'{prefix}lines_02_{world}'),
     ))
     cur.execute(SQL(drop_tmp).format(
-        table_tmp1=Identifier(f'{layer}_lines_tmp1'),
-        table_tmp2=Identifier(f'{layer}_lines_tmp2'),
+        table_tmp1=Identifier(f'{prefix}lines_tmp1_{world}'),
     ))
-    logger.info(layer)
+    logger.info(f'{prefix}{world}')

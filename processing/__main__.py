@@ -1,28 +1,35 @@
 from multiprocessing import Pool
-from . import (download, preprocessing, inputs, attributes, polygons, land,
-               intersection, points, lines, outputs, cleanup, postprocessing,
-               meta)
-from .utils import logging, names, prefixes, apply_funcs
+from . import (download, preprocessing, inputs, attributes, polygonize,
+               continents, intersection, dissolve, points, lines, outputs,
+               cleanup, meta)
+from .utils import logging, prefixes, world_views, apply_funcs
 
 logger = logging.getLogger(__name__)
 
-funcs = [attributes.main, inputs.main, polygons.main, land.main,
-         intersection.main, points.main, lines.main, outputs.main, cleanup.main]
+funcs_1 = [attributes.main, inputs.main, polygonize.main,
+           continents.main, intersection.main]
+funcs_2 = [dissolve.main, points.main, lines.main, outputs.main, cleanup.main]
 
-if __name__ == '__main__':
-    logger.info('starting')
-    download.main()
-    preprocessing.main()
+
+def run_pool(world_views, funcs):
     results = []
     pool = Pool()
-    for name in names:
-        for prefix in prefixes:
-            args = [name, prefix, *funcs]
+    for prefix in prefixes:
+        for world in world_views:
+            args = [prefix, world, *funcs]
             result = pool.apply_async(apply_funcs, args=args)
             results.append(result)
     pool.close()
     pool.join()
     for result in results:
         result.get()
-    postprocessing.main()
+
+
+if __name__ == '__main__':
+    logger.info('starting')
+    download.main()
+    preprocessing.main()
+    run_pool([None], funcs_1)
+    run_pool(world_views, funcs_2)
+    cleanup.postprocessing()
     meta.main()

@@ -33,14 +33,12 @@ def import_layers():
 
 
 def fix_lsib(cur):
-    query_1 = "UPDATE lsib_00 SET RANK=2 WHERE cc1='XK' AND cc2='RS';"
-    query_2 = "UPDATE lsib_00 SET RANK=2 WHERE cc1='SS' AND cc2='SD';"
-    query_3 = "UPDATE lsib_00 SET RANK=3 WHERE cc1='SS' AND cc2='Q2';"
-    query_4 = "UPDATE lsib_00 SET RANK=3 WHERE cc1='IL' AND cc2='SY';"
+    query_1 = "DELETE FROM lsib_00 WHERE cc1='CN' AND cc2='IN' AND rank=1;"
+    query_2 = "DELETE FROM lsib_00 WHERE cc1='KE' AND cc2='SS' AND rank=2;"
+    query_3 = "DELETE FROM lsib_00 WHERE cc1='SS' AND cc2='SD' AND rank=1;"
     cur.execute(SQL(query_1))
     cur.execute(SQL(query_2))
     cur.execute(SQL(query_3))
-    cur.execute(SQL(query_4))
 
 
 def fix_land_simple(cur):

@@ -1,3 +1,6 @@
 .vscode
 __pycache__
 *.pyc
+~$*.xlsx
+*.gpkg-shm
+*.gpkg-wal

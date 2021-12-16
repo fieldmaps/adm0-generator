@@ -22,6 +22,7 @@ query_2 = """
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
     ON a.id = b.id
+    WHERE b.label IS NOT NULL
     ORDER BY a.id;
 """
 drop_tmp = """
@@ -29,18 +30,17 @@ drop_tmp = """
 """
 
 
-def main(cur, name, prefix):
-    layer = f'{prefix}{name}'
+def main(cur, prefix, world):
     cur.execute(SQL(query_1).format(
-        table_in=Identifier(f'{layer}_polygons_01'),
-        table_out=Identifier(f'{layer}_points_tmp1'),
+        table_in=Identifier(f'{prefix}polygons_02_{world}'),
+        table_out=Identifier(f'{prefix}points_tmp1_{world}'),
     ))
     cur.execute(SQL(query_2).format(
-        table_in1=Identifier(f'{layer}_points_tmp1'),
-        table_in2=Identifier(f'{layer}_attributes'),
-        table_out=Identifier(f'{layer}_points_01'),
+        table_in1=Identifier(f'{prefix}points_tmp1_{world}'),
+        table_in2=Identifier(f'{prefix}attributes_points'),
+        table_out=Identifier(f'{prefix}points_01_{world}'),
     ))
     cur.execute(SQL(drop_tmp).format(
-        table_tmp1=Identifier(f'{layer}_points_tmp1'),
+        table_tmp1=Identifier(f'{prefix}points_tmp1_{world}'),
     ))
-    logger.info(layer)
+    logger.info(f'{prefix}{world}')
