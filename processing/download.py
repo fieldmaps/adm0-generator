@@ -22,12 +22,11 @@ def download_zip(url, output):
 def get_shp(dir, name, url):
     inputs = (input_dir / dir)
     inputs.mkdir(exist_ok=True, parents=True)
-    cpg = (inputs / f'{name}.cpg').is_file()
     dbf = (inputs / f'{name}.dbf').is_file()
     prj = (inputs / f'{name}.prj').is_file()
     shp = (inputs / f'{name}.shp').is_file()
     shx = (inputs / f'{name}.shx').is_file()
-    if not cpg or not dbf or not prj or not shp or not shx:
+    if not dbf or not prj or not shp or not shx:
         download_zip(url, inputs)
 
 
