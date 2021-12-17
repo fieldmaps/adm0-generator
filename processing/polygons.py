@@ -7,7 +7,7 @@ query_1 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        COALESCE ({world_view_1}::TEXT, {world_view_2}::TEXT, id) AS id,
+        COALESCE({world_view_1}::TEXT, {world_view_2}::TEXT, id) AS id,
         geom
     FROM {table_in};
 """
@@ -35,7 +35,7 @@ query_3 = """
 """
 query_4 = """
     UPDATE {table_out}
-    SET iso_grp = COALESCE (iso_grp, iso3);
+    SET iso_grp = COALESCE(iso_grp, iso3);
 """
 query_5 = """
     ALTER TABLE {table_out}

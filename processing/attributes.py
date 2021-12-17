@@ -11,7 +11,8 @@ input_dir = cwd / '../inputs/lsib_extension'
 def main(_, prefix, __):
     for geom in ['points', 'lines']:
         file = (input_dir / f'adm0_{geom}.xlsx')
-        df = pd.read_excel(file, engine='openpyxl')
+        df = pd.read_excel(file, engine='openpyxl',
+                           keep_default_na=False, na_values=['', '#N/A'])
         df.to_sql(f'{prefix}attributes_{geom}', con=f'postgresql:///{DATABASE}',
                   if_exists='replace', index=False, method='multi')
     logger.info(prefix)

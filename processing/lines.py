@@ -1,5 +1,5 @@
 from psycopg2.sql import SQL, Identifier
-from .utils import logging
+from .utils import logging, world_views
 
 logger = logging.getLogger(__name__)
 
@@ -27,18 +27,16 @@ query_2 = """
     FROM {table_in1} AS a
     LEFT JOIN {table_in2} AS b
     ON a.fid_1 = b.fid_1
-    WHERE COALESCE ({rank}, rank) > 0
+    WHERE COALESCE({rank}, rank) > 0
     ORDER BY b.fid_1;
 """
 query_3 = """
     UPDATE {table_out}
-    SET rank = COALESCE ({rank}, rank);
+    SET rank = COALESCE({rank}, rank);
+"""
+query_4 = """
     ALTER TABLE {table_out}
-    DROP COLUMN IF EXISTS rank_all,
-    DROP COLUMN IF EXISTS rank_intl,
-    DROP COLUMN IF EXISTS rank_usa,
-    DROP COLUMN IF EXISTS rank_chn,
-    DROP COLUMN IF EXISTS rank_ind;
+    DROP COLUMN IF EXISTS {rank};
 """
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};
@@ -61,6 +59,11 @@ def main(cur, prefix, world):
         rank=Identifier(f'rank_{world}'),
         table_out=Identifier(f'{prefix}lines_02_{world}'),
     ))
+    for wld in world_views:
+        cur.execute(SQL(query_4).format(
+            rank=Identifier(f'rank_{wld}'),
+            table_out=Identifier(f'{prefix}lines_02_{world}'),
+        ))
     cur.execute(SQL(drop_tmp).format(
         table_tmp1=Identifier(f'{prefix}lines_tmp1_{world}'),
     ))
