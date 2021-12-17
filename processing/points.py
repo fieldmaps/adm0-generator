@@ -29,10 +29,10 @@ query_3 = """
     UPDATE {table_out}
     SET iso_grp = COALESCE (iso_grp, iso3);
     ALTER TABLE {table_out}
-    DROP COLUMN IF EXISTS wld_all
-    DROP COLUMN IF EXISTS wld_intl
-    DROP COLUMN IF EXISTS wld_usa
-    DROP COLUMN IF EXISTS wld_chn
+    DROP COLUMN IF EXISTS wld_all,
+    DROP COLUMN IF EXISTS wld_intl,
+    DROP COLUMN IF EXISTS wld_usa,
+    DROP COLUMN IF EXISTS wld_chn,
     DROP COLUMN IF EXISTS wld_ind;
 """
 drop_tmp = """
