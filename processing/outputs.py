@@ -10,7 +10,7 @@ cwd = Path(__file__).parent
 layers = [
     ('lines', 'lines_02'),
     ('points', 'points_01'),
-    ('polygons', 'polygons_02'),
+    ('polygons', 'polygons_02_a'),
 ]
 
 

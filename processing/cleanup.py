@@ -7,7 +7,8 @@ logger = logging.getLogger(__name__)
 layers_world = [
     'lines_02',
     'points_01',
-    'polygons_02',
+    'polygons_02_a',
+    'polygons_02_p',
 ]
 
 layers = [
