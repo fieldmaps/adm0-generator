@@ -31,7 +31,7 @@ query_3 = """
     FROM {table_in1} AS a
     LEFT JOIN {table_in2} AS b
     ON a.id = b.id
-    ORDER BY b.id;
+    ORDER BY id;
 """
 query_4 = """
     UPDATE {table_out}

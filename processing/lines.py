@@ -28,7 +28,7 @@ query_2 = """
     LEFT JOIN {table_in2} AS b
     ON a.fid_1 = b.fid_1
     WHERE COALESCE({rank}, rank) > 0
-    ORDER BY b.fid_1;
+    ORDER BY fid_1;
 """
 query_3 = """
     UPDATE {table_out}

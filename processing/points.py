@@ -23,7 +23,7 @@ query_2 = """
     JOIN {table_in2} AS b
     ON a.id = b.id
     WHERE b.label IS NOT NULL
-    ORDER BY b.id;
+    ORDER BY id;
 """
 query_3 = """
     UPDATE {table_out}
