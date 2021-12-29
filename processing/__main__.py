@@ -1,7 +1,7 @@
 from multiprocessing import Pool
 from . import (download, preprocessing, inputs, attributes, polygonize,
-               continents, intersection, polygons, points, lines, outputs,
-               cleanup, meta)
+               continents, intersection, land, polygons, points, lines,
+               outputs, cleanup, meta)
 from .utils import logging, prefixes, world_views, apply_funcs
 
 logger = logging.getLogger(__name__)
@@ -25,11 +25,24 @@ def run_pool(world_views, funcs):
         result.get()
 
 
+def run_land():
+    results = []
+    pool = Pool()
+    for prefix in prefixes:
+        result = pool.apply_async(land.main, args=[prefix])
+        results.append(result)
+    pool.close()
+    pool.join()
+    for result in results:
+        result.get()
+
+
 if __name__ == '__main__':
     logger.info('starting')
     download.main()
     preprocessing.main()
     run_pool([None], funcs_1)
     run_pool(world_views, funcs_2)
+    run_land()
     cleanup.postprocessing()
     meta.main()

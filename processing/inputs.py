@@ -5,7 +5,7 @@ from .utils import logging, DATABASE
 logger = logging.getLogger(__name__)
 
 cwd = Path(__file__).parent
-input_dir = (cwd / '../inputs/lsib_extension').resolve()
+input_dir = cwd / '../inputs/lsib_extension'
 
 
 def main(_, prefix, __):

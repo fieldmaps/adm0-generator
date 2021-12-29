@@ -27,7 +27,7 @@ query_2 = """
 """
 query_3 = """
     UPDATE {table_out}
-    SET iso_grp = COALESCE(iso_grp, iso3);
+    SET iso3_grp = COALESCE(iso3_grp, iso3);
 """
 query_4 = """
     ALTER TABLE {table_out}

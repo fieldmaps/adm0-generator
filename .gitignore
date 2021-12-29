@@ -4,3 +4,4 @@ __pycache__
 ~$*.xlsx
 *.gpkg-shm
 *.gpkg-wal
+*.gpkg-journal

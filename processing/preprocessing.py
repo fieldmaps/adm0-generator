@@ -1,8 +1,8 @@
 import subprocess
 from pathlib import Path
 from psycopg2 import connect
-from psycopg2.sql import SQL, Identifier
-from .utils import logging, DATABASE
+from psycopg2.sql import SQL, Identifier, Literal
+from .utils import logging, DATABASE, get_land_date
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +13,7 @@ input_dir = (cwd / '../inputs').resolve()
 def import_layers():
     layers = [
         ('land_00', 'land/land_polygons.shp'),
-        ('simplified_land_tmp1', 'land/simplified_land_polygons.shp'),
+        ('simplified_land_00_tmp1', 'land/simplified_land_polygons.shp'),
         ('lsib_00', 'lsib/LSIB.shp'),
     ]
     for layer, file in layers:
@@ -41,6 +41,17 @@ def fix_lsib(cur):
     cur.execute(SQL(query_3))
 
 
+def fix_land(cur):
+    query_1 = """
+        ALTER TABLE {table_out}
+        ADD COLUMN date DATE DEFAULT {date};
+    """
+    cur.execute(SQL(query_1).format(
+        date=Literal(get_land_date()),
+        table_out=Identifier('land_00'),
+    ))
+
+
 def fix_land_simple(cur):
     query_1 = """
         DROP TABLE IF EXISTS {table_out};
@@ -64,12 +75,20 @@ def fix_land_simple(cur):
         FROM {table_in};
         CREATE INDEX ON {table_out} USING GIST(geom);
     """
+    query_3 = """
+        ALTER TABLE {table_out}
+        ADD COLUMN date DATE DEFAULT {date};
+    """
     cur.execute(SQL(query_1).format(
-        table_in=Identifier('simplified_land_tmp1'),
-        table_out=Identifier('simplified_land_tmp2'),
+        table_in=Identifier('simplified_land_00_tmp1'),
+        table_out=Identifier('simplified_land_00_tmp2'),
     ))
     cur.execute(SQL(query_2).format(
-        table_in=Identifier('simplified_land_tmp2'),
+        table_in=Identifier('simplified_land_00_tmp2'),
+        table_out=Identifier('simplified_land_00'),
+    ))
+    cur.execute(SQL(query_3).format(
+        date=Literal(get_land_date()),
         table_out=Identifier('simplified_land_00'),
     ))
 
@@ -80,8 +99,8 @@ def cleanup_tmp(cur):
         DROP TABLE IF EXISTS {table_tmp2};
     """
     cur.execute(SQL(query_1).format(
-        table_tmp1=Identifier('simplified_land_tmp1'),
-        table_tmp2=Identifier('simplified_land_tmp2'),
+        table_tmp1=Identifier('simplified_land_00_tmp1'),
+        table_tmp2=Identifier('simplified_land_00_tmp2'),
     ))
 
 
@@ -91,6 +110,7 @@ def main():
     cur = con.cursor()
     import_layers()
     fix_lsib(cur)
+    fix_land(cur)
     fix_land_simple(cur)
     cleanup_tmp(cur)
     cur.close()
