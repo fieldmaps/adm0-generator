@@ -7,7 +7,7 @@ if __name__ == '__main__':
     subprocess.run([
         'aws', 's3', 'cp',
         cwd / 'outputs/adm0.json',
-        's3://fieldmapsdata/adm0.json',
+        's3://data.fieldmaps.io/adm0.json',
     ])
     subprocess.run([
         'aws', 's3', 'sync',
@@ -16,5 +16,5 @@ if __name__ == '__main__':
         '--exclude', '*.json',
         '--exclude', '*clip.gpkg.zip',
         cwd / f'outputs',
-        f's3://fieldmapsdata/adm0',
+        f's3://data.fieldmaps.io/adm0',
     ])
