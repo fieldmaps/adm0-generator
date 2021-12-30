@@ -1,4 +1,4 @@
-from psycopg2.sql import SQL, Identifier
+from psycopg2.sql import SQL, Identifier, Literal
 from .utils import logging, world_views
 
 logger = logging.getLogger(__name__)
@@ -23,6 +23,7 @@ query_2 = """
     CREATE TABLE {table_out} AS
     SELECT
         b.*,
+        {wld} AS wld_view,
         a.geom
     FROM {table_in1} AS a
     LEFT JOIN {table_in2} AS b
@@ -53,6 +54,7 @@ def main(cur, prefix, world):
         table_in1=Identifier(f'{prefix}lines_tmp1_{world}'),
         table_in2=Identifier(f'{prefix}attributes_lines'),
         rank=Identifier(f'rank_{world}'),
+        wld=Literal(world),
         table_out=Identifier(f'{prefix}lines_02_{world}'),
     ))
     cur.execute(SQL(query_3).format(

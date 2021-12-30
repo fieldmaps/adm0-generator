@@ -1,4 +1,4 @@
-from psycopg2.sql import SQL, Identifier
+from psycopg2.sql import SQL, Identifier, Literal
 from .utils import logging, world_views
 
 logger = logging.getLogger(__name__)
@@ -27,6 +27,12 @@ query_2 = """
 """
 query_3 = """
     ALTER TABLE {table_out}
+    ALTER COLUMN wld_view TYPE VARCHAR;
+    UPDATE {table_out}
+    SET wld_view = {wld};
+"""
+query_4 = """
+    ALTER TABLE {table_out}
     DROP COLUMN IF EXISTS {polygon},
     DROP COLUMN IF EXISTS {point};
 """
@@ -45,8 +51,12 @@ def main(cur, prefix, world):
         table_in2=Identifier(f'{prefix}attributes_points'),
         table_out=Identifier(f'{prefix}points_01_{world}'),
     ))
+    cur.execute(SQL(query_3).format(
+        wld=Literal(world),
+        table_out=Identifier(f'{prefix}points_01_{world}'),
+    ))
     for wld in world_views:
-        cur.execute(SQL(query_3).format(
+        cur.execute(SQL(query_4).format(
             polygon=Identifier(f'wld_a_{wld}'),
             point=Identifier(f'wld_p_{wld}'),
             table_out=Identifier(f'{prefix}points_01_{world}'),

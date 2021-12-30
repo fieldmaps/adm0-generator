@@ -9,7 +9,7 @@ SIMPLE_LAND_URL = 'https://osmdata.openstreetmap.de/download/simplified-land-pol
 LSIB_URL = 'https://geonode.state.gov/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3ALSIB&outputFormat=SHAPE-ZIP&srs=EPSG%3A4326&format_options=charset%3AUTF-8'
 LSIB_DATE = '2021-05-28'
 
-prefixes = ['', 'simplified_']
+prefixes = ['simplified_', '']
 world_views = ['all', 'intl', 'usa', 'chn', 'ind']
 geoms = ['lines', 'points', 'polygons']
 
