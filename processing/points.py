@@ -22,14 +22,10 @@ query_2 = """
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
     ON a.id = b.id
-    WHERE b.label IS NOT NULL
+    WHERE b.adm0_name IS NOT NULL
     ORDER BY id;
 """
 query_3 = """
-    UPDATE {table_out}
-    SET iso3_grp = COALESCE(iso3_grp, iso3);
-"""
-query_4 = """
     ALTER TABLE {table_out}
     DROP COLUMN IF EXISTS {polygon},
     DROP COLUMN IF EXISTS {point};
@@ -49,11 +45,8 @@ def main(cur, prefix, world):
         table_in2=Identifier(f'{prefix}attributes_points'),
         table_out=Identifier(f'{prefix}points_01_{world}'),
     ))
-    cur.execute(SQL(query_3).format(
-        table_out=Identifier(f'{prefix}points_01_{world}'),
-    ))
     for wld in world_views:
-        cur.execute(SQL(query_4).format(
+        cur.execute(SQL(query_3).format(
             polygon=Identifier(f'wld_a_{wld}'),
             point=Identifier(f'wld_p_{wld}'),
             table_out=Identifier(f'{prefix}points_01_{world}'),

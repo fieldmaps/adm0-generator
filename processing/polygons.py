@@ -34,10 +34,6 @@ query_3 = """
     ORDER BY id;
 """
 query_4 = """
-    UPDATE {table_out}
-    SET iso3_grp = COALESCE(iso3_grp, iso3);
-"""
-query_5 = """
     ALTER TABLE {table_out}
     DROP COLUMN IF EXISTS {polygon},
     DROP COLUMN IF EXISTS {point};
@@ -65,11 +61,8 @@ def main(cur, prefix, world):
             table_in2=Identifier(f'{prefix}attributes_points'),
             table_out=Identifier(f'{prefix}polygons_02_{geom}_{world}'),
         ))
-        cur.execute(SQL(query_4).format(
-            table_out=Identifier(f'{prefix}polygons_02_{geom}_{world}'),
-        ))
         for wld in world_views:
-            cur.execute(SQL(query_5).format(
+            cur.execute(SQL(query_4).format(
                 polygon=Identifier(f'wld_a_{wld}'),
                 point=Identifier(f'wld_p_{wld}'),
                 table_out=Identifier(f'{prefix}polygons_02_{geom}_{world}'),

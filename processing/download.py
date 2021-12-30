@@ -8,7 +8,7 @@ from .utils import logging, LAND_URL, SIMPLE_LAND_URL, LSIB_URL
 logger = logging.getLogger(__name__)
 
 cwd = Path(__file__).parent
-input_dir = (cwd / '../inputs')
+input_dir = cwd / '../inputs'
 
 
 def download_zip(url, output):
@@ -20,7 +20,7 @@ def download_zip(url, output):
 
 
 def get_shp(dir, name, url):
-    inputs = (input_dir / dir)
+    inputs = input_dir / dir
     inputs.mkdir(exist_ok=True, parents=True)
     dbf = (inputs / f'{name}.dbf').is_file()
     prj = (inputs / f'{name}.prj').is_file()

@@ -1,5 +1,6 @@
 import subprocess
 from pathlib import Path
+from psycopg2.sql import SQL, Identifier
 from zipfile import ZipFile, ZIP_DEFLATED
 from .utils import logging, DATABASE
 
@@ -14,13 +15,21 @@ layers = [
     ('clip', 'polygons_02_p'),
 ]
 
+query_1 = """
+    ALTER TABLE {table_out}
+    DROP COLUMN IF EXISTS id;
+"""
 
-def make_zip_gpkg(prefix, world, n, l):
+
+def make_zip_gpkg(cur, prefix, world, n, l):
     output_dir = cwd / f'../outputs/{world}'
     output_dir.mkdir(exist_ok=True, parents=True)
     file_name = f'{prefix}adm0_{n}'
     gpkg = output_dir / f'{file_name}.gpkg'
     gpkg.unlink(missing_ok=True)
+    cur.execute(SQL(query_1).format(
+        table_out=Identifier(f'{prefix}{l}_{world}'),
+    ))
     subprocess.run([
         'ogr2ogr',
         '-overwrite',
@@ -36,7 +45,7 @@ def make_zip_gpkg(prefix, world, n, l):
     gpkg.unlink(missing_ok=True)
 
 
-def main(_, prefix, world):
+def main(cur, prefix, world):
     for n, l in layers:
-        make_zip_gpkg(prefix, world, n, l)
+        make_zip_gpkg(cur, prefix, world, n, l)
     logger.info(f'{prefix}{world}')
