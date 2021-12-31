@@ -15,6 +15,6 @@ if __name__ == '__main__':
         '--exclude', '.*',
         '--exclude', '*.json',
         '--exclude', '*clip.gpkg.zip',
-        cwd / f'outputs',
-        f's3://data.fieldmaps.io/adm0',
+        cwd / 'outputs',
+        's3://data.fieldmaps.io/adm0',
     ])
