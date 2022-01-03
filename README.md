@@ -8,58 +8,58 @@ This tool provides a flexible way to manage ADM0 boundaries, using a separation 
 
 A balanced world view for use by international non-governmental organizations. Disputed areas follow recommended representation used by the [UN Clear Map](https://geoservices.un.org/Html5Viewer/index.html?viewer=clearmap). UN agencies should use official layers at the [UN Geospatial Hub](https://geoservices.un.org/webapps/geohub/).
 
-| Layer Type | Original                                                     | Simplified                                                   |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Layer Type | Original                                                                        | Simplified                                                                                   |
+| ---------- | ------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | Polygons   | [Original Polygons](https://data.fieldmaps.io/adm0/intl/adm0_polygons.gpkg.zip) | [Simplified Polygons](https://data.fieldmaps.io/adm0/intl/simplified_adm0_polygons.gpkg.zip) |
-| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/intl/adm0_lines.gpkg.zip) | [Simplified Lines](https://data.fieldmaps.io/adm0/intl/simplified_adm0_lines.gpkg.zip) |
-| Points     | [Original Points](https://data.fieldmaps.io/adm0/intl/adm0_points.gpkg.zip) | [Simplified Points](https://data.fieldmaps.io/adm0/intl/simplified_adm0_points.gpkg.zip) |
+| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/intl/adm0_lines.gpkg.zip)       | [Simplified Lines](https://data.fieldmaps.io/adm0/intl/simplified_adm0_lines.gpkg.zip)       |
+| Points     | [Original Points](https://data.fieldmaps.io/adm0/intl/adm0_points.gpkg.zip)     | [Simplified Points](https://data.fieldmaps.io/adm0/intl/simplified_adm0_points.gpkg.zip)     |
 
 ### All Disputed Areas Disaggregated
 
 A conservative world view that depicts all disputed areas individually. Useful if applying individual customization outside the presets generated here.
 
-| Layer Type | Original                                                     | Simplified                                                   |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Layer Type | Original                                                                       | Simplified                                                                                  |
+| ---------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | Polygons   | [Original Polygons](https://data.fieldmaps.io/adm0/all/adm0_polygons.gpkg.zip) | [Simplified Polygons](https://data.fieldmaps.io/adm0/all/simplified_adm0_polygons.gpkg.zip) |
-| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/all/adm0_lines.gpkg.zip) | [Simplified Lines](https://data.fieldmaps.io/adm0/all/simplified_adm0_lines.gpkg.zip) |
-| Points     | [Original Points](https://data.fieldmaps.io/adm0/all/adm0_points.gpkg.zip) | [Simplified Points](https://data.fieldmaps.io/adm0/all/simplified_adm0_points.gpkg.zip) |
+| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/all/adm0_lines.gpkg.zip)       | [Simplified Lines](https://data.fieldmaps.io/adm0/all/simplified_adm0_lines.gpkg.zip)       |
+| Points     | [Original Points](https://data.fieldmaps.io/adm0/all/adm0_points.gpkg.zip)     | [Simplified Points](https://data.fieldmaps.io/adm0/all/simplified_adm0_points.gpkg.zip)     |
 
 ### United States
 
 World view of the United States as represented in the original Large Scale International Boundaries (LSIB) layer.
 
-| Layer Type | Original                                                     | Simplified                                                   |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Layer Type | Original                                                                       | Simplified                                                                                  |
+| ---------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | Polygons   | [Original Polygons](https://data.fieldmaps.io/adm0/usa/adm0_polygons.gpkg.zip) | [Simplified Polygons](https://data.fieldmaps.io/adm0/usa/simplified_adm0_polygons.gpkg.zip) |
-| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/usa/adm0_lines.gpkg.zip) | [Simplified Lines](https://data.fieldmaps.io/adm0/usa/simplified_adm0_lines.gpkg.zip) |
-| Points     | [Original Points](https://data.fieldmaps.io/adm0/usa/adm0_points.gpkg.zip) | [Simplified Points](https://data.fieldmaps.io/adm0/usa/simplified_adm0_points.gpkg.zip) |
+| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/usa/adm0_lines.gpkg.zip)       | [Simplified Lines](https://data.fieldmaps.io/adm0/usa/simplified_adm0_lines.gpkg.zip)       |
+| Points     | [Original Points](https://data.fieldmaps.io/adm0/usa/adm0_points.gpkg.zip)     | [Simplified Points](https://data.fieldmaps.io/adm0/usa/simplified_adm0_points.gpkg.zip)     |
 
 ### China
 
 World view incorperating Hong Kong, Macau, Taiwan, and disputed areas in the Himalayas and South China Sea as part of China. Regions such as Western Sahara and Kosovo are represented based on Chinese recognition.
 
-| Layer Type | Original                                                     | Simplified                                                   |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Layer Type | Original                                                                       | Simplified                                                                                  |
+| ---------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | Polygons   | [Original Polygons](https://data.fieldmaps.io/adm0/chn/adm0_polygons.gpkg.zip) | [Simplified Polygons](https://data.fieldmaps.io/adm0/chn/simplified_adm0_polygons.gpkg.zip) |
-| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/chn/adm0_lines.gpkg.zip) | [Simplified Lines](https://data.fieldmaps.io/adm0/chn/simplified_adm0_lines.gpkg.zip) |
-| Points     | [Original Points](https://data.fieldmaps.io/adm0/chn/adm0_points.gpkg.zip) | [Simplified Points](https://data.fieldmaps.io/adm0/chn/simplified_adm0_points.gpkg.zip) |
+| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/chn/adm0_lines.gpkg.zip)       | [Simplified Lines](https://data.fieldmaps.io/adm0/chn/simplified_adm0_lines.gpkg.zip)       |
+| Points     | [Original Points](https://data.fieldmaps.io/adm0/chn/adm0_points.gpkg.zip)     | [Simplified Points](https://data.fieldmaps.io/adm0/chn/simplified_adm0_points.gpkg.zip)     |
 
 ### India
 
 World view incorperating Jammu & Kashmir and disputed areas in the Himalayas as part of India. Regions such as Western Sahara and Kosovo are represented based on Indian recognition.
 
-| Layer Type | Original                                                     | Simplified                                                   |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Layer Type | Original                                                                       | Simplified                                                                                  |
+| ---------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | Polygons   | [Original Polygons](https://data.fieldmaps.io/adm0/ind/adm0_polygons.gpkg.zip) | [Simplified Polygons](https://data.fieldmaps.io/adm0/ind/simplified_adm0_polygons.gpkg.zip) |
-| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/ind/adm0_lines.gpkg.zip) | [Simplified Lines](https://data.fieldmaps.io/adm0/ind/simplified_adm0_lines.gpkg.zip) |
-| Points     | [Original Points](https://data.fieldmaps.io/adm0/ind/adm0_points.gpkg.zip) | [Simplified Points](https://data.fieldmaps.io/adm0/ind/simplified_adm0_points.gpkg.zip) |
+| Lines      | [Original Lines](https://data.fieldmaps.io/adm0/ind/adm0_lines.gpkg.zip)       | [Simplified Lines](https://data.fieldmaps.io/adm0/ind/simplified_adm0_lines.gpkg.zip)       |
+| Points     | [Original Points](https://data.fieldmaps.io/adm0/ind/adm0_points.gpkg.zip)     | [Simplified Points](https://data.fieldmaps.io/adm0/ind/simplified_adm0_points.gpkg.zip)     |
 
 ### Land
 
 Recommended for visualizing shorelines when used with point and line layers above for cartographic applications.
 
-| Layer Type | Original                                                     | Simplified                                                   |
-| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Layer Type | Original                                                                       | Simplified                                                                                  |
+| ---------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | Polygons   | [Original Polygons](https://data.fieldmaps.io/adm0/ind/adm0_polygons.gpkg.zip) | [Simplified Polygons](https://data.fieldmaps.io/adm0/ind/simplified_adm0_polygons.gpkg.zip) |
 
 ## Usage
@@ -86,7 +86,7 @@ docker compose up
 
 ![](https://img.fieldmaps.io/adm0-generator/wld_09.png)
 
-Due to the complexity of boundaries, international divisions are stored solely as line geometries, not polygons. The example above illustrated why this is useful, as the border status can vary at points between two ADM0 areas. To obtain the input lines with a voronoi-like global coverage, a [companion tool](https://github.com/fieldmaps/polygon-voronoi) is run on the original LSIB dataset and uploaded here as [lines](https://data.fieldmaps.io/adm0-template/open/adm0_lines.gpkg), [points](https://data.fieldmaps.io/adm0-template/open/adm0_points.gpkg), and [attributes](https://data.fieldmaps.io/adm0-template/open/adm0_attributes.xlsx).
+Due to the complexity of boundaries, international divisions are stored solely as line geometries, not polygons. The example above illustrated why this is useful, as the border status can vary at points between two ADM0 areas.
 
 |                      Land Polygons                      |               ADM0 Line & Point Template                |
 | :-----------------------------------------------------: | :-----------------------------------------------------: |
