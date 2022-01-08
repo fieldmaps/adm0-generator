@@ -8,8 +8,6 @@ if __name__ == '__main__':
     subprocess.run([
         's3cmd', 'sync',
         '--acl-public',
-        '--delete-removed',
-        '--rexclude', '\/\.',
         cwd / 'outputs/adm0.json',
         's3://data.fieldmaps.io/adm0.json',
     ])
@@ -19,6 +17,7 @@ if __name__ == '__main__':
             '--acl-public',
             '--delete-removed',
             '--rexclude', '\/\.',
+            '--multipart-chunk-size-mb=5120',
             cwd / f'outputs/{wld}',
             's3://data.fieldmaps.io/adm0/',
         ])
