@@ -5,3 +5,7 @@ __pycache__
 *.gpkg-shm
 *.gpkg-wal
 *.gpkg-journal
+inputs/land
+inputs/lsib
+data
+outputs

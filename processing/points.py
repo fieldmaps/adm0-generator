@@ -21,9 +21,7 @@ query_2 = """
         a.geom
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
-    ON a.id = b.id
-    WHERE b.adm0_name IS NOT NULL
-    ORDER BY id;
+    ON a.id = b.id;
 """
 query_3 = """
     ALTER TABLE {table_out}

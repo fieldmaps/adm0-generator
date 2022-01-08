@@ -41,8 +41,7 @@ query_3 = """
         a.geom
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
-    ON a.id = b.id
-    ORDER BY a.id;
+    ON a.id = b.id;
 """
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};

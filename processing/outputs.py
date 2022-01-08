@@ -21,31 +21,77 @@ query_1 = """
 """
 
 
-def make_zip_gpkg(cur, prefix, world, n, l):
-    output_dir = cwd / f'../outputs/{world}'
-    output_dir.mkdir(exist_ok=True, parents=True)
-    file_name = f'{prefix}adm0_{n}'
-    gpkg = output_dir / f'{file_name}.gpkg'
-    gpkg.unlink(missing_ok=True)
-    cur.execute(SQL(query_1).format(
-        table_out=Identifier(f'{prefix}{l}_{world}'),
-    ))
+def output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id):
     subprocess.run([
         'ogr2ogr',
         '-overwrite',
         '-makevalid',
+        '-sql', f'SELECT * FROM {prefix}{layer}_{wld} ORDER BY {id}',
         '-nln', file_name,
         gpkg,
-        f'PG:dbname={DATABASE}', f'{prefix}{l}_{world}',
+        f'PG:dbname={DATABASE}',
     ])
-    file_zip = output_dir / f'{file_name}.gpkg.zip'
-    file_zip.unlink(missing_ok=True)
-    with ZipFile(file_zip, 'w', ZIP_DEFLATED) as z:
+    if geom == 'clip':
+        return
+    gpkg_zip = output_dir / f'{file_name}.gpkg.zip'
+    gpkg_zip.unlink(missing_ok=True)
+    with ZipFile(gpkg_zip, 'w', ZIP_DEFLATED) as z:
         z.write(gpkg, gpkg.name)
+
+
+def output_shp(prefix, layer, wld, output_dir, file_name, id):
+    exts = ['cpg', 'dbf', 'prj', 'shp', 'shx']
+    shp = output_dir / f'{file_name}.shp'
+    subprocess.run([
+        'pgsql2shp', '-q',
+        '-f', shp,
+        DATABASE,
+        f'SELECT * FROM {prefix}{layer}_{wld} ORDER BY {id}',
+    ])
+    shp_zip = output_dir / f'{file_name}.shp.zip'
+    shp_zip.unlink(missing_ok=True)
+    with ZipFile(shp_zip, 'w', ZIP_DEFLATED) as z:
+        for ext in exts:
+            shp_part = output_dir / f'{file_name}.{ext}'
+            z.write(shp_part, shp_part.name)
+            shp_part.unlink(missing_ok=True)
+
+
+def output_xlsx(gpkg, output_dir, file_name):
+    xlsx = output_dir / f'{file_name}.xlsx'
+    xlsx.unlink(missing_ok=True)
+    xlsx_zip = output_dir / f'{file_name}.xlsx.zip'
+    xlsx_zip.unlink(missing_ok=True)
+    subprocess.run(['ogr2ogr', xlsx, gpkg])
+    with ZipFile(xlsx_zip, 'w', ZIP_DEFLATED) as z:
+        z.write(xlsx, xlsx.name)
+    xlsx.unlink(missing_ok=True)
+
+
+def outputs(cur, prefix, wld, geom, layer):
+    if geom == 'clip' and prefix == 'simplified_':
+        return
+    data_dir = cwd / f'../data/{wld}'
+    data_dir.mkdir(exist_ok=True, parents=True)
+    output_dir = cwd / f'../outputs/{wld}'
+    output_dir.mkdir(exist_ok=True, parents=True)
+    file_name = f'{prefix}adm0_{geom}'
+    gpkg = data_dir / f'{file_name}.gpkg'
     gpkg.unlink(missing_ok=True)
+    cur.execute(SQL(query_1).format(
+        table_out=Identifier(f'{prefix}{layer}_{wld}'),
+    ))
+    id = 'fid_1' if geom == 'lines' else 'adm0_id'
+    output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id)
+    if geom == 'clip':
+        return
+    output_shp(prefix, layer, wld, output_dir, file_name, id)
+    output_xlsx(gpkg, output_dir, file_name)
+    if prefix == 'simplified_':
+        gpkg.unlink(missing_ok=True)
 
 
-def main(cur, prefix, world):
-    for n, l in layers:
-        make_zip_gpkg(cur, prefix, world, n, l)
-    logger.info(f'{prefix}{world}')
+def main(cur, prefix, wld):
+    for geom, layer in layers:
+        outputs(cur, prefix, wld, geom, layer)
+    logger.info(f'{prefix}{wld}')

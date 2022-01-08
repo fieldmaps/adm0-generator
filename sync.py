@@ -2,19 +2,23 @@ from pathlib import Path
 import subprocess
 
 cwd = Path(__file__).parent
+world_views = ['land', 'intl', 'all', 'usa', 'chn', 'ind']
 
 if __name__ == '__main__':
     subprocess.run([
-        'aws', 's3', 'cp',
+        's3cmd', 'sync',
+        '--acl-public',
+        '--delete-removed',
+        '--rexclude', '\/\.',
         cwd / 'outputs/adm0.json',
         's3://data.fieldmaps.io/adm0.json',
     ])
-    subprocess.run([
-        'aws', 's3', 'sync',
-        '--delete',
-        '--exclude', '.*',
-        '--exclude', '*.json',
-        '--exclude', '*clip.gpkg.zip',
-        cwd / 'outputs',
-        's3://data.fieldmaps.io/adm0',
-    ])
+    for wld in world_views:
+        subprocess.run([
+            's3cmd', 'sync',
+            '--acl-public',
+            '--delete-removed',
+            '--rexclude', '\/\.',
+            cwd / f'outputs/{wld}',
+            's3://data.fieldmaps.io/adm0/',
+        ])

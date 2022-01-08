@@ -30,8 +30,7 @@ query_3 = """
         a.geom
     FROM {table_in1} AS a
     LEFT JOIN {table_in2} AS b
-    ON a.id = b.id
-    ORDER BY id;
+    ON a.id = b.id;
 """
 query_4 = """
     ALTER TABLE {table_out}

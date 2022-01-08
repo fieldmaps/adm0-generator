@@ -1,4 +1,5 @@
 from pathlib import Path
+from psycopg2.sql import SQL, Identifier
 import pandas as pd
 from .utils import logging, DATABASE, LSIB_DATE, get_land_date
 
@@ -7,10 +8,17 @@ logger = logging.getLogger(__name__)
 cwd = Path(__file__).parent
 input_dir = cwd / '../inputs/lsib_extension'
 
+query_1 = """
+    ALTER TABLE {table_out}
+    ALTER COLUMN region3_cd TYPE INT8,
+    ALTER COLUMN region2_cd TYPE INT8,
+    ALTER COLUMN region1_cd TYPE INT8;
+"""
 
-def main(_, prefix, __):
+
+def main(cur, prefix, __):
     for geom in ['points', 'lines']:
-        file = (input_dir / f'adm0_{geom}.xlsx')
+        file = input_dir / f'adm0_{geom}.xlsx'
         df = pd.read_excel(file, engine='openpyxl',
                            keep_default_na=False, na_values=['', '#N/A'])
         if geom == 'points':
@@ -34,4 +42,8 @@ def main(_, prefix, __):
         df['wld_update'] = df['wld_update'].dt.date
         df.to_sql(f'{prefix}attributes_{geom}', con=f'postgresql:///{DATABASE}',
                   if_exists='replace', index=False, method='multi')
+        if geom == 'points':
+            cur.execute(SQL(query_1).format(
+                table_out=Identifier(f'{prefix}attributes_{geom}'),
+            ))
     logger.info(prefix)
