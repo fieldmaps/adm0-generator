@@ -40,10 +40,9 @@ def output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id):
 
 
 def output_shp(prefix, layer, wld, output_dir, file_name, id):
-    exts = ['cpg', 'dbf', 'prj', 'shp', 'shx']
     shp = output_dir / f'{file_name}.shp'
     subprocess.run([
-        'pgsql2shp', '-q',
+        'pgsql2shp', '-k', '-q',
         '-f', shp,
         DATABASE,
         f'SELECT * FROM {prefix}{layer}_{wld} ORDER BY {id}',
@@ -51,7 +50,7 @@ def output_shp(prefix, layer, wld, output_dir, file_name, id):
     shp_zip = output_dir / f'{file_name}.shp.zip'
     shp_zip.unlink(missing_ok=True)
     with ZipFile(shp_zip, 'w', ZIP_DEFLATED) as z:
-        for ext in exts:
+        for ext in ['cpg', 'dbf', 'prj', 'shp', 'shx']:
             shp_part = output_dir / f'{file_name}.{ext}'
             z.write(shp_part, shp_part.name)
             shp_part.unlink(missing_ok=True)

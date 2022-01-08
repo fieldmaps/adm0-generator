@@ -26,7 +26,7 @@ def output_shp(prefix, output_dir, file_name):
     exts = ['cpg', 'dbf', 'prj', 'shp', 'shx']
     shp = output_dir / f'{file_name}.shp'
     subprocess.run([
-        'pgsql2shp', '-q',
+        'pgsql2shp', '-k', '-q',
         '-f', shp,
         DATABASE, f'{prefix}land_00',
     ])
