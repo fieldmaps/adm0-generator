@@ -11,7 +11,7 @@ LSIB_DATE = '2021-05-28'
 
 prefixes = ['simplified_', '']
 world_views = ['intl', 'all', 'usa', 'chn', 'ind']
-geoms = ['lines', 'points', 'polygons']
+geoms = ['polygons', 'lines', 'points']
 
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(message)s',
