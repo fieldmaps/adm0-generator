@@ -1,4 +1,5 @@
 import subprocess
+import shutil
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 from .utils import DATABASE, logging
@@ -42,6 +43,7 @@ def output_shp(prefix, output_dir, file_name):
 def main(prefix):
     data_dir = cwd / f'../data/land'
     data_dir.mkdir(exist_ok=True, parents=True)
+    shutil.copy(cwd / f'../inputs/land/README.txt', data_dir / 'README.txt')
     output_dir = cwd / f'../outputs/land'
     output_dir.mkdir(exist_ok=True, parents=True)
     file_name = f'{prefix}land_polygons'
@@ -49,6 +51,5 @@ def main(prefix):
     gpkg.unlink(missing_ok=True)
     output_gpkg(prefix, output_dir, file_name, gpkg)
     output_shp(prefix, output_dir, file_name)
-    if prefix == 'simplified_':
-        gpkg.unlink(missing_ok=True)
+    gpkg.unlink(missing_ok=True)
     logger.info(f'{prefix}land')
