@@ -20,6 +20,6 @@ if __name__ == '__main__':
             '--delete-removed',
             '--rexclude', '\/\.',
             '--multipart-chunk-size-mb=5120',
-            cwd / f'outputs/{wld}/',
+            cwd / f'outputs/{wld}',
             's3://data.fieldmaps.io/adm0/',
         ])
