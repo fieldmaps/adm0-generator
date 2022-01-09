@@ -59,12 +59,7 @@ def output_shp(prefix, layer, wld, output_dir, file_name, id):
 def output_xlsx(gpkg, output_dir, file_name):
     xlsx = output_dir / f'{file_name}.xlsx'
     xlsx.unlink(missing_ok=True)
-    xlsx_zip = output_dir / f'{file_name}.xlsx.zip'
-    xlsx_zip.unlink(missing_ok=True)
     subprocess.run(['ogr2ogr', xlsx, gpkg])
-    with ZipFile(xlsx_zip, 'w', ZIP_DEFLATED) as z:
-        z.write(xlsx, xlsx.name)
-    xlsx.unlink(missing_ok=True)
 
 
 def outputs(cur, prefix, wld, geom, layer):
