@@ -15,7 +15,7 @@ def main():
         for wld in world_views:
             row = {
                 'id': f'{prefix}{wld}_adm0',
-                'grp': 'original' if prefix == '' else 'simplified',
+                'grp': 'detailed' if prefix == '' else 'simplified',
                 'wld': wld,
                 'adm': 0,
                 'date': get_land_date(),
@@ -32,7 +32,7 @@ def main():
             data.append(row)
         data.append({
             'id': f'{prefix}land_polygons',
-            'grp': 'original' if prefix == '' else 'simplified',
+            'grp': 'detailed' if prefix == '' else 'simplified',
             'wld': 'land',
             'adm': 0,
             'date': get_land_date(),
