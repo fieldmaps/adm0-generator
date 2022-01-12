@@ -4,7 +4,7 @@
 
 This tool provides a flexible way to manage ADM0 boundaries, using a separation of concerns for physical and political layers. For physical boundaries, OpenStreetMap coastlines (original and simplified) provide the basis for land polygons. This is taken as-is from [osmdata.openstreetmap.de](https://osmdata.openstreetmap.de/data/land-polygons.html) without further modification. Political boundaries are delineated with an extension of the U.S. Department of State Large Scale International Boundaries (LSIB) layer from [hiu.state.gov](https://hiu.state.gov/data/). This source provides exact detail about border statuses, defining multiple classifications and guidance for proper visualization. Attributes are derived from United Nations Department of Statistics M49 standard: [unstats.un.org](https://unstats.un.org/unsd/methodology/m49/overview/).
 
-## Download data
+## Download Data
 
 Outputs from this tool can be accessed at [fieldmaps.io](https://fieldmaps.io/data/adm0).
 
