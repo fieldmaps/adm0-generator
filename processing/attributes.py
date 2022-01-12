@@ -18,11 +18,10 @@ query_1 = """
 
 def main(cur, prefix, __):
     for geom in ['points', 'lines']:
-        file = input_dir / f'adm0_{geom}.xlsx'
-        df = pd.read_excel(file, engine='openpyxl',
-                           keep_default_na=False, na_values=['', '#N/A'])
+        file = input_dir / f'adm0_{geom}.csv'
+        df = pd.read_csv(file, keep_default_na=False, na_values=['', '#N/A'])
         if geom == 'points':
-            df['adm0_src'] = df['id'].str.upper()
+            df['adm0_src'] = df['id']
             df['adm0_id'] = df['adm0_src'] + '-' + \
                 get_land_date().replace('-', '')
             df['iso_3_grp'] = df[f'iso_3_grp'].combine_first(df['iso_3'])
@@ -46,4 +45,4 @@ def main(cur, prefix, __):
             cur.execute(SQL(query_1).format(
                 table_out=Identifier(f'{prefix}attributes_{geom}'),
             ))
-    logger.info(prefix)
+    logger.info(f'{prefix}attributes')

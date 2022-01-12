@@ -35,4 +35,4 @@ def main(_, prefix, __):
                 '-f', 'PostgreSQL', f'PG:dbname={DATABASE}',
                 f'PG:dbname={DATABASE}', 'lsib_00',
             ])
-    logger.info(prefix)
+    logger.info(f'{prefix}inputs')

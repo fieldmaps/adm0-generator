@@ -8,9 +8,9 @@ query_1 = """
     CREATE TABLE {table_out} AS
     SELECT
         id,
-        (
-            ST_MaximumInscribedCircle(geom)
-        ).center::GEOMETRY(Point, 4326) AS geom
+        ST_ReducePrecision(
+            (ST_MaximumInscribedCircle(geom)).center
+        , 0.000000001)::GEOMETRY(Point, 4326) AS geom
     FROM {table_in};
 """
 query_2 = """
@@ -42,10 +42,10 @@ drop_tmp = """
 def main(cur, prefix, world):
     cur.execute(SQL(query_1).format(
         table_in=Identifier(f'{prefix}polygons_02_p_{world}'),
-        table_out=Identifier(f'{prefix}points_tmp1_{world}'),
+        table_out=Identifier(f'{prefix}points_01_tmp1_{world}'),
     ))
     cur.execute(SQL(query_2).format(
-        table_in1=Identifier(f'{prefix}points_tmp1_{world}'),
+        table_in1=Identifier(f'{prefix}points_01_tmp1_{world}'),
         table_in2=Identifier(f'{prefix}attributes_points'),
         table_out=Identifier(f'{prefix}points_01_{world}'),
     ))
@@ -55,11 +55,11 @@ def main(cur, prefix, world):
     ))
     for wld in world_views:
         cur.execute(SQL(query_4).format(
-            polygon=Identifier(f'wld_a_{wld}'),
-            point=Identifier(f'wld_p_{wld}'),
+            polygon=Identifier(f'a_{wld}'),
+            point=Identifier(f'p_{wld}'),
             table_out=Identifier(f'{prefix}points_01_{world}'),
         ))
     cur.execute(SQL(drop_tmp).format(
-        table_tmp1=Identifier(f'{prefix}points_tmp1_{world}'),
+        table_tmp1=Identifier(f'{prefix}points_01_tmp1_{world}'),
     ))
     logger.info(f'{prefix}{world}')

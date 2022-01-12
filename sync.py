@@ -2,7 +2,7 @@ from pathlib import Path
 import subprocess
 
 cwd = Path(__file__).parent
-world_views = ['land', 'intl', 'all', 'usa', 'chn', 'ind']
+world_views = ['intl', 'all', 'usa', 'chn', 'ind', 'land']
 exts = ['json', 'csv', 'xlsx']
 
 if __name__ == '__main__':

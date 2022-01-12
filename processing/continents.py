@@ -21,4 +21,4 @@ def main(cur, prefix, _):
         table_in2=Identifier(f'{prefix}lines_01'),
         table_out=Identifier(f'{prefix}land_01'),
     ))
-    logger.info(prefix)
+    logger.info(f'{prefix}continents')
