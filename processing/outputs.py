@@ -11,8 +11,9 @@ cwd = Path(__file__).parent
 layers = [
     ('lines', 'lines_02'),
     ('points', 'points_01'),
-    ('polygons', 'polygons_02_a'),
-    ('clip', 'polygons_02_p'),
+    ('polygons', 'polygons_01_a'),
+    ('voronoi', 'voronoi_01_a'),
+    ('clip', 'polygons_01_p'),
 ]
 
 query_1 = """
@@ -31,7 +32,7 @@ def output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id):
         gpkg,
         f'PG:dbname={DATABASE}',
     ])
-    if geom == 'clip':
+    if geom in ['clip', 'voronoi']:
         return
     gpkg_zip = output_dir / f'{file_name}.gpkg.zip'
     gpkg_zip.unlink(missing_ok=True)
@@ -63,7 +64,7 @@ def output_xlsx(gpkg, output_dir, file_name):
 
 
 def outputs(cur, prefix, wld, geom, layer):
-    if geom == 'clip' and prefix == 'simplified_':
+    if geom in ['clip', 'voronoi'] and prefix == 'simplified_':
         return
     data_dir = cwd / f'../data/{wld}'
     data_dir.mkdir(exist_ok=True, parents=True)
@@ -77,7 +78,7 @@ def outputs(cur, prefix, wld, geom, layer):
     ))
     id = 'fid_1' if geom == 'lines' else 'adm0_id'
     output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id)
-    if geom == 'clip':
+    if geom in ['clip', 'voronoi']:
         return
     output_shp(prefix, layer, wld, output_dir, file_name, id)
     output_xlsx(gpkg, output_dir, file_name)

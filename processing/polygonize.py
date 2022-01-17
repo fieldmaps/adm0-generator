@@ -35,6 +35,16 @@ query_3 = """
     CREATE INDEX ON {table_out} USING GIST(geom);
 """
 query_4 = """
+    DROP TABLE IF EXISTS {table_out};
+    CREATE TABLE {table_out} AS
+    SELECT
+        b.*,
+        a.geom
+    FROM {table_in1} AS a
+    JOIN {table_in2} AS b
+    ON a.id = b.id;
+"""
+query_5 = """
     SELECT EXISTS(
         SELECT 1
         FROM {table_in} a
@@ -43,22 +53,23 @@ query_4 = """
         WHERE a.id != b.id
     );
 """
-query_5 = """
+query_6 = """
     SELECT ST_NumInteriorRings(ST_Union(geom))
     FROM {table_in};
 """
 drop_tmp = """
     DROP TABLE IF EXISTS {table_tmp1};
+    DROP TABLE IF EXISTS {table_tmp2};
 """
 
 
 def check_topology(cur, prefix):
-    cur.execute(SQL(query_4).format(
-        table_in=Identifier(f'{prefix}polygons_00'),
+    cur.execute(SQL(query_5).format(
+        table_in=Identifier(f'{prefix}voronoi_00'),
     ))
     has_duplicates = cur.fetchone()[0]
-    cur.execute(SQL(query_5).format(
-        table_in=Identifier(f'{prefix}polygons_00'),
+    cur.execute(SQL(query_6).format(
+        table_in=Identifier(f'{prefix}voronoi_00'),
     ))
     has_gaps = cur.fetchone()[0] > 0
     if has_duplicates or has_gaps:
@@ -76,15 +87,21 @@ def main(cur, prefix, _):
     ))
     cur.execute(SQL(query_2).format(
         table_in=Identifier(f'{prefix}lines_01'),
-        table_out=Identifier(f'{prefix}polygons_00_tmp1'),
+        table_out=Identifier(f'{prefix}voronoi_00_tmp1'),
     ))
     cur.execute(SQL(query_3).format(
-        table_in1=Identifier(f'{prefix}polygons_00_tmp1'),
+        table_in1=Identifier(f'{prefix}voronoi_00_tmp1'),
         table_in2=Identifier(f'{prefix}points_00'),
-        table_out=Identifier(f'{prefix}polygons_00'),
+        table_out=Identifier(f'{prefix}voronoi_00_tmp2'),
+    ))
+    cur.execute(SQL(query_4).format(
+        table_in1=Identifier(f'{prefix}voronoi_00_tmp2'),
+        table_in2=Identifier(f'{prefix}attributes_points'),
+        table_out=Identifier(f'{prefix}voronoi_00'),
     ))
     cur.execute(SQL(drop_tmp).format(
-        table_tmp1=Identifier(f'{prefix}polygons_00_tmp1'),
+        table_tmp1=Identifier(f'{prefix}voronoi_00_tmp1'),
+        table_tmp2=Identifier(f'{prefix}voronoi_00_tmp2'),
     ))
     check_topology(cur, prefix)
     logger.info(f'{prefix}polygonize')

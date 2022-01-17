@@ -41,7 +41,7 @@ drop_tmp = """
 
 def main(cur, prefix, world):
     cur.execute(SQL(query_1).format(
-        table_in=Identifier(f'{prefix}polygons_02_p_{world}'),
+        table_in=Identifier(f'{prefix}polygons_01_p_{world}'),
         table_out=Identifier(f'{prefix}points_01_tmp1_{world}'),
     ))
     cur.execute(SQL(query_2).format(
