@@ -1,17 +1,10 @@
-FROM ubuntu:20.04
+FROM ubuntu:21.10
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-  gnupg \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B827C12C2D425E227EDCA75089EBE08314DF160 \
-  && echo "deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu focal main" | tee /etc/apt/sources.list.d/ubuntugis.list \
-  && apt-get update \
-  && apt-get install -y --no-install-recommends \
-  gdal-bin postgresql-12-postgis-3 python3-pip \
+  gdal-bin postgresql-13-postgis-3 python3-pip \
   && rm -rf /var/lib/apt/lists/*
 
 RUN /etc/init.d/postgresql start \

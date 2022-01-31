@@ -1,6 +1,7 @@
 services:
-  adm0-template:
+  adm0-generator:
     build: .
     volumes:
+      - ./data:/usr/src/app/data
       - ./inputs:/usr/src/app/inputs
       - ./outputs:/usr/src/app/outputs
