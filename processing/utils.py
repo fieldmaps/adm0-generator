@@ -10,7 +10,7 @@ LSIB_URL = 'https://geonode.state.gov/geoserver/ows?service=WFS&version=1.0.0&re
 LSIB_DATE = '2021-05-28'
 
 prefixes = ['', 'simplified_']
-world_views = ['intl', 'all', 'usa', 'chn', 'ind']
+world_views = ['intl', 'all', 'usa']
 geoms = ['polygons', 'lines', 'points']
 
 logging.basicConfig(level=logging.INFO,
