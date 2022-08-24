@@ -1,6 +1,6 @@
 import subprocess
 from pathlib import Path
-from .utils import logging, DATABASE
+from processing.utils import logging, DATABASE
 
 logger = logging.getLogger(__name__)
 

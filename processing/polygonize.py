@@ -1,5 +1,5 @@
-from psycopg2.sql import SQL, Identifier
-from .utils import logging
+from psycopg.sql import SQL, Identifier
+from processing.utils import logging
 
 logger = logging.getLogger(__name__)
 
@@ -63,15 +63,13 @@ drop_tmp = """
 """
 
 
-def check_topology(cur, prefix):
-    cur.execute(SQL(query_5).format(
+def check_topology(conn, prefix):
+    has_duplicates = conn.execute(SQL(query_5).format(
         table_in=Identifier(f'{prefix}voronoi_00'),
-    ))
-    has_duplicates = cur.fetchone()[0]
-    cur.execute(SQL(query_6).format(
+    )).fetchone()[0]
+    has_gaps = conn.execute(SQL(query_6).format(
         table_in=Identifier(f'{prefix}voronoi_00'),
-    ))
-    has_gaps = cur.fetchone()[0] > 0
+    )).fetchone()[0] > 0
     if has_duplicates or has_gaps:
         overlaps_txt = f'DUPLICATES' if has_duplicates else ''
         and_txt = f' & ' if has_gaps and has_duplicates else ''
@@ -80,28 +78,28 @@ def check_topology(cur, prefix):
         raise RuntimeError(f'{overlaps_txt}{and_txt}{gaps_txt} in polygons.')
 
 
-def main(cur, prefix, _):
-    cur.execute(SQL(query_1).format(
+def main(conn, prefix, _):
+    conn.execute(SQL(query_1).format(
         table_in=Identifier(f'{prefix}lines_00'),
         table_out=Identifier(f'{prefix}lines_01'),
     ))
-    cur.execute(SQL(query_2).format(
+    conn.execute(SQL(query_2).format(
         table_in=Identifier(f'{prefix}lines_01'),
         table_out=Identifier(f'{prefix}voronoi_00_tmp1'),
     ))
-    cur.execute(SQL(query_3).format(
+    conn.execute(SQL(query_3).format(
         table_in1=Identifier(f'{prefix}voronoi_00_tmp1'),
         table_in2=Identifier(f'{prefix}points_00'),
         table_out=Identifier(f'{prefix}voronoi_00_tmp2'),
     ))
-    cur.execute(SQL(query_4).format(
+    conn.execute(SQL(query_4).format(
         table_in1=Identifier(f'{prefix}voronoi_00_tmp2'),
         table_in2=Identifier(f'{prefix}attributes_points'),
         table_out=Identifier(f'{prefix}voronoi_00'),
     ))
-    cur.execute(SQL(drop_tmp).format(
+    conn.execute(SQL(drop_tmp).format(
         table_tmp1=Identifier(f'{prefix}voronoi_00_tmp1'),
         table_tmp2=Identifier(f'{prefix}voronoi_00_tmp2'),
     ))
-    check_topology(cur, prefix)
+    check_topology(conn, prefix)
     logger.info(f'{prefix}polygonize')

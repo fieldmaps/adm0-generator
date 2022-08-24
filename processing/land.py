@@ -2,7 +2,7 @@ import subprocess
 import shutil
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
-from .utils import DATABASE, logging
+from processing.utils import DATABASE, logging
 
 logger = logging.getLogger(__name__)
 cwd = Path(__file__).parent
@@ -43,7 +43,8 @@ def output_shp(prefix, output_dir, file_name):
 def main(prefix):
     data_dir = cwd / f'../data/land'
     data_dir.mkdir(exist_ok=True, parents=True)
-    shutil.copy(cwd / f'../inputs/land/README.txt', data_dir / 'README.txt')
+    shutil.copy(cwd / f'../inputs/land/land_polygons.txt',
+                data_dir / 'README.txt')
     output_dir = cwd / f'../outputs/land'
     output_dir.mkdir(exist_ok=True, parents=True)
     file_name = f'{prefix}land_polygons'

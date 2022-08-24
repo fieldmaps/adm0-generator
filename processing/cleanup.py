@@ -1,6 +1,6 @@
-from psycopg2 import connect
-from psycopg2.sql import SQL, Identifier
-from .utils import logging, prefixes, DATABASE
+from psycopg import connect
+from psycopg.sql import SQL, Identifier
+from processing.utils import logging, prefixes, DATABASE
 
 logger = logging.getLogger(__name__)
 
@@ -33,24 +33,21 @@ drop_shp = """
 """
 
 
-def main(cur, prefix, world):
+def main(conn, prefix, world):
     for l in layers_world:
-        cur.execute(SQL(drop_tmp).format(
+        conn.execute(SQL(drop_tmp).format(
             table_tmp1=Identifier(f'{prefix}{l}_{world}'),
         ))
     logger.info(f'{prefix}{world}')
 
 
 def postprocessing():
-    con = connect(database=DATABASE)
-    con.set_session(autocommit=True)
-    cur = con.cursor()
+    conn = connect(f'dbname={DATABASE}', autocommit=True)
     for prefix in prefixes:
         for l in layers:
-            cur.execute(SQL(drop_tmp).format(
+            conn.execute(SQL(drop_tmp).format(
                 table_tmp1=Identifier(f'{prefix}{l}'),
             ))
-    cur.execute(SQL(drop_shp))
-    cur.close()
-    con.close()
+    conn.execute(SQL(drop_shp))
+    conn.close()
     logger.info(f'postprocessing')

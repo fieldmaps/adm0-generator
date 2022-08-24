@@ -6,6 +6,5 @@ __pycache__
 *.gpkg-wal
 *.gpkg-journal
 inputs/land
-inputs/lsib
 data
 outputs

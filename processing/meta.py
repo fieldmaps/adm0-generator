@@ -1,7 +1,7 @@
 import json
 import pandas as pd
 from pathlib import Path
-from .utils import DATA_URL, logging, prefixes, world_views, get_land_date
+from processing.utils import DATA_URL, logging, prefixes, world_views, get_land_date
 
 logger = logging.getLogger(__name__)
 cwd = Path(__file__).parent

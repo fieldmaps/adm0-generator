@@ -1,8 +1,8 @@
 import subprocess
 from pathlib import Path
-from psycopg2.sql import SQL, Identifier
+from psycopg.sql import SQL, Identifier
 from zipfile import ZipFile, ZIP_DEFLATED
-from .utils import logging, DATABASE
+from processing.utils import logging, DATABASE
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +63,7 @@ def output_xlsx(gpkg, output_dir, file_name):
     subprocess.run(['ogr2ogr', xlsx, gpkg])
 
 
-def outputs(cur, prefix, wld, geom, layer):
+def outputs(conn, prefix, wld, geom, layer):
     if geom in ['clip', 'voronoi'] and prefix == 'simplified_':
         return
     data_dir = cwd / f'../data/{wld}'
@@ -73,10 +73,10 @@ def outputs(cur, prefix, wld, geom, layer):
     file_name = f'{prefix}adm0_{geom}'
     gpkg = data_dir / f'{file_name}.gpkg'
     gpkg.unlink(missing_ok=True)
-    cur.execute(SQL(query_1).format(
+    conn.execute(SQL(query_1).format(
         table_out=Identifier(f'{prefix}{layer}_{wld}'),
     ))
-    id = 'fid_1' if geom == 'lines' else 'adm0_id'
+    id = 'fid' if geom == 'lines' else 'adm0_id'
     output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id)
     if geom in ['clip', 'voronoi']:
         return
@@ -86,7 +86,7 @@ def outputs(cur, prefix, wld, geom, layer):
         gpkg.unlink(missing_ok=True)
 
 
-def main(cur, prefix, wld):
+def main(conn, prefix, wld):
     for geom, layer in layers:
-        outputs(cur, prefix, wld, geom, layer)
+        outputs(conn, prefix, wld, geom, layer)
     logger.info(f'{prefix}{wld}')

@@ -1,5 +1,5 @@
-from psycopg2.sql import SQL, Identifier
-from .utils import logging
+from psycopg.sql import SQL, Identifier
+from processing.utils import logging
 
 logger = logging.getLogger(__name__)
 
@@ -51,23 +51,23 @@ drop_tmp = """
 """
 
 
-def main(cur, prefix, _):
-    cur.execute(SQL(query_1).format(
+def main(conn, prefix, _):
+    conn.execute(SQL(query_1).format(
         table_in1=Identifier(f'{prefix}land_00'),
         table_in2=Identifier(f'{prefix}land_01'),
         table_in3=Identifier(f'{prefix}voronoi_00'),
         table_out=Identifier(f'{prefix}polygons_00_tmp1'),
     ))
-    cur.execute(SQL(query_2).format(
+    conn.execute(SQL(query_2).format(
         table_in=Identifier(f'{prefix}polygons_00_tmp1'),
         table_out=Identifier(f'{prefix}polygons_00_tmp2'),
     ))
-    cur.execute(SQL(query_3).format(
+    conn.execute(SQL(query_3).format(
         table_in1=Identifier(f'{prefix}polygons_00_tmp2'),
         table_in2=Identifier(f'{prefix}attributes_points'),
         table_out=Identifier(f'{prefix}polygons_00'),
     ))
-    cur.execute(SQL(drop_tmp).format(
+    conn.execute(SQL(drop_tmp).format(
         table_tmp1=Identifier(f'{prefix}polygons_00_tmp1'),
         table_tmp2=Identifier(f'{prefix}polygons_00_tmp2'),
     ))

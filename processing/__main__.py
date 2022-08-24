@@ -1,8 +1,8 @@
 from multiprocessing import Pool
-from . import (download, preprocessing, inputs, attributes, polygonize,
-               continents, intersection, land, polygons, points, lines,
-               outputs, cleanup, meta)
-from .utils import logging, prefixes, world_views, apply_funcs
+from processing import (download, inputs, attributes, polygonize,
+                        continents, intersection, land, polygons, points, lines,
+                        outputs, cleanup, preprocessing, meta)
+from processing.utils import logging, prefixes, apply_funcs, world_views
 
 logger = logging.getLogger(__name__)
 
