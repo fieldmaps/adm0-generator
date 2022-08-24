@@ -1,4 +1,4 @@
-fid,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl,rank_usa
+adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl,rank_usa
 1,AF,AFGHANISTAN,CN,CHINA,1,,International Boundary,,,,
 2,AF,AFGHANISTAN,IR,IRAN,1,,International Boundary,,,,
 3,AF,AFGHANISTAN,PK,PAKISTAN,1,,International Boundary,,,,

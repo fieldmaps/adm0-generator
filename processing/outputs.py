@@ -76,7 +76,7 @@ def outputs(conn, prefix, wld, geom, layer):
     conn.execute(SQL(query_1).format(
         table_out=Identifier(f'{prefix}{layer}_{wld}'),
     ))
-    id = 'fid' if geom == 'lines' else 'adm0_id'
+    id = 'adm_id' if geom == 'lines' else 'adm0_id'
     output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id)
     if geom in ['clip', 'voronoi']:
         return
