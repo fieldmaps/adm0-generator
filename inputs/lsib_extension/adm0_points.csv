@@ -283,7 +283,7 @@ ZMB,,,,,,,,,Zambia,Zambia,,894,ZM,ZMB,,14,Eastern Africa,202,Sub-Saharan Africa,
 ZWE,,,,,,,,,Zimbabwe,Zimbabwe,,716,ZW,ZWE,,14,Eastern Africa,202,Sub-Saharan Africa,2,Africa,1,State,,,,
 XAB,,,,,,,,,Abyei,Abyei,,901,,XAB,,14,Eastern Africa,202,Sub-Saharan Africa,2,Africa,99,Sovereignty unsettled,,,,Final status of the Abyei area is not yet determined.
 XAC,,,,,,,,,,Aksai Chin,,902,,XAC,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,
-XAK,,XJK,PAK,,,,,,Azad Kashmir and Northern Areas,Azad Kashmir and Northern Areas,,903,,XAK,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,Azad Kashmir and Northern Areas are not constitutionally part of Pakistan
+XAK,,XJK,PAK,,XAK,,,,Azad Kashmir and Northern Areas,Azad Kashmir and Northern Areas,,903,,XAK,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,Azad Kashmir and Northern Areas are not constitutionally part of Pakistan
 XAP,,,IND,,,,,,,Arunachal Pradesh,,904,,XAP,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,
 XCE,,,,,,,,,,Chumar East,,905,,XCE,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,
 XCH,,,,,,,,,,Chumar,,906,,XCH,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,
@@ -322,7 +322,7 @@ XSI,,,,,,,,,,Spratly Islands,,935,,XSI,,,,35,South-eastern Asia,142,Asia,99,Sove
 XSK,,,,,,,,,,Senkaku Islands,,936,,XSK,JPN,,,30,Eastern Asia,142,Asia,99,Sovereignty unsettled,,,,
 XSP,,,,,,,,,,Shipki Pass,,937,,XSP,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,
 XSR,,,,,,,,,,Scarborough Reef,,938,,XSR,,,,35,South-eastern Asia,142,Asia,99,Sovereignty unsettled,,,,
-XSS,,XJK,,,,,,,,Siachen-Saltoro,,939,,XSS,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,
+XSS,,XJK,,,XSS,,,,,Siachen-Saltoro,,939,,XSS,,,,34,Southern Asia,142,Asia,99,Sovereignty unsettled,,,,
 XVO,,,,,,,,,,Vorukh NW-Ak Sai,,940,,XVO,,,,143,Central Asia,142,Asia,99,Sovereignty unsettled,,,,
 XUK_1,,,,,,,,,Akrotiri (UK),Akrotiri and Dekelia,,941,,XUK,GBR,,,145,Western Asia,142,Asia,5,Territory/Self-governing territory,,,,
 XUK_2,,,,,,,,,Dekelia (UK),Akrotiri and Dekelia,,941,,XUK,GBR,,,145,Western Asia,142,Asia,5,Territory/Self-governing territory,,,,
