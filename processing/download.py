@@ -3,7 +3,7 @@ import requests
 from pathlib import Path
 from zipfile import ZipFile
 from io import BytesIO
-from processing.utils import logging, LSIB_URL, LAND_URL, SIMPLE_LAND_URL
+from processing.utils import logging, LSIB_URL, LAND_URL
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +34,5 @@ def get_shp(dir, name, url):
 
 def main():
     get_shp('lsib', 'lsib', LSIB_URL)
-    get_shp('land', 'simplified_land_polygons', SIMPLE_LAND_URL)
-    get_shp('land', 'land_polygons', LAND_URL)
+    get_shp('land', 'land_osm', LAND_URL)
     logger.info('download')

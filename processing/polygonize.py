@@ -63,43 +63,43 @@ drop_tmp = """
 """
 
 
-def check_topology(conn, prefix):
+def check_topology(conn, land):
     has_duplicates = conn.execute(SQL(query_5).format(
-        table_in=Identifier(f'{prefix}voronoi_00'),
+        table_in=Identifier(f'{land}_voronoi_00'),
     )).fetchone()[0]
     has_gaps = conn.execute(SQL(query_6).format(
-        table_in=Identifier(f'{prefix}voronoi_00'),
+        table_in=Identifier(f'{land}_voronoi_00'),
     )).fetchone()[0] > 0
     if has_duplicates or has_gaps:
         overlaps_txt = f'DUPLICATES' if has_duplicates else ''
         and_txt = f' & ' if has_gaps and has_duplicates else ''
         gaps_txt = f'GAPS' if has_gaps else ''
-        logger.info(f'{overlaps_txt}{and_txt}{gaps_txt}: {prefix}')
+        logger.info(f'{overlaps_txt}{and_txt}{gaps_txt}: {land}')
         raise RuntimeError(f'{overlaps_txt}{and_txt}{gaps_txt} in polygons.')
 
 
-def main(conn, prefix, _):
+def main(conn, land, _):
     conn.execute(SQL(query_1).format(
-        table_in=Identifier(f'{prefix}lines_00'),
-        table_out=Identifier(f'{prefix}lines_01'),
+        table_in=Identifier(f'{land}_lines_00'),
+        table_out=Identifier(f'{land}_lines_01'),
     ))
     conn.execute(SQL(query_2).format(
-        table_in=Identifier(f'{prefix}lines_01'),
-        table_out=Identifier(f'{prefix}voronoi_00_tmp1'),
+        table_in=Identifier(f'{land}_lines_01'),
+        table_out=Identifier(f'{land}_voronoi_00_tmp1'),
     ))
     conn.execute(SQL(query_3).format(
-        table_in1=Identifier(f'{prefix}voronoi_00_tmp1'),
-        table_in2=Identifier(f'{prefix}points_00'),
-        table_out=Identifier(f'{prefix}voronoi_00_tmp2'),
+        table_in1=Identifier(f'{land}_voronoi_00_tmp1'),
+        table_in2=Identifier(f'{land}_points_00'),
+        table_out=Identifier(f'{land}_voronoi_00_tmp2'),
     ))
     conn.execute(SQL(query_4).format(
-        table_in1=Identifier(f'{prefix}voronoi_00_tmp2'),
-        table_in2=Identifier(f'{prefix}attributes_points'),
-        table_out=Identifier(f'{prefix}voronoi_00'),
+        table_in1=Identifier(f'{land}_voronoi_00_tmp2'),
+        table_in2=Identifier(f'{land}_attributes_points'),
+        table_out=Identifier(f'{land}_voronoi_00'),
     ))
     conn.execute(SQL(drop_tmp).format(
-        table_tmp1=Identifier(f'{prefix}voronoi_00_tmp1'),
-        table_tmp2=Identifier(f'{prefix}voronoi_00_tmp2'),
+        table_tmp1=Identifier(f'{land}_voronoi_00_tmp1'),
+        table_tmp2=Identifier(f'{land}_voronoi_00_tmp2'),
     ))
-    check_topology(conn, prefix)
-    logger.info(f'{prefix}polygonize')
+    check_topology(conn, land)
+    logger.info(f'{land}_polygonize')

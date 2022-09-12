@@ -16,7 +16,7 @@ query_1 = """
 """
 
 
-def main(conn, prefix, __):
+def main(conn, land, __):
     for geom in ['points', 'lines']:
         file = input_dir / f'adm0_{geom}.csv'
         df = pd.read_csv(file, keep_default_na=False, na_values=['', '#N/A'])
@@ -39,10 +39,11 @@ def main(conn, prefix, __):
         df['wld_date'] = df['wld_date'].dt.date
         df['wld_update'] = pd.to_datetime(get_land_date())
         df['wld_update'] = df['wld_update'].dt.date
-        df.to_sql(f'{prefix}attributes_{geom}', con=f'postgresql:///{DATABASE}',
+        df['wld_land'] = land
+        df.to_sql(f'{land}_attributes_{geom}', con=f'postgresql:///{DATABASE}',
                   if_exists='replace', index=False, method='multi')
         if geom == 'points':
             conn.execute(SQL(query_1).format(
-                table_out=Identifier(f'{prefix}attributes_{geom}'),
+                table_out=Identifier(f'{land}_attributes_{geom}'),
             ))
-    logger.info(f'{prefix}attributes')
+    logger.info(f'{land}_attributes')

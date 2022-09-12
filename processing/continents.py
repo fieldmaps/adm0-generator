@@ -15,10 +15,10 @@ query_1 = """
 """
 
 
-def main(conn, prefix, _):
+def main(conn, land, _):
     conn.execute(SQL(query_1).format(
-        table_in1=Identifier(f'{prefix}land_00'),
-        table_in2=Identifier(f'{prefix}lines_01'),
-        table_out=Identifier(f'{prefix}land_01'),
+        table_in1=Identifier(f'{land}_land_00'),
+        table_in2=Identifier(f'{land}_lines_01'),
+        table_out=Identifier(f'{land}_land_01'),
     ))
-    logger.info(f'{prefix}continents')
+    logger.info(f'{land}_continents')

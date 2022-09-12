@@ -4,7 +4,7 @@ from pathlib import Path
 cwd = Path(__file__).parent
 land = cwd / 'inputs/land'
 
-layers = ['land_polygons', 'simplified_land_polygons']
+layers = ['land_osm']
 exts = ['cpg', 'dbf', 'prj', 'shp', 'shx']
 
 if __name__ == '__main__':

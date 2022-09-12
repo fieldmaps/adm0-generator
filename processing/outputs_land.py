@@ -1,5 +1,4 @@
 import subprocess
-import shutil
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 from processing.utils import DATABASE, logging
@@ -8,14 +7,14 @@ logger = logging.getLogger(__name__)
 cwd = Path(__file__).parent
 
 
-def output_gpkg(prefix, output_dir, file_name, gpkg):
+def output_gpkg(land, output_dir, file_name, gpkg):
     subprocess.run([
         'ogr2ogr',
         '-overwrite',
         '-makevalid',
         '-nln', file_name,
         gpkg,
-        f'PG:dbname={DATABASE}', f'{prefix}land_00',
+        f'PG:dbname={DATABASE}', f'{land}_land_00',
     ])
     gpkg_zip = output_dir / f'{file_name}.gpkg.zip'
     gpkg_zip.unlink(missing_ok=True)
@@ -23,13 +22,13 @@ def output_gpkg(prefix, output_dir, file_name, gpkg):
         z.write(gpkg, gpkg.name)
 
 
-def output_shp(prefix, output_dir, file_name):
+def output_shp(land, output_dir, file_name):
     exts = ['cpg', 'dbf', 'prj', 'shp', 'shx']
     shp = output_dir / f'{file_name}.shp'
     subprocess.run([
         'pgsql2shp', '-k', '-q',
         '-f', shp,
-        DATABASE, f'{prefix}land_00',
+        DATABASE, f'{land}_land_00',
     ])
     shp_zip = output_dir / f'{file_name}.shp.zip'
     shp_zip.unlink(missing_ok=True)
@@ -40,17 +39,15 @@ def output_shp(prefix, output_dir, file_name):
             shp_part.unlink(missing_ok=True)
 
 
-def main(prefix):
-    data_dir = cwd / f'../data/land'
+def main(land):
+    data_dir = cwd / f'../data/{land}/land'
     data_dir.mkdir(exist_ok=True, parents=True)
-    shutil.copy(cwd / f'../inputs/land/land_polygons.txt',
-                data_dir / 'README.txt')
-    output_dir = cwd / f'../outputs/land'
+    output_dir = cwd / f'../outputs/{land}/land'
     output_dir.mkdir(exist_ok=True, parents=True)
-    file_name = f'{prefix}land_polygons'
+    file_name = f'land_polygons'
     gpkg = data_dir / f'{file_name}.gpkg'
     gpkg.unlink(missing_ok=True)
-    output_gpkg(prefix, output_dir, file_name, gpkg)
-    output_shp(prefix, output_dir, file_name)
+    output_gpkg(land, output_dir, file_name, gpkg)
+    output_shp(land, output_dir, file_name)
     gpkg.unlink(missing_ok=True)
-    logger.info(f'{prefix}land')
+    logger.info(f'{land}_land')

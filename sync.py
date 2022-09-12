@@ -2,20 +2,22 @@ from pathlib import Path
 import subprocess
 
 cwd = Path(__file__).parent
+lands = ['osm', 'usgs']
 world_views = ['intl', 'all', 'usa', 'land']
 exts = ['json', 'csv', 'xlsx']
 
 if __name__ == '__main__':
-    for wld in world_views:
-        subprocess.run([
-            's3cmd', 'sync',
-            '--acl-public',
-            '--delete-removed',
-            '--rexclude', '\/\.',
-            '--multipart-chunk-size-mb=5120',
-            cwd / f'outputs/{wld}',
-            's3://data.fieldmaps.io/adm0/',
-        ])
+    for land in lands:
+        for wld in world_views:
+            subprocess.run([
+                's3cmd', 'sync',
+                '--acl-public',
+                '--delete-removed',
+                '--rexclude', '\/\.',
+                '--multipart-chunk-size-mb=5120',
+                cwd / f'outputs/{land}/{wld}',
+                's3://data.fieldmaps.io/adm0/',
+            ])
     for ext in exts:
         subprocess.run([
             's3cmd', 'sync',

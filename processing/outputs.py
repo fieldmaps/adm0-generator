@@ -22,12 +22,12 @@ query_1 = """
 """
 
 
-def output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id):
+def output_gpkg(land, layer, wld, geom, output_dir, file_name, gpkg, id):
     subprocess.run([
         'ogr2ogr',
         '-overwrite',
         '-makevalid',
-        '-sql', f'SELECT * FROM {prefix}{layer}_{wld} ORDER BY {id}',
+        '-sql', f'SELECT * FROM {land}_{layer}_{wld} ORDER BY {id}',
         '-nln', file_name,
         gpkg,
         f'PG:dbname={DATABASE}',
@@ -40,13 +40,13 @@ def output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id):
         z.write(gpkg, gpkg.name)
 
 
-def output_shp(prefix, layer, wld, output_dir, file_name, id):
+def output_shp(land, layer, wld, output_dir, file_name, id):
     shp = output_dir / f'{file_name}.shp'
     subprocess.run([
         'pgsql2shp', '-k', '-q',
         '-f', shp,
         DATABASE,
-        f'SELECT * FROM {prefix}{layer}_{wld} ORDER BY {id}',
+        f'SELECT * FROM {land}_{layer}_{wld} ORDER BY {id}',
     ])
     shp_zip = output_dir / f'{file_name}.shp.zip'
     shp_zip.unlink(missing_ok=True)
@@ -63,30 +63,26 @@ def output_xlsx(gpkg, output_dir, file_name):
     subprocess.run(['ogr2ogr', xlsx, gpkg])
 
 
-def outputs(conn, prefix, wld, geom, layer):
-    if geom in ['clip', 'voronoi'] and prefix == 'simplified_':
-        return
-    data_dir = cwd / f'../data/{wld}'
+def outputs(conn, land, wld, geom, layer):
+    data_dir = cwd / f'../data/{land}/{wld}'
     data_dir.mkdir(exist_ok=True, parents=True)
-    output_dir = cwd / f'../outputs/{wld}'
+    output_dir = cwd / f'../outputs/{land}/{wld}'
     output_dir.mkdir(exist_ok=True, parents=True)
-    file_name = f'{prefix}adm0_{geom}'
+    file_name = f'adm0_{geom}'
     gpkg = data_dir / f'{file_name}.gpkg'
     gpkg.unlink(missing_ok=True)
     conn.execute(SQL(query_1).format(
-        table_out=Identifier(f'{prefix}{layer}_{wld}'),
+        table_out=Identifier(f'{land}_{layer}_{wld}'),
     ))
     id = 'adm_id' if geom == 'lines' else 'adm0_id'
-    output_gpkg(prefix, layer, wld, geom, output_dir, file_name, gpkg, id)
+    output_gpkg(land, layer, wld, geom, output_dir, file_name, gpkg, id)
     if geom in ['clip', 'voronoi']:
         return
-    output_shp(prefix, layer, wld, output_dir, file_name, id)
+    output_shp(land, layer, wld, output_dir, file_name, id)
     output_xlsx(gpkg, output_dir, file_name)
-    if prefix == 'simplified_':
-        gpkg.unlink(missing_ok=True)
 
 
-def main(conn, prefix, wld):
+def main(conn, land, wld):
     for geom, layer in layers:
-        outputs(conn, prefix, wld, geom, layer)
-    logger.info(f'{prefix}{wld}')
+        outputs(conn, land, wld, geom, layer)
+    logger.info(f'{land}_{wld}')

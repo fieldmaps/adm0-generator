@@ -8,10 +8,10 @@ cwd = Path(__file__).parent
 input_dir = cwd / '../inputs/lsib_extension'
 
 
-def main(_, prefix, __):
+def main(_, land, __):
     layers = [
-        (f'{prefix}lines', 'adm0_lines.gpkg'),
-        (f'{prefix}points', 'adm0_points.gpkg'),
+        (f'{land}_lines', 'adm0_lines.gpkg'),
+        (f'{land}_points', 'adm0_points.gpkg'),
     ]
     for l, file in layers:
         subprocess.run([
@@ -27,12 +27,12 @@ def main(_, prefix, __):
             '-f', 'PostgreSQL', f'PG:dbname={DATABASE}',
             (input_dir / file),
         ])
-        if l == f'{prefix}lines':
+        if l == f'{land}_lines':
             subprocess.run([
                 'ogr2ogr',
                 '-append',
-                '-nln', f'{prefix}lines_00',
+                '-nln', f'{land}_lines_00',
                 '-f', 'PostgreSQL', f'PG:dbname={DATABASE}',
                 f'PG:dbname={DATABASE}', 'lsib_00',
             ])
-    logger.info(f'{prefix}inputs')
+    logger.info(f'{land}_inputs')

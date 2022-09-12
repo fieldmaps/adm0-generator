@@ -1,8 +1,8 @@
 from multiprocessing import Pool
-from processing import (download, inputs, attributes, polygonize,
-                        continents, intersection, land, polygons, points, lines,
+from processing import (download, inputs, attributes, outputs_land, polygonize,
+                        continents, intersection, polygons, points, lines,
                         outputs, cleanup, preprocessing, meta)
-from processing.utils import logging, prefixes, apply_funcs, world_views
+from processing.utils import logging, lands, apply_funcs, world_views
 
 logger = logging.getLogger(__name__)
 
@@ -14,13 +14,13 @@ funcs_2 = [polygons.main, points.main, lines.main, outputs.main, cleanup.main]
 def run_pool(world_views, funcs, export_land):
     results = []
     pool = Pool()
-    for prefix in prefixes:
+    for land in lands:
         for world in world_views:
-            args = [prefix, world, *funcs]
+            args = [land, world, *funcs]
             result = pool.apply_async(apply_funcs, args=args)
             results.append(result)
         if export_land is True:
-            result = pool.apply_async(land.main, args=[prefix])
+            result = pool.apply_async(outputs_land.main, args=[land])
             results.append(result)
     pool.close()
     pool.join()
