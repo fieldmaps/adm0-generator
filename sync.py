@@ -7,6 +7,13 @@ world_views = ['intl', 'all', 'usa', 'land']
 exts = ['json', 'csv', 'xlsx']
 
 if __name__ == '__main__':
+    for ext in exts:
+        subprocess.run([
+            's3cmd', 'sync',
+            '--acl-public',
+            cwd / f'outputs/adm0.{ext}',
+            f's3://data.fieldmaps.io/adm0.{ext}',
+        ])
     for land in lands:
         for wld in world_views:
             subprocess.run([
@@ -18,10 +25,3 @@ if __name__ == '__main__':
                 cwd / f'outputs/{land}/{wld}',
                 's3://data.fieldmaps.io/adm0/',
             ])
-    for ext in exts:
-        subprocess.run([
-            's3cmd', 'sync',
-            '--acl-public',
-            cwd / f'outputs/adm0.{ext}',
-            f's3://data.fieldmaps.io/adm0.{ext}',
-        ])
