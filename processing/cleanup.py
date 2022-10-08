@@ -7,8 +7,10 @@ logger = logging.getLogger(__name__)
 layers_world = [
     'lines_02',
     'points_01',
-    'polygons_02_a',
-    'polygons_02_p',
+    'polygons_01_a',
+    'polygons_01_p',
+    'voronoi_01_a',
+    'voronoi_01_p',
 ]
 
 layers = [
@@ -19,6 +21,7 @@ layers = [
     'points_00',
     'polygons_00',
     'polygons_01',
+    'voronoi_00',
     'land_01',
 ]
 
@@ -27,8 +30,8 @@ drop_tmp = """
 """
 
 drop_shp = """
-    DROP TABLE IF EXISTS land_osm_00;
-    DROP TABLE IF EXISTS land_usgs_00;
+    DROP TABLE IF EXISTS osm_land_00;
+    DROP TABLE IF EXISTS usgs_land_00;
     DROP TABLE IF EXISTS lsib_00;
 """
 
