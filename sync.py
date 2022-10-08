@@ -23,5 +23,5 @@ if __name__ == '__main__':
                 '--rexclude', '\/\.',
                 '--multipart-chunk-size-mb=5120',
                 cwd / f'outputs/{land}/{wld}',
-                's3://data.fieldmaps.io/adm0/',
+                f's3://data.fieldmaps.io/adm0/{land}/',
             ])
