@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                 xmlns:srv="http://www.isotc211.org/2005/srv"
+                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                 xmlns:gts="http://www.isotc211.org/2005/gts"
+                 xmlns:gsr="http://www.isotc211.org/2005/gsr"
+                 xmlns:gmi="http://www.isotc211.org/2005/gmi"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+  <gmd:fileIdentifier>
+      <gco:CharacterString>3bdb81a0-c1b9-439a-a0b1-85dac30c59b2</gco:CharacterString>
+  </gmd:fileIdentifier>
+  <gmd:language>
+      <gco:CharacterString>eng</gco:CharacterString>
+  </gmd:language>
+  <gmd:characterSet>
+      <gmd:MD_CharacterSetCode codeSpace="ISOTC211/19115"
+                               codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+                               codeListValue="utf8"/>
+  </gmd:characterSet>
+  <gmd:hierarchyLevel>
+      <gmd:MD_ScopeCode codeSpace="ISOTC211/19115"
+                        codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                        codeListValue="dataset"/>
+  </gmd:hierarchyLevel>
+  <gmd:contact>
+      <gmd:CI_ResponsibleParty>
+         <gmd:individualName>
+            <gco:CharacterString>Office of the Geographer and Global Issues</gco:CharacterString>
+         </gmd:individualName>
+         <gmd:organisationName>
+            <gco:CharacterString>U.S. Department of State</gco:CharacterString>
+         </gmd:organisationName>
+         <gmd:contactInfo>
+            <gmd:CI_Contact>
+               <gmd:address>
+                  <gmd:CI_Address>
+                     <gmd:electronicMailAddress>
+                        <gco:CharacterString>internationalboundaries@state.gov</gco:CharacterString>
+                     </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+               </gmd:address>
+            </gmd:CI_Contact>
+         </gmd:contactInfo>
+         <gmd:role>
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                             codeListValue="publisher"
+                             codeSpace="ISOTC211/19115"/>
+         </gmd:role>
+      </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+  <gmd:dateStamp>
+      <gco:DateTime>2023-02-02T13:40:40</gco:DateTime>
+  </gmd:dateStamp>
+  <gmd:metadataStandardName>
+      <gco:CharacterString>ISO 19115:2003 - Geographic information - Metadata</gco:CharacterString>
+  </gmd:metadataStandardName>
+  <gmd:metadataStandardVersion>
+      <gco:CharacterString>ISO 19115:2003</gco:CharacterString>
+  </gmd:metadataStandardVersion>
+  <gmd:spatialRepresentationInfo>
+      <gmd:MD_VectorSpatialRepresentation>
+         <gmd:topologyLevel>
+            <gmd:MD_TopologyLevelCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_TopologyLevelCode"
+                                      codeListValue="geometryOnly"
+                                      codeSpace="ISOTC211/19115"/>
+         </gmd:topologyLevel>
+         <gmd:geometricObjects>
+            <gmd:MD_GeometricObjects>
+               <gmd:geometricObjectType>
+                  <gmd:MD_GeometricObjectTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_GeometricObjectTypeCode"
+                                                  codeListValue="composite"
+                                                  codeSpace="ISOTC211/19115"/>
+               </gmd:geometricObjectType>
+               <gmd:geometricObjectCount>
+                  <gco:Integer>397</gco:Integer>
+               </gmd:geometricObjectCount>
+            </gmd:MD_GeometricObjects>
+         </gmd:geometricObjects>
+      </gmd:MD_VectorSpatialRepresentation>
+  </gmd:spatialRepresentationInfo>
+  <gmd:referenceSystemInfo>
+      <gmd:MD_ReferenceSystem>
+         <gmd:referenceSystemIdentifier>
+            <gmd:RS_Identifier>
+               <gmd:code>
+                  <gco:CharacterString>4326</gco:CharacterString>
+               </gmd:code>
+               <gmd:codeSpace>
+                  <gco:CharacterString>EPSG</gco:CharacterString>
+               </gmd:codeSpace>
+               <gmd:version>
+                  <gco:CharacterString>6.11</gco:CharacterString>
+               </gmd:version>
+            </gmd:RS_Identifier>
+         </gmd:referenceSystemIdentifier>
+      </gmd:MD_ReferenceSystem>
+  </gmd:referenceSystemInfo>
+  <gmd:identificationInfo>
+      <gmd:MD_DataIdentification>
+         <gmd:citation>
+            <gmd:CI_Citation>
+               <gmd:title>
+                  <gco:CharacterString>Large Scale International Boundaries</gco:CharacterString>
+               </gmd:title>
+               <gmd:date>
+                  <gmd:CI_Date>
+                     <gmd:date>
+                        <gco:DateTime>2023-02-01T12:01:00</gco:DateTime>
+                     </gmd:date>
+                     <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeSpace="ISOTC211/19115"
+                                             codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                             codeListValue="revision"/>
+                     </gmd:dateType>
+                  </gmd:CI_Date>
+               </gmd:date>
+               <gmd:edition>
+                  <gco:CharacterString>11.2</gco:CharacterString>
+               </gmd:edition>
+               <gmd:presentationForm>
+                  <gmd:CI_PresentationFormCode codeSpace="ISOTC211/19115"
+                                               codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_PresentationFormCode"
+                                               codeListValue="mapDigital"/>
+               </gmd:presentationForm>
+            </gmd:CI_Citation>
+         </gmd:citation>
+         <gmd:abstract>
+            <gco:CharacterString>Overview 
+            The Office of the Geographer and Global Issues at the U.S. Department of State produces the Large Scale International Boundaries (LSIB) dataset, currently at Version 11.2 (published 01 February 2023). The 11.2 release is primarily a data refinement release, fixing attribute issues and applying updates to match the Geopolitical Entities, Names, and Codes (GENC) Version 3 Update 17. These data and their derivatives are the only international boundary lines approved for U.S. Government use. They reflect U.S. Government policy, and not necessarily de facto limits of control. This dataset is a National Geospatial Data Asset. 
+            
+            Details 
+            Sources for these data include treaties, relevant maps, and data from boundary commissions and national mapping agencies. Where available, the dataset incorporates information from courts, tribunals, and international arbitrations. The research and recovery of the data involves analysis of satellite imagery and elevation data. Due to the limitations of source materials and processing techniques, most lines are within 100 meters of their true position on the ground. 
+
+            Attributes 
+            The dataset uses the following attributes: 
+            Country Code: Country-level codes are from the Geopolitical Entities, Names, and Codes Standard (GENC). The Q2 code denotes a line representing a boundary associated with an area not in GENC.
+            Country Names: Names approved by the U.S. Board on Geographic Names (BGN). Names for lines associated with a Q2 code are descriptive and are not necessarily BGN-approved.
+
+            Label: Required text label for the line segment where scale permits
+
+            Rank/Status 
+            Rank 1: International Boundary, Rank 2: Other Line of International Separation, Rank 3: Special Line
+
+            Notes 
+            Explanation of any applicable special circumstances 
+
+            Cartographic Usage 
+            Depiction of the LSIB requires a visual differentiation between the three categories of boundaries: 
+            International Boundaries (Rank 1)
+            Other Lines of International Separation (Rank 2)
+            Special Lines (Rank 3). 
+
+            Rank 1 lines must be the most visually prominent. Rank 2 lines must be less visually prominent than Rank 1 lines. Rank 3 lines must be shown in a manner visually subordinate to Ranks 1 and 2. Where scale permits, Rank 2 and 3 lines must be labeled in accordance with the “Label” field. Data marked with a Rank 2 or 3 designation does not necessarily correspond to a disputed boundary. 
+
+            Additional cartographic information can be found in Guidance Bulletins published by the Office of the Geographer and Global Issues (https://hiu.state.gov/data/cartographic_guidance_bulletins/). Questions Direct inquiries to internationalboundaries@state.gov </gco:CharacterString>
+         </gmd:abstract>
+         <gmd:purpose>
+            <gco:CharacterString>The Large Scale International Boundaries (LSIB) dataset are a digital georeferenced dataset intended for cartographic and spatial analysis. These data and their derivatives are the only international boundary lines approved for U.S. Government use. They reflect U.S. Government policy, and not necessarily de facto limits of control.
+			
+			Additional Information: For US government and military users, additional boundaries information and analysis can be accessed through the Boundaries and Sovereignty Encyclopedia (BASE) web application maintained by the Office of the Geographer and Global Issues.  BASE can be accessed on the internet at https://statetoday.net/base . Access requires a username and password which can be requested through the site for users with a .gov or .mil email address.
+</gco:CharacterString>
+         </gmd:purpose>
+         <gmd:status>
+            <gmd:MD_ProgressCode codeSpace="ISOTC211/19115"
+                                 codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ProgressCode"
+                                 codeListValue="completed"/>
+         </gmd:status>
+         <gmd:pointOfContact>
+            <gmd:CI_ResponsibleParty>
+               <gmd:individualName>
+                  <gco:CharacterString>Office of the Geographer and Global Issues</gco:CharacterString>
+               </gmd:individualName>
+               <gmd:organisationName>
+                  <gco:CharacterString>U.S. Department of State</gco:CharacterString>
+               </gmd:organisationName>
+               <gmd:contactInfo>
+                  <gmd:CI_Contact>
+                     <gmd:address>
+                        <gmd:CI_Address>
+                           <gmd:electronicMailAddress>
+                              <gco:CharacterString>internationalboundaries@state.gov</gco:CharacterString>
+                           </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                     </gmd:address>
+                  </gmd:CI_Contact>
+               </gmd:contactInfo>
+               <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                   codeListValue="publisher"
+                                   codeSpace="ISOTC211/19115"/>
+               </gmd:role>
+            </gmd:CI_ResponsibleParty>
+         </gmd:pointOfContact>
+         <gmd:resourceMaintenance>
+            <gmd:MD_MaintenanceInformation>
+               <gmd:maintenanceAndUpdateFrequency>
+                  <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+                                                   codeListValue="asNeeded"
+                                                   codeSpace="ISOTC211/19115"/>
+               </gmd:maintenanceAndUpdateFrequency>
+               <gmd:contact>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:individualName>
+                        <gco:CharacterString>Office of the Geographer and Global Issues</gco:CharacterString>
+                     </gmd:individualName>
+                     <gmd:organisationName>
+                        <gco:CharacterString>U.S. Department of State</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>internationalboundaries@state.gov</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="publisher"
+                                         codeSpace="ISOTC211/19115"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:contact>
+            </gmd:MD_MaintenanceInformation>
+         </gmd:resourceMaintenance>
+         <gmd:graphicOverview>
+            <gmd:MD_BrowseGraphic>
+               <gmd:fileName>
+                  <gco:CharacterString>https://geonode.state.gov/uploaded/CACHE/images/curated_thumbs/LSIB_v11_1_thumbnail/172da91c8d6dc4c670f4a928cb197f8d.png</gco:CharacterString>
+               </gmd:fileName>
+               <gmd:fileDescription>
+                  <gco:CharacterString>Thumbnail for 'Large Scale International Boundaries'</gco:CharacterString>
+               </gmd:fileDescription>
+               <gmd:fileType>
+                  <gco:CharacterString>image/png</gco:CharacterString>
+               </gmd:fileType>
+            </gmd:MD_BrowseGraphic>
+         </gmd:graphicOverview>
+         <gmd:resourceFormat>
+            <gmd:MD_Format>
+               <gmd:name>
+                  <gco:CharacterString>ESRI Shapefile</gco:CharacterString>
+               </gmd:name>
+               <gmd:version>
+                  <gco:CharacterString>1.0</gco:CharacterString>
+               </gmd:version>
+            </gmd:MD_Format>
+         </gmd:resourceFormat>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gco:CharacterString>Downloadable Data</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>International Boundaries Theme</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>NGDA</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>NGDAID194</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>National Geospatial Data Asset</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:type>
+                  <gmd:MD_KeywordTypeCode codeSpace="ISOTC211/19115"
+                                          codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                          codeListValue="theme"/>
+               </gmd:type>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gco:CharacterString>Global</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:type>
+                  <gmd:MD_KeywordTypeCode codeSpace="ISOTC211/19115"
+                                          codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                          codeListValue="place"/>
+               </gmd:type>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:resourceConstraints>
+            <gmd:MD_Constraints>
+               <gmd:useLimitation>
+                  <gco:CharacterString>other-pd</gco:CharacterString>
+               </gmd:useLimitation>
+            </gmd:MD_Constraints>
+         </gmd:resourceConstraints>
+         <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+               <gmd:useConstraints>
+                  <gmd:MD_RestrictionCode codeSpace="ISOTC211/19115"
+                                          codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                          codeListValue="limitation not listed"/>
+               </gmd:useConstraints>
+               <gmd:otherConstraints>
+                  <gco:CharacterString>Copyright Notice and Disclaimer While U.S. Government works prepared by employees of the U.S. Government as part of their official duties are not subject to Federal copyright protection (see 17 U.S.C. § 105), copyrighted material incorporated in U.S. Government works retains its copyright protection. The works on or made available through download from the U.S. Department of State’s website may not be used in any manner that infringes any intellectual property rights or other proprietary rights held by any third party. Use of any copyrighted material beyond what is allowed by fair use or other exemptions may require appropriate permission from the relevant rightsholder. With respect to works on or made available through download from the U.S. Department of State’s website, neither the U.S. Government nor any of its agencies, employees, agents, or contractors make any representations or warranties—express, implied, or statutory—as to the validity, accuracy, completeness, or fitness for a particular purpose; nor represent that use of such works would not infringe privately owned rights; nor assume any liability resulting from use of such works; and shall in no way be liable for any costs, expenses, claims, or demands arising out of use of such works.</gco:CharacterString>
+               </gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+         </gmd:resourceConstraints>
+         <gmd:spatialRepresentationType>
+            <gmd:MD_SpatialRepresentationTypeCode codeSpace="ISOTC211/19115"
+                                                  codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                                  codeListValue="vector"/>
+         </gmd:spatialRepresentationType>
+         <gmd:language>
+            <gco:CharacterString>eng</gco:CharacterString>
+         </gmd:language>
+         <gmd:characterSet>
+            <gmd:MD_CharacterSetCode codeSpace="ISOTC211/19115"
+                                     codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+                                     codeListValue="utf8"/>
+         </gmd:characterSet>
+         <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>boundaries</gmd:MD_TopicCategoryCode>
+         </gmd:topicCategory>
+         <gmd:extent>
+            <gmd:EX_Extent>
+               <gmd:geographicElement>
+                  <gmd:EX_GeographicBoundingBox>
+                     <gmd:westBoundLongitude>
+                        <gco:Decimal>-180.00</gco:Decimal>
+                     </gmd:westBoundLongitude>
+                     <gmd:eastBoundLongitude>
+                        <gco:Decimal>180.00</gco:Decimal>
+                     </gmd:eastBoundLongitude>
+                     <gmd:southBoundLatitude>
+                        <gco:Decimal>-90.00</gco:Decimal>
+                     </gmd:southBoundLatitude>
+                     <gmd:northBoundLatitude>
+                        <gco:Decimal>90.00</gco:Decimal>
+                     </gmd:northBoundLatitude>
+                  </gmd:EX_GeographicBoundingBox>
+               </gmd:geographicElement>
+            </gmd:EX_Extent>
+         </gmd:extent>
+         <gmd:supplementalInformation>
+            <gco:CharacterString>The lines in the LSIB dataset are the product of decades of collaboration between geographers at the Department of State and the National Geospatial-Intelligence Agency with contributions from the Central Intelligence Agency and the UK Defence Geographic Centre. Attribution is welcome: U.S. Department of State, Office of the Geographer.
+
+The 11.2 release is update to the version 11 series, correcting a few errors in the attribute data and ensure the CC1 and CC2 attributes are in alignment with an updated version of the Geopolitical Entities, Names, and Codes (GENC) standard, specifically version 3.17.   The version 11 sequence was a significant upgrade in the line geometry and those changes, categorized by boundary country pair, are listed below. 
+
+Changes in the version 11.0 series:								   
+This version of the LSIB contains changes and accuracy refinements for the following line segments. These changes reflect improvements in spatial accuracy derived from newly available source materials, an ongoing review process, or the publication of new treaties or agreements. Changes to lines include:
+
+•	Akrotiri (UK) / Cyprus
+•	Albania / Montenegro
+•	Albania / Greece
+•	Albania / North Macedonia
+•	Armenia / Turkey
+•	Austria / Czechia
+•	Austria / Slovakia
+•	Austria / Hungary
+•	Austria / Slovenia
+•	Austria / Germany
+•	Austria / Italy
+•	Austria / Switzerland
+•	Azerbaijan / Turkey
+•	Azerbaijan / Iran
+•	Belarus / Latvia
+•	Belarus / Russia
+•	Belarus / Ukraine
+•	Belarus / Poland
+•	Bhutan / India
+•	Bhutan / China
+•	Bulgaria / Turkey
+•	Bulgaria / Romania
+•	Bulgaria / Serbia
+•	Bulgaria / Romania
+•	Canada / Denmark
+•	China / Tajikistan
+•	China / India
+•	Croatia / Slovenia
+•	Croatia / Hungary
+•	Croatia / Serbia
+•	Croatia / Montenegro
+•	Czechia / Slovakia
+•	Czechia / Poland
+•	Czechia / Germany
+•	Finland / Russia
+•	Finland / Norway
+•	Finland / Sweden
+•	France / Italy
+•	Georgia / Turkey
+•	Germany / Poland
+•	Germany / Switzerland
+•	Greece / North Macedonia
+•	Guyana / Suriname
+•	Hungary / Slovenia
+•	Hungary / Serbia
+•	Hungary / Romania
+•	Hungary / Ukraine
+•	Iran / Turkey
+•	Iraq / Turkey
+•	Italy / Slovenia
+•	Italy / Switzerland
+•	Italy / Vatican City
+•	Italy / San Marino
+•	Kazakhstan / Russia
+•	Kazakhstan / Uzbekistan
+•	Kosovo / north Macedonia
+•	Kosovo / Serbia
+•	Kyrgyzstan / Tajikistan
+•	Kyrgyzstan / Uzbekistan
+•	Latvia / Russia
+•	Latvia / Lithuania
+•	Lithuania / Poland
+•	Lithuania / Russia
+•	Moldova / Ukraine
+•	Moldova / Romania
+•	Norway / Russia
+•	Norway / Sweden
+•	Poland / Russia
+•	Poland / Ukraine
+•	Poland / Slovakia
+•	Romania / Ukraine
+•	Romania / Serbia
+•	Russia / Ukraine
+•	Syria / Turkey
+•	Tajikistan / Uzbekistan
+
+Version 11.0 and 11.1 also contained topology fixes, land boundary terminus refinements, and tripoint adjustments.</gco:CharacterString>
+         </gmd:supplementalInformation>
+      </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+  <gmd:contentInfo>
+      <gmd:MD_FeatureCatalogueDescription>
+         <gmd:includedWithDataset>
+            <gco:Boolean>0</gco:Boolean>
+         </gmd:includedWithDataset>
+         <gmd:featureCatalogueCitation uuidref="64187725-2c22-4cdd-9fa7-8e770a1b2aee"
+                                       xlink:href="https://geonode.state.gov/layers/catalog:geonode:LSIB/feature_catalogue"/>
+      </gmd:MD_FeatureCatalogueDescription>
+  </gmd:contentInfo>
+  <gmd:distributionInfo>
+      <gmd:MD_Distribution>
+         <gmd:distributionFormat>
+            <gmd:MD_Format>
+               <gmd:name>
+                  <gco:CharacterString>ESRI Shapefile</gco:CharacterString>
+               </gmd:name>
+               <gmd:version>
+                  <gco:CharacterString>1.0</gco:CharacterString>
+               </gmd:version>
+            </gmd:MD_Format>
+         </gmd:distributionFormat>
+         <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+               <gmd:unitsOfDistribution>
+                  <gco:CharacterString>megabytes</gco:CharacterString>
+               </gmd:unitsOfDistribution>
+               <gmd:transferSize>
+                  <gco:Real>150</gco:Real>
+               </gmd:transferSize>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://geonode.state.gov/layers/catalog:geonode:LSIB</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                     </gmd:protocol>
+                     <gmd:name>
+                        <gco:CharacterString>LSIB webpage</gco:CharacterString>
+                     </gmd:name>
+                     <gmd:description>
+                        <gco:CharacterString>Information and download LSIB data</gco:CharacterString>
+                     </gmd:description>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="information"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://data.geonode.state.gov/LSIB.zip</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gco:CharacterString>WWW:DOWNLOAD-1.0-http--download</gco:CharacterString>
+                     </gmd:protocol>
+                     <gmd:name>
+                        <gco:CharacterString>LSIB download</gco:CharacterString>
+                     </gmd:name>
+                     <gmd:description>
+                        <gco:CharacterString>direct download to current LSIB data</gco:CharacterString>
+                     </gmd:description>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="download"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+         </gmd:transferOptions>
+      </gmd:MD_Distribution>
+  </gmd:distributionInfo>
+  <gmd:dataQualityInfo>
+      <gmd:DQ_DataQuality>
+         <gmd:scope>
+            <gmd:DQ_Scope>
+               <gmd:level>
+                  <gmd:MD_ScopeCode codeSpace="ISOTC211/19115"
+                                    codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                                    codeListValue="dataset"/>
+               </gmd:level>
+            </gmd:DQ_Scope>
+         </gmd:scope>
+         <gmd:lineage>
+            <gmd:LI_Lineage>
+               <gmd:statement>
+                  <gco:CharacterString>The Office of the Geographer and Global Issues at the U.S. Department of State produces the Large Scale International Boundaries (LSIB) dataset. These data and their derivatives are the only international boundary lines approved for U.S. Government use. They reflect U.S. Government policy, and not necessarily de facto limits of control. This dataset is a National Geospatial Data Asset.</gco:CharacterString>
+               </gmd:statement>
+            </gmd:LI_Lineage>
+         </gmd:lineage>
+      </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

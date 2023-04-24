@@ -1,5 +1,5 @@
 services:
-  adm0-generator:
+  app:
     build: .
     volumes:
       - ./data:/usr/src/app/data
