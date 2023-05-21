@@ -2,3 +2,4 @@ __pycache__
 *.gpkg-shm
 *.gpkg-wal
 *.gpkg-journal
+*.pdf
