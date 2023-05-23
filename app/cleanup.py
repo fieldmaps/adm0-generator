@@ -1,7 +1,9 @@
+import shutil
+
 from psycopg import connect
 from psycopg.sql import SQL, Identifier
 
-from .utils import DATABASE, lands, logging
+from .utils import DATABASE, cwd, lands, logging
 
 logger = logging.getLogger(__name__)
 
@@ -58,4 +60,7 @@ def postprocessing():
             )
     conn.execute(SQL(drop_shp))
     conn.close()
+    for land in lands:
+        if land != "osm":
+            shutil.rmtree(cwd / f"../data/{land}", ignore_errors=True)
     logger.info(f"postprocessing")

@@ -10,15 +10,23 @@ logger = logging.getLogger(__name__)
 
 def output_ogr(land: str, output_dir: Path, file_out: Path):
     file_out.parent.mkdir(parents=True, exist_ok=True)
-    opts = ["-f", "OpenFileGDB"] if file_out.suffix == ".gdb" else []
+    opts = (
+        [
+            *["--config", "OGR_ORGANIZE_POLYGONS", "ONLY_CCW"],
+            *["-f", "OpenFileGDB"],
+            *["-mapFieldType", "Integer64=Real"],
+        ]
+        if file_out.suffix == ".gdb"
+        else []
+    )
     subprocess.run(
         [
             "ogr2ogr",
-            *["--config", "OGR_ORGANIZE_POLYGONS", "ONLY_CCW"],
-            "-unsetFid",
-            "-overwrite",
             "-makevalid",
+            "-overwrite",
+            "-unsetFid",
             *["-nln", file_out.stem],
+            *["-nlt", "MultiPolygon"],
             *opts,
             file_out,
             *[f"PG:dbname={DATABASE}", f"{land}_land_00"],
@@ -38,6 +46,5 @@ def main(conn, land, _):
     shutil.rmtree(gdb, ignore_errors=True)
     output_ogr(land, output_dir, gpkg)
     output_ogr(land, output_dir, gdb)
-    gpkg.unlink(missing_ok=True)
-    shutil.rmtree(gdb, ignore_errors=True)
+    shutil.rmtree(data_dir, ignore_errors=True)
     logger.info(f"{land}_land")

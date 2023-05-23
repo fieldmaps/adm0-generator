@@ -26,16 +26,20 @@ query_1 = """
 def output_ogr(land, layer, wld, geom, geom_type, output_dir, file_out, id):
     file_out.parent.mkdir(parents=True, exist_ok=True)
     opts = (
-        ["-mapFieldType", "Integer64=Real", "-f", "OpenFileGDB"]
+        [
+            *["--config", "OGR_ORGANIZE_POLYGONS", "ONLY_CCW"],
+            *["-f", "OpenFileGDB"],
+            *["-mapFieldType", "Integer64=Real"],
+        ]
         if file_out.suffix == ".gdb"
         else []
     )
     subprocess.run(
         [
             "ogr2ogr",
-            *["--config", "OGR_ORGANIZE_POLYGONS", "ONLY_CCW"],
-            "-overwrite",
             "-makevalid",
+            "-overwrite",
+            "-unsetFid",
             *opts,
             *["-sql", f"SELECT * FROM {land}_{layer}_{wld} ORDER BY {id};"],
             *["-nln", file_out.stem],
@@ -58,6 +62,8 @@ def output_xlsx(gpkg, output_dir, file_name):
 
 
 def outputs(conn, land, wld, geom, geom_type, layer):
+    if geom in ["clip", "voronoi"] and (land != "osm" or wld != "intl"):
+        return
     data_dir = cwd / f"../data/{land}/{wld}"
     data_dir.mkdir(exist_ok=True, parents=True)
     output_dir = cwd / f"../outputs/{land}/{wld}"
@@ -80,4 +86,6 @@ def outputs(conn, land, wld, geom, geom_type, layer):
 def main(conn, land, wld):
     for geom, geom_type, layer in layers:
         outputs(conn, land, wld, geom, geom_type, layer)
+    if land != "osm" or wld != "intl":
+        shutil.rmtree(cwd / f"../data/{land}/{wld}", ignore_errors=True)
     logger.info(f"{land}_{wld}")
