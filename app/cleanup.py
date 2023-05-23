@@ -60,7 +60,4 @@ def postprocessing():
             )
     conn.execute(SQL(drop_shp))
     conn.close()
-    for land in lands:
-        if land != "osm":
-            shutil.rmtree(cwd / f"../data/{land}", ignore_errors=True)
     logger.info(f"postprocessing")

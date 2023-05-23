@@ -62,7 +62,7 @@ def output_xlsx(gpkg, output_dir, file_name):
 
 
 def outputs(conn, land, wld, geom, geom_type, layer):
-    if geom in ["clip", "voronoi"] and (land != "osm" or wld != "intl"):
+    if geom in ["clip", "voronoi"] and wld != "intl":
         return
     data_dir = cwd / f"../data/{land}/{wld}"
     data_dir.mkdir(exist_ok=True, parents=True)
@@ -86,6 +86,6 @@ def outputs(conn, land, wld, geom, geom_type, layer):
 def main(conn, land, wld):
     for geom, geom_type, layer in layers:
         outputs(conn, land, wld, geom, geom_type, layer)
-    if land != "osm" or wld != "intl":
+    if wld != "intl":
         shutil.rmtree(cwd / f"../data/{land}/{wld}", ignore_errors=True)
     logger.info(f"{land}_{wld}")
