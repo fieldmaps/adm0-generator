@@ -1,4 +1,4 @@
-pandas[excel,sql-other]>=2.0.1
-psycopg[binary,pool]>=3.1.9
-psycopg2-binary>=2.9.6
-requests>=2.30.0
+pandas[excel,sql-other]>=2.1.4
+psycopg[binary,pool]>=3.1.16
+psycopg2-binary>=2.9.9
+requests>=2.31.0

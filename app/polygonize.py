@@ -79,9 +79,9 @@ def check_topology(conn, land):
         > 0
     )
     if has_duplicates or has_gaps:
-        overlaps_txt = f"DUPLICATES" if has_duplicates else ""
-        and_txt = f" & " if has_gaps and has_duplicates else ""
-        gaps_txt = f"GAPS" if has_gaps else ""
+        overlaps_txt = "DUPLICATES" if has_duplicates else ""
+        and_txt = " & " if has_gaps and has_duplicates else ""
+        gaps_txt = "GAPS" if has_gaps else ""
         logger.info(f"{overlaps_txt}{and_txt}{gaps_txt}: {land}")
         raise RuntimeError(f"{overlaps_txt}{and_txt}{gaps_txt} in polygons.")
 

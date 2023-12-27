@@ -35,6 +35,6 @@ def get_shp(dir, name, url):
 def main():
     get_shp("lsib", "lsib", LSIB_URL)
     get_shp("land", "land_osm", LAND_OSM_URL)
-    if not (input_dir / f"land/land_usgs.gpkg").is_file():
+    if not (input_dir / "land/land_usgs.gpkg").is_file():
         download_zip(input_dir / "land", "land_usgs", LAND_USGS_URL)
     logger.info("download")

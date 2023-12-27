@@ -58,11 +58,11 @@ def main():
                 "p_gdb": None,
             }
         )
-    with open((outputs / f"adm0.json"), "w") as f:
+    with open((outputs / "adm0.json"), "w") as f:
         json.dump(rows, f, separators=(",", ":"))
     df = pd.DataFrame(rows)
     df["date"] = pd.to_datetime(df["date"])
     df["date"] = df["date"].dt.date
-    df.to_csv(outputs / f"adm0.csv", index=False)
-    df.to_excel(outputs / f"adm0.xlsx", index=False)
+    df.to_csv(outputs / "adm0.csv", index=False)
+    df.to_excel(outputs / "adm0.xlsx", index=False)
     logger.info("meta")
