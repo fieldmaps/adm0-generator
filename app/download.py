@@ -10,15 +10,24 @@ from .utils import LAND_OSM_URL, LAND_USGS_URL, LSIB_URL, input_dir
 logger = logging.getLogger(__name__)
 
 
-def download_zip(output, name, url):
-    r = requests.get(url)
-    with ZipFile(BytesIO(r.content)) as z:
+def unzip(output, name, content):
+    with ZipFile(content) as z:
         for member in z.infolist():
             if os.path.basename(member.filename):
                 member.filename = (
                     name + "." + os.path.basename(member.filename).split(".")[-1]
                 ).lower()
                 z.extract(member=member, path=output)
+
+
+def download_zip(output, name, url):
+    r = requests.get(url)
+    content = BytesIO(r.content)
+    unzip(output, name, content)
+    zipfile = output / f"{name}.zip"
+    if zipfile.is_file():
+        unzip(output, name, output / f"{name}.zip")
+        zipfile.unlink()
 
 
 def get_shp(dir, name, url):

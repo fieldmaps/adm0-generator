@@ -1,6 +1,8 @@
-node_modules
 __pycache__
+*.gpkg-journal
 *.gpkg-shm
 *.gpkg-wal
-*.gpkg-journal
 *.pdf
+inputs/land
+inputs/lsib
+node_modules

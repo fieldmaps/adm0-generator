@@ -1,4 +1,5 @@
 import logging
+import os
 import shutil
 from pathlib import Path
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -23,11 +24,13 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
+os.environ["NUMEXPR_MAX_THREADS"] = str(os.cpu_count())
 
 cwd = Path(__file__).parent
 data_dir = cwd / "../data"
 input_dir = cwd / "../inputs"
 output_dir = cwd / "../outputs"
+mapshaper = cwd / "../node_modules/mapshaper/bin/mapshaper-xl"
 
 
 def apply_funcs(prefix, world, *args):
