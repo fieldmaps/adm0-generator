@@ -3,7 +3,7 @@ import os
 from io import BytesIO
 from zipfile import ZipFile
 
-import requests
+import httpx
 
 from .utils import LAND_OSM_URL, LAND_USGS_URL, LSIB_URL, input_dir
 
@@ -21,7 +21,7 @@ def unzip(output, name, content):
 
 
 def download_zip(output, name, url):
-    r = requests.get(url)
+    r = httpx.get(url)
     content = BytesIO(r.content)
     unzip(output, name, content)
     zipfile = output / f"{name}.zip"
