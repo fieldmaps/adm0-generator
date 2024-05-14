@@ -2,33 +2,39 @@ import subprocess
 from pathlib import Path
 
 cwd = Path(__file__).parent
-lands = ["osm", "usgs"]
-world_views = ["intl", "all", "usa", "land"]
 exts = ["json", "csv", "xlsx"]
+
+
+def sync(src, dest):
+    subprocess.run(
+        [
+            "rclone",
+            "sync",
+            "--exclude=.*",
+            "--progress",
+            "--s3-no-check-bucket",
+            "--s3-chunk-size=256M",
+            src,
+            dest,
+        ]
+    )
+
+
+def copy(src, dest):
+    subprocess.run(
+        [
+            "rclone",
+            "copyto",
+            "--progress",
+            "--s3-no-check-bucket",
+            "--s3-chunk-size=256M",
+            src,
+            dest,
+        ]
+    )
+
 
 if __name__ == "__main__":
     for ext in exts:
-        subprocess.run(
-            [
-                "s3cmd",
-                "sync",
-                "--acl-public",
-                cwd / f"outputs/adm0.{ext}",
-                f"s3://data.fieldmaps.io/adm0.{ext}",
-            ]
-        )
-    for land in lands:
-        for wld in world_views:
-            subprocess.run(
-                [
-                    "s3cmd",
-                    "sync",
-                    "--acl-public",
-                    "--delete-removed",
-                    "--rexclude",
-                    r"\/\.",
-                    "--multipart-chunk-size-mb=5120",
-                    cwd / f"outputs/{land}/{wld}",
-                    f"s3://data.fieldmaps.io/adm0/{land}/",
-                ]
-            )
+        copy(cwd / f"outputs/adm0.{ext}", f"r2://fieldmaps-data/adm0.{ext}")
+    sync(cwd / "outputs/adm0", "r2://fieldmaps-data/adm0")

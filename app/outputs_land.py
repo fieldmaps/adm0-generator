@@ -39,7 +39,7 @@ def output_ogr(land: str, output_dir: Path, file_out: Path):
 
 def main(conn, land, _):
     data_dir = cwd / f"../data/{land}/land"
-    output_dir = cwd / f"../outputs/{land}/land"
+    output_dir = cwd / f"../outputs/adm0/{land}/land"
     gpkg = data_dir / "land_polygons.gpkg"
     gpkg.unlink(missing_ok=True)
     gdb = data_dir / "land_polygons.gdb"

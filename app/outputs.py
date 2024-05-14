@@ -66,7 +66,7 @@ def outputs(conn, land, wld, geom, geom_type, layer):
         return
     data_dir = cwd / f"../data/{land}/{wld}"
     data_dir.mkdir(exist_ok=True, parents=True)
-    output_dir = cwd / f"../outputs/{land}/{wld}"
+    output_dir = cwd / f"../outputs/adm0/{land}/{wld}"
     output_dir.mkdir(exist_ok=True, parents=True)
     file_name = f"adm0_{geom}"
     gpkg = data_dir / f"{file_name}.gpkg"
