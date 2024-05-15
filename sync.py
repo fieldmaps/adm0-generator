@@ -25,7 +25,6 @@ def copy(src, dest):
         [
             "rclone",
             "copyto",
-            "--progress",
             "--s3-no-check-bucket",
             "--s3-chunk-size=256M",
             src,

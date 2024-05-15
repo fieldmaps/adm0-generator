@@ -30,6 +30,7 @@ def output_ogr(land, layer, wld, geom, geom_type, output_dir, file_out, id):
             *["--config", "OGR_ORGANIZE_POLYGONS", "ONLY_CCW"],
             *["-f", "OpenFileGDB"],
             *["-mapFieldType", "Integer64=Real"],
+            *["-mapFieldType", "Date=DateTime"],
         ]
         if file_out.suffix == ".gdb"
         else []
