@@ -14,7 +14,7 @@ def output_ogr(land: str, output_dir: Path, file_out: Path):
         [
             *["--config", "OGR_ORGANIZE_POLYGONS", "ONLY_CCW"],
             *["-f", "OpenFileGDB"],
-            *["-mapFieldType", "Integer64=Real"],
+            *["-mapFieldType", "Integer64=Real,Date=DateTime"],
         ]
         if file_out.suffix == ".gdb"
         else []
