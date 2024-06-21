@@ -16,7 +16,7 @@ LSIB_URL = "https://data.geonode.state.gov/LSIB.zip"
 LSIB_DATE = "2023-12-19"
 
 lands = ["osm", "usgs"]
-world_views = ["intl", "all", "usa"]
+world_views = ["intl", "all"]
 geoms = ["polygons", "lines", "points"]
 
 logging.basicConfig(
