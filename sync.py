@@ -34,6 +34,6 @@ def copy(src, dest):
 
 
 if __name__ == "__main__":
+    sync(cwd / "outputs/adm0", "r2://fieldmaps-data/adm0")
     for ext in exts:
         copy(cwd / f"outputs/adm0.{ext}", f"r2://fieldmaps-data/adm0.{ext}")
-    sync(cwd / "outputs/adm0", "r2://fieldmaps-data/adm0")
