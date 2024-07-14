@@ -21,7 +21,8 @@ def unzip(output, name, content):
 
 
 def download_zip(output, name, url):
-    r = httpx.get(url)
+    with httpx.Client(http2=True) as client:
+        r = client.get(url)
     content = BytesIO(r.content)
     unzip(output, name, content)
     zipfile = output / f"{name}.zip"

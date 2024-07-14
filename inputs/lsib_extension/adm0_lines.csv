@@ -1,11 +1,11 @@
-adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
+﻿adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 1,AF,AFGHANISTAN,CN,CHINA,1,,International Boundary,,,
 2,AF,AFGHANISTAN,IR,IRAN,1,,International Boundary,,,
 3,AF,AFGHANISTAN,PK,PAKISTAN,1,,International Boundary,,,
 4,AF,AFGHANISTAN,TJ,TAJIKISTAN,1,,International Boundary,,,
 5,AF,AFGHANISTAN,TM,TURKMENISTAN,1,,International Boundary,,,
 6,AF,AFGHANISTAN,UZ,UZBEKISTAN,1,,International Boundary,,,
-7,QZ,Akrotiri (UK),CY,CYPRUS,1,,International Boundary,,3,3
+7,QZ,Akrotiri (U.K.),CY,CYPRUS,1,,International Boundary,,3,3
 8,AL,ALBANIA,GR,GREECE,1,,International Boundary,,,
 9,AL,ALBANIA,XK,KOSOVO,1,,International Boundary,,,
 10,AL,ALBANIA,ME,MONTENEGRO,1,,International Boundary,,,
@@ -53,8 +53,8 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 52,BY,BELARUS,RU,RUSSIA,1,,International Boundary,,,
 53,BY,BELARUS,UA,UKRAINE,1,,International Boundary,,,
 54,BE,BELGIUM,FR,FRANCE,1,,International Boundary,,,
-55,BE,BELGIUM,Q2,Ger.-Lux. condominium,1,,International Boundary,,,
-56,BE,BELGIUM,DE,GERMANY,1,,International Boundary,,,
+55,BE,BELGIUM,DE,GERMANY,1,,International Boundary,,,
+56,BE,BELGIUM,Q2,Germany-Luxembourg Condominium,1,,International Boundary,,,
 57,BE,BELGIUM,LU,LUXEMBOURG,1,,International Boundary,,,
 58,BE,BELGIUM,NL,NETHERLANDS,1,,International Boundary,,,
 59,BZ,BELIZE,GT,GUATEMALA,1,,International Boundary,,,
@@ -90,7 +90,7 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 89,BG,BULGARIA,RO,ROMANIA,1,,International Boundary,,,
 90,BG,BULGARIA,RS,SERBIA,1,,International Boundary,,,
 91,BG,BULGARIA,TR,TURKEY,1,,International Boundary,,,
-92,BF,BURKINA FASO,CI,COTE D’IVOIRE,1,,International Boundary,,,
+92,BF,BURKINA FASO,CI,COTE D'IVOIRE,1,,International Boundary,,,
 93,BF,BURKINA FASO,GH,GHANA,1,,International Boundary,,,
 94,BF,BURKINA FASO,ML,MALI,1,,International Boundary,,,
 95,BF,BURKINA FASO,NE,NIGER,1,,International Boundary,,,
@@ -148,10 +148,10 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 147,CG,"CONGO, REP. OF THE",GA,GABON,1,,International Boundary,,,
 148,CR,COSTA RICA,NI,NICARAGUA,1,,International Boundary,,,
 149,CR,COSTA RICA,PA,PANAMA,1,,International Boundary,,,
-150,CI,COTE D’IVOIRE,GH,GHANA,1,,International Boundary,,,
-151,CI,COTE D’IVOIRE,GN,GUINEA,1,,International Boundary,,,
-152,CI,COTE D’IVOIRE,LR,LIBERIA,1,,International Boundary,,,
-153,CI,COTE D’IVOIRE,ML,MALI,1,,International Boundary,,,
+150,CI,COTE D'IVOIRE,GH,GHANA,1,,International Boundary,,,
+151,CI,COTE D'IVOIRE,GN,GUINEA,1,,International Boundary,,,
+152,CI,COTE D'IVOIRE,LR,LIBERIA,1,,International Boundary,,,
+153,CI,COTE D'IVOIRE,ML,MALI,1,,International Boundary,,,
 154,HR,CROATIA,HU,HUNGARY,1,,International Boundary,,,
 155,HR,CROATIA,ME,MONTENEGRO,1,,International Boundary,,,
 156,HR,CROATIA,RS,SERBIA,1,,International Boundary,,,
@@ -188,10 +188,10 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 187,FI,FINLAND,NO,NORWAY,1,,International Boundary,,,
 188,FI,FINLAND,RU,RUSSIA,1,,International Boundary,,,
 189,FI,FINLAND,SE,SWEDEN,1,,International Boundary,,,
-190,FR,FRANCE,Q2,Ger.-Lux. condominium,1,,International Boundary,,,
+190,FR,FRANCE,Q2,France-Spain Condominium,1,,International Boundary,,,
 191,FR,FRANCE,DE,GERMANY,1,,International Boundary,,,
-192,FR,FRANCE,IT,ITALY,1,,International Boundary,,,
-193,FR,FRANCE,Q2,Joint Fr.-Sp. condominium,1,,International Boundary,,,
+192,FR,FRANCE,Q2,Germany-Luxembourg Condominium,1,,International Boundary,,,
+193,FR,FRANCE,IT,ITALY,1,,International Boundary,,,
 194,FR,FRANCE,LU,LUXEMBOURG,1,,International Boundary,,,
 195,FR,FRANCE,MC,MONACO,1,,International Boundary,,,
 196,FR,FRANCE,ES,SPAIN,1,,International Boundary,,,
@@ -200,7 +200,7 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 199,GM,"GAMBIA, THE",SN,SENEGAL,1,,International Boundary,,,
 200,GE,GEORGIA,RU,RUSSIA,1,,International Boundary,,,
 201,GE,GEORGIA,TR,TURKEY,1,,International Boundary,,,
-202,DE,GERMANY,Q2,Ger.-Lux. condominium,1,,International Boundary,Ger.-Lux. condominium,,
+202,DE,GERMANY,Q2,Germany-Luxembourg Condominium,1,,International Boundary,Ger.-Lux. condominium,,
 203,DE,GERMANY,LU,LUXEMBOURG,1,,International Boundary,,,
 204,DE,GERMANY,NL,NETHERLANDS,1,,International Boundary,,,
 205,DE,GERMANY,PL,POLAND,1,,International Boundary,,,
@@ -277,7 +277,7 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 276,LI,LIECHTENSTEIN,CH,SWITZERLAND,1,,International Boundary,,,
 277,LT,LITHUANIA,PL,POLAND,1,,International Boundary,,,
 278,LT,LITHUANIA,RU,RUSSIA,1,,International Boundary,,,
-279,LU,LUXEMBOURG,Q2,Ger.-Lux. condominium,1,,International Boundary,Ger.-Lux. condominium,,
+279,LU,LUXEMBOURG,Q2,Germany-Luxembourg Condominium,1,,International Boundary,Ger.-Lux. condominium,,
 280,MW,MALAWI,MZ,MOZAMBIQUE,1,,International Boundary,,,
 281,MW,MALAWI,TZ,TANZANIA,1,,International Boundary,,,
 282,MW,MALAWI,ZM,ZAMBIA,1,,International Boundary,,,
@@ -287,8 +287,7 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 286,ML,MALI,NE,NIGER,1,,International Boundary,,,
 287,ML,MALI,SN,SENEGAL,1,,International Boundary,,,
 288,MR,MAURITANIA,MA,MOROCCO,1,,International Boundary,,,
-289,MR,MAURITANIA,SN,SENEGAL,1,,International Boundary,"
-",,
+289,MR,MAURITANIA,SN,SENEGAL,1,,International Boundary,,,
 290,MX,MEXICO,US,UNITED STATES,1,,International Boundary,Line from IBWC,,
 291,MD,MOLDOVA,RO,ROMANIA,1,,International Boundary,,,
 292,MD,MOLDOVA,UA,UKRAINE,1,,International Boundary,,,
@@ -323,10 +322,10 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 321,SA,SAUDI ARABIA,YE,YEMEN,1,,International Boundary,,,
 322,SK,SLOVAKIA,UA,UKRAINE,1,,International Boundary,,,
 323,ZA,SOUTH AFRICA,ZW,ZIMBABWE,1,,International Boundary,,,
-324,SS,SOUTH SUDAN,QN,Abyei Area,1,,International Boundary,,3,3
+324,SS,SOUTH SUDAN,QN,Abyei,1,,International Boundary,,3,3
 325,SS,SOUTH SUDAN,SD,SUDAN,1,,International Boundary,,2,2
 326,SS,SOUTH SUDAN,UG,UGANDA,1,,International Boundary,,,
-327,ES,SPAIN,Q2,Joint Fr.-Sp. condominium,1,,International Boundary,,,
+327,ES,SPAIN,Q2,France-Spain Condominium,1,,International Boundary,,,
 328,SD,SUDAN,SD,SUDAN,1,,International Boundary,,,
 329,SY,SYRIA,TR,TURKEY,1,,International Boundary,,,
 330,TJ,TAJIKISTAN,UZ,UZBEKISTAN,1,,International Boundary,,,
@@ -355,13 +354,13 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 353,CG,"CONGO, REP. OF THE",QR,Congo River Islands,2,,Other Line of International Separation,Uncertain alignment in Congo River,,
 354,EG,EGYPT,SD,SUDAN,2,Administrative Boundary,Other Line of International Separation,,,
 355,ET,ETHIOPIA,SO,SOMALIA,2,Provisional Administrative Line,Other Line of International Separation,,,
-356,FR,FRANCE,Q2,Mt. Blanc,2,Italy claim,Other Line of International Separation,,,
+356,FR,FRANCE,Q2,Mont Blanc Summit,2,Italy claim,Other Line of International Separation,,,
 357,XG,Gaza Strip,IL,ISRAEL,2,1950 Armistice Line,Other Line of International Separation,,,
 358,IN,INDIA,QO,Aksai Chin,2,Line of Actual Control,Other Line of International Separation,,,1
 359,IN,INDIA,QO,Chumar,2,China Claim,Other Line of International Separation,,,1
 360,IN,INDIA,QO,Chumar East,2,China Claim,Other Line of International Separation,,,1
-361,IN,INDIA,QO,Demchok,2,Line of Actual Control,Other Line of International Separation,,,1
-362,IN,INDIA,QO,Demchok,2,China Claim,Other Line of International Separation,,,1
+361,IN,INDIA,QO,Demchok,2,China Claim,Other Line of International Separation,,,1
+362,IN,INDIA,QO,Demchok,2,Line of Actual Control,Other Line of International Separation,,,1
 363,IN,INDIA,QO,Jadh-Nelang,2,China Claim,Other Line of International Separation,,,1
 364,IN,INDIA,XO,Kalapani,2,Nepal Claim,Other Line of International Separation,,,
 365,IN,INDIA,QO,Kauirik,2,China Claim,Other Line of International Separation,,,1
@@ -372,7 +371,7 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 370,IL,ISRAEL,LB,LEBANON,2,1949 Armistice Line,Other Line of International Separation,,,1
 371,IL,ISRAEL,Q4,No Man's Land,2,1949 Armistice Line,Other Line of International Separation,,,
 372,IL,ISRAEL,XW,West Bank,2,1949 Armistice Line,Other Line of International Separation,,,
-373,IT,ITALY,Q2,Mt. Blanc,2,France claim,Other Line of International Separation,,,
+373,IT,ITALY,Q2,Mont Blanc Summit,2,France claim,Other Line of International Separation,,,
 374,JO,JORDAN,XW,West Bank,2,1994 Treaty Line,Other Line of International Separation,,,1
 375,KE,KENYA,KE,KENYA,2,Provisional Boundary,Other Line of International Separation,,,
 376,KE,KENYA,SS,SOUTH SUDAN,2,Administrative Boundary,Other Line of International Separation,,,
@@ -392,7 +391,7 @@ adm_id,cc1,country1,cc2,country2,rank,label,status,notes,rank_all,rank_intl
 390,KP,"KOREA, NORTH",KP,"KOREA, NORTH",3,DMZ,Special Line,,,
 391,KR,"KOREA, SOUTH",Q2,Han R. Estuary DMZ,3,,Special Line,Neutral Zone,,
 392,KR,"KOREA, SOUTH",KR,"KOREA, SOUTH",3,DMZ,Special Line,,,
-393,SD,SUDAN,QN,Abyei Area,3,,Special Line,Abyei Tribunal Decision Line,,
+393,SD,SUDAN,QN,Abyei,3,,Special Line,Abyei Tribunal Decision Line,,
 394,SY,SYRIA,SY,SYRIA,3,UNDOF Line B,Special Line,,,
 395,XW,West Bank,Q4,No Man's Land,3,1949 Armistice Line,Special Line,,,
 396,XW,West Bank,Q4,No Man's Land,3,1949 Armistice Line DMZ,Special Line,,,

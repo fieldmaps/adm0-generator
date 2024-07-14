@@ -8,8 +8,8 @@ query_1 = """
     DROP TABLE IF EXISTS {table_out};
     CREATE TABLE {table_out} AS
     SELECT
-        a.cc1,
-        a.cc2,
+        a.country1,
+        a.country2,
         a.rank,
         a.label,
         ST_Multi(
@@ -24,7 +24,7 @@ query_1 = """
     FROM {table_in1} AS a
     JOIN {table_in2} AS b
     ON ST_Intersects(a.geom, b.geom)
-    GROUP BY cc1, cc2, rank, label;
+    GROUP BY country1, country2, rank, label;
 """
 query_2 = """
     DROP TABLE IF EXISTS {table_out};
@@ -35,7 +35,7 @@ query_2 = """
         a.geom
     FROM {table_in1} AS a
     LEFT JOIN {table_in2} AS b
-    ON CONCAT(a.cc1, a.cc2, a.rank, a.label) = CONCAT(b.cc1, b.cc2, b.rank, b.label)
+    ON CONCAT(a.country1, a.country2, a.rank, a.label) = CONCAT(b.country1, b.country2, b.rank, b.label)
     WHERE COALESCE({rank}, a.rank) > 0;
 """
 query_3 = """
