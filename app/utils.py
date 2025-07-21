@@ -11,7 +11,7 @@ DATA_URL = "https://data.fieldmaps.io/adm0"
 LAND_OSM_URL = (
     "https://osmdata.openstreetmap.de/download/land-polygons-complete-4326.zip"
 )
-LAND_USGS_URL = "https://data.fieldmaps.io/adm0/land/land_usgs.gpkg.zip"
+LAND_USGS_URL = "https://data.fieldmaps.io/adm0/usgs/land/land_polygons.gpkg.zip"
 LSIB_URL = "https://data.geodata.state.gov/LSIB.zip"
 LSIB_DATE = "2024-04-30"
 
