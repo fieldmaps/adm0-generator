@@ -48,6 +48,6 @@ def main(conn, land, __):
             conn.execute(
                 SQL(query_1).format(
                     table_out=Identifier(f"{land}_attributes_{geom}"),
-                )
+                ),
             )
     logger.info(f"{land}_attributes")

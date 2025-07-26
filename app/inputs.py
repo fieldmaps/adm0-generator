@@ -28,7 +28,8 @@ def main(_, land, __):
                 *["-nln", f"{l}_00"],
                 *["-f", "PostgreSQL", f"PG:dbname={DATABASE}"],
                 (input_dir / file),
-            ]
+            ],
+            check=False,
         )
         if l == f"{land}_lines":
             subprocess.run(
@@ -38,6 +39,7 @@ def main(_, land, __):
                     *["-nln", f"{land}_lines_00"],
                     *["-f", "PostgreSQL", f"PG:dbname={DATABASE}"],
                     *[f"PG:dbname={DATABASE}", "lsib_00"],
-                ]
+                ],
+                check=False,
             )
     logger.info(f"{land}_inputs")

@@ -57,7 +57,7 @@ def main(conn, land, world):
             table_in1=Identifier(f"{land}_lines_00"),
             table_in2=Identifier(f"{land}_land_01"),
             table_out=Identifier(f"{land}_lines_02_tmp1_{world}"),
-        )
+        ),
     )
     conn.execute(
         SQL(query_2).format(
@@ -66,24 +66,24 @@ def main(conn, land, world):
             rank=Identifier(f"rank_{world}"),
             wld=Literal(world),
             table_out=Identifier(f"{land}_lines_02_{world}"),
-        )
+        ),
     )
     conn.execute(
         SQL(query_3).format(
             rank=Identifier(f"rank_{world}"),
             table_out=Identifier(f"{land}_lines_02_{world}"),
-        )
+        ),
     )
     for wld in world_views:
         conn.execute(
             SQL(query_4).format(
                 rank=Identifier(f"rank_{wld}"),
                 table_out=Identifier(f"{land}_lines_02_{world}"),
-            )
+            ),
         )
     conn.execute(
         SQL(drop_tmp).format(
             table_tmp1=Identifier(f"{land}_lines_02_tmp1_{world}"),
-        )
+        ),
     )
     logger.info(f"{land}_{world}")

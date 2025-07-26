@@ -30,11 +30,31 @@ def output_ogr(land: str, output_dir: Path, file_out: Path):
             *opts,
             file_out,
             *[f"PG:dbname={DATABASE}", f"{land}_land_00"],
-        ]
+        ],
+        check=False,
     )
     file_zip = output_dir / f"{file_out.name}.zip"
     file_zip.unlink(missing_ok=True)
     zip_path(file_out, file_zip)
+
+
+def output_parquet(land, file_out: Path):
+    file_out.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [
+            "ogr2ogr",
+            "-makevalid",
+            "-overwrite",
+            "-unsetFid",
+            *["-nln", file_out.stem],
+            *["-nlt", "MultiPolygon"],
+            *["-lco", "COMPRESSION=ZSTD"],
+            *["-lco", "GEOMETRY_NAME=geometry"],
+            file_out,
+            *[f"PG:dbname={DATABASE}", f"{land}_land_00"],
+        ],
+        check=False,
+    )
 
 
 def main(conn, land, _):
@@ -43,8 +63,11 @@ def main(conn, land, _):
     gpkg = data_dir / "land_polygons.gpkg"
     gpkg.unlink(missing_ok=True)
     gdb = data_dir / "land_polygons.gdb"
+    parquet = output_dir / "land_polygons.parquet"
+    parquet.unlink(missing_ok=True)
     shutil.rmtree(gdb, ignore_errors=True)
     output_ogr(land, output_dir, gpkg)
     output_ogr(land, output_dir, gdb)
+    output_parquet(land, parquet)
     shutil.rmtree(data_dir, ignore_errors=True)
     logger.info(f"{land}_land")

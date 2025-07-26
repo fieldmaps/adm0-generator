@@ -56,9 +56,9 @@ def main():
                 "p_xlsx": None,
                 "p_gpkg": None,
                 "p_gdb": None,
-            }
+            },
         )
-    with open((outputs / "adm0.json"), "w") as f:
+    with (outputs / "adm0.json").open("w") as f:
         json.dump(rows, f, separators=(",", ":"))
     df = pd.DataFrame(rows)
     df["date"] = pd.to_datetime(df["date"])

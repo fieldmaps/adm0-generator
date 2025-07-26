@@ -11,5 +11,5 @@ if __name__ == "__main__":
     for layer in layers:
         for ext in exts:
             (land / f"{layer}.{ext}").unlink(missing_ok=True)
-    subprocess.run(["python", "-m", "app"])
-    subprocess.run(["python", "sync.py"])
+    subprocess.run(["python", "-m", "app"], check=False)
+    subprocess.run(["python", "sync.py"], check=False)

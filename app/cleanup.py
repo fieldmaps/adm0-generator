@@ -40,7 +40,7 @@ drop_shp = """
 def main(conn, land, world):
     for layer in layers_world:
         conn.execute(
-            SQL(drop_tmp).format(table_tmp1=Identifier(f"{land}_{layer}_{world}"))
+            SQL(drop_tmp).format(table_tmp1=Identifier(f"{land}_{layer}_{world}")),
         )
     logger.info(f"{land}_{world}")
 

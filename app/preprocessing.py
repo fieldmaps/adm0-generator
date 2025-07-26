@@ -32,27 +32,36 @@ def import_layers():
                 *["-nln", layer],
                 *["-f", "PostgreSQL", f"PG:dbname={DATABASE}"],
                 input_dir / file_name,
-            ]
+            ],
+            check=False,
         )
 
 
 def fix_lsib(conn):
-    conn.execute(SQL("DELETE FROM lsib_00 WHERE cc1='SS' AND cc2='SD' AND rank=1;"))
-    conn.execute(SQL("DELETE FROM lsib_00 WHERE cc1='KE' AND cc2='SS' AND rank=2;"))
-    conn.execute(SQL("DELETE FROM lsib_00 WHERE cc1='SS' AND cc2='SS' AND rank=2;"))
-    conn.execute(SQL("DELETE FROM lsib_00 WHERE cc1='KE' AND cc2='KE' AND rank=2;"))
+    conn.execute(
+        SQL("DELETE FROM lsib_00 WHERE cc1='SS' AND cc2='SD' AND rank::INTEGER=1;"),
+    )
+    conn.execute(
+        SQL("DELETE FROM lsib_00 WHERE cc1='KE' AND cc2='SS' AND rank::INTEGER=2;"),
+    )
+    conn.execute(
+        SQL("DELETE FROM lsib_00 WHERE cc1='SS' AND cc2='SS' AND rank::INTEGER=2;"),
+    )
+    conn.execute(
+        SQL("DELETE FROM lsib_00 WHERE cc1='KE' AND cc2='KE' AND rank::INTEGER=2;"),
+    )
 
 
 def fix_land(conn, land):
     query_1 = """
         ALTER TABLE {table_out}
-        ADD COLUMN wld_update DATE DEFAULT {date};
+        ADD COLUMN IF NOT EXISTS wld_update DATE DEFAULT {date};
     """
     conn.execute(
         SQL(query_1).format(
             date=Literal(get_land_date()),
             table_out=Identifier(f"{land}_land_00"),
-        )
+        ),
     )
 
 

@@ -13,7 +13,7 @@ LAND_OSM_URL = (
 )
 LAND_USGS_URL = "https://data.fieldmaps.io/adm0/usgs/land/land_polygons.gpkg.zip"
 LSIB_URL = "https://data.geodata.state.gov/LSIB.zip"
-LSIB_DATE = "2024-04-30"
+LSIB_DATE = "2025-02-24"
 
 lands = ["osm", "usgs"]
 world_views = ["intl", "all"]

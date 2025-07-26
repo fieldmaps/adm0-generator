@@ -1,0 +1,283 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis version="3.34.13-Prizren">
+  <identifier>3bdb81a0-c1b9-439a-a0b1-85dac30c59b2</identifier>
+  <parentidentifier></parentidentifier>
+  <language>eng</language>
+  <type>dataset</type>
+  <title>Large Scale International Boundaries v11.4</title>
+  <abstract>Overview
+
+The Office of the Geographer and Global Issues at the U.S. Department of State produces the Large Scale International Boundaries (LSIB) dataset.  The current edition is version 11.4 (published 24 February 2025).  The 11.4 release contains updated boundary lines and data refinements designed to extend the functionality of the dataset.  These data and generalized derivatives are the only international boundary lines approved for U.S. Government use.  The contents of this dataset reflect U.S. Government policy on international boundary alignment, political recognition, and dispute status.  They do not necessarily reflect de facto limits of control.
+
+National Geospatial Data Asset 
+
+This dataset is a National Geospatial Data Asset (NGDAID 194) managed by the Department of State.  It is a part of the International Boundaries Theme created by the Federal Geographic Data Committee.
+            
+Dataset Source Details 
+
+Sources for these data include treaties, relevant maps, and data from boundary commissions, as well as national mapping agencies.  Where available and applicable, the dataset incorporates information from courts, tribunals, and international arbitrations.  The research and recovery process includes analysis of satellite imagery and elevation data.  Due to the limitations of source materials and processing techniques, most lines are within 100 meters of their true position on the ground.
+
+Cartographic Visualization
+
+The LSIB is a geospatial dataset that, when used for cartographic purposes, requires additional styling. The LSIB download package contains example style files for commonly used software applications.  The attribute table also contains embedded information to guide the cartographic representation.  Additional discussion of these considerations can be found in the Use of Core Attributes in Cartographic Visualization section below.  
+
+Additional cartographic information pertaining to the depiction and description of international boundaries or areas of special sovereignty can be found in Guidance Bulletins published by the Office of the Geographer and Global Issues:  https://data.geodata.state.gov/guidance/index.html
+
+Contact
+
+Direct inquiries to internationalboundaries@state.gov.
+Direct download: https://data.geodata.state.gov/LSIB.zip
+
+Attribute Structure
+
+The dataset uses the following attributes divided into two categories:
+ATTRIBUTE NAME | ATTRIBUTE STATUS 
+CC1 | Core
+CC1_GENC3 | Extension
+CC1_WPID | Extension
+COUNTRY1 | Core
+CC2 | Core
+CC2_GENC3 | Extension
+CC2_WPID | Extension
+COUNTRY2 | Core
+RANK | Core
+LABEL | Core
+STATUS | Core
+NOTES | Core
+LSIB_ID | Extension
+ANTECIDS | Extension
+PREVIDS | Extension
+PARENTID | Extension
+PARENTSEG | Extension
+
+These attributes have external data sources that update separately from the LSIB:
+ATTRIBUTE NAME | ATTRIBUTE STATUS 
+CC1 | GENC
+CC1_GENC3 | GENC
+CC1_WPID | World Polygons
+COUNTRY1 | DoS Lists
+CC2 | GENC
+CC2_GENC3 | GENC
+CC2_WPID | World Polygons
+COUNTRY2 | DoS Lists
+LSIB_ID | BASE
+ANTECIDS | BASE
+PREVIDS | BASE
+PARENTID | BASE
+PARENTSEG | BASE
+
+The core attributes listed above describe the boundary lines contained within the LSIB dataset.  Removal of core attributes from the dataset will change the meaning of the lines.  An attribute status of “Extension” represents a field containing data interoperability information.  Other attributes not listed above include “FID”, “Shape_length” and “Shape.” These are components of the shapefile format and do not form an intrinsic part of the LSIB. 
+
+Core Attributes
+
+The eight core attributes listed above contain unique information which, when combined with the line geometry, comprise the LSIB dataset.  These Core Attributes are further divided into Country Code and Name Fields and Descriptive Fields. 
+
+County Code and Country Name Fields 
+
+“CC1” and “CC2” fields are machine readable fields that contain political entity codes.  These are two-character codes derived from the Geopolitical Entities, Names, and Codes Standard (GENC), Edition 3 Update 18.  “CC1_GENC3” and “CC2_GENC3” fields contain the corresponding three-character GENC codes and are extension attributes discussed below.  The codes “Q2” or “QX2” denote a line in the LSIB representing a boundary associated with areas not contained within the GENC standard.
+
+The “COUNTRY1” and “COUNTRY2” fields contain the names of corresponding political entities.  These fields contain names approved by the U.S. Board on Geographic Names (BGN) as incorporated in the ‘"Independent States in the World" and "Dependencies and Areas of Special Sovereignty" lists maintained by the Department of State.  To ensure maximum compatibility, names are presented without diacritics and certain names are rendered using common cartographic abbreviations.  Names for lines associated with the code "Q2" are descriptive and not necessarily BGN-approved. Names rendered in all CAPITAL LETTERS denote independent states.   Names rendered in normal text represent dependencies, areas of special sovereignty, or are otherwise presented for the convenience of the user.
+
+Descriptive Fields
+
+The following text fields are a part of the core attributes of the LSIB dataset and do not update from external sources. They provide additional information about each of the lines and are as follows:
+ATTRIBUTE NAME | CONTAINS NULLS
+RANK | No
+STATUS | No 
+LABEL | Yes
+NOTES | Yes
+
+Neither the "RANK" nor "STATUS" fields contain null values; the "LABEL" and "NOTES" fields do.
+The "RANK" field is a numeric expression of the "STATUS" field.  Combined with the line geometry, these fields encode the views of the United States Government on the political status of the boundary line.
+
+ATTRIBUTE NAME | | VALUE |
+RANK | 1 | 2 | 3
+STATUS | International Boundary | Other Line of International Separation | Special Line
+
+A value of “1” in the “RANK” field corresponds to an "International Boundary" value in the “STATUS” field.  Values of ”2” and “3” correspond to “Other Line of International Separation” and “Special Line,” respectively.
+
+The “LABEL” field contains required text to describe the line segment on all finished cartographic products, including but not limited to print and interactive maps.  
+
+The “NOTES” field contains an explanation of special circumstances modifying the lines.  This information can pertain to the origins of the boundary lines, limitations regarding the purpose of the lines, or the original source of the line.
+
+Use of Core Attributes in Cartographic Visualization 
+
+Several of the Core Attributes provide information required for the proper cartographic representation of the LSIB dataset.  The cartographic usage of the LSIB requires a visual differentiation between the three categories of boundary lines.  Specifically, this differentiation must be between:
+
+- International Boundaries (Rank 1);
+- Other Lines of International Separation (Rank 2); and
+- Special Lines (Rank 3).
+
+Rank 1 lines must be the most visually prominent.  Rank 2 lines must be less visually prominent than Rank 1 lines.  Rank 3 lines must be shown in a manner visually subordinate to Ranks 1 and 2.  Where scale permits, Rank 2 and 3 lines must be labeled in accordance with the “Label” field.  Data marked with a Rank 2 or 3 designation does not necessarily correspond to a disputed boundary.  Please consult the style files in the download package for examples of this depiction.
+
+The requirement to incorporate the contents of the "LABEL" field on cartographic products is scale dependent.  If a label is legible at the scale of a given static product, a proper use of this dataset would encourage the application of that label.  Using the contents of the "COUNTRY1" and "COUNTRY2" fields in the generation of a line segment label is not required.  The "STATUS" field contains the preferred description for the three LSIB line types when they are incorporated into a map legend but is otherwise not to be used for labeling. 
+
+Use of the “CC1,” “CC1_GENC3,” “CC2,” “CC2_GENC3,” “RANK,” or “NOTES” fields for cartographic labeling purposes is prohibited.
+
+Extension Attributes
+
+Certain elements of the attributes within the LSIB dataset extend data functionality to make the data more interoperable or to provide clearer linkages to other datasets.
+
+The fields “CC1_GENC3” and “CC2_GENC” contain the corresponding three-character GENC code to the “CC1” and “CC2” attributes.  The code “QX2” is the three-character counterpart of the code “Q2,” which denotes a line in the LSIB representing a boundary associated with a geographic area not contained within the GENC standard.
+
+To allow for linkage between individual lines in the LSIB and World Polygons dataset, the “CC1_WPID” and “CC2_WPID” fields contain a Universally Unique Identifier (UUID), version 4, which provides a stable description of each geographic entity in a boundary pair relationship.  Each UUID corresponds to a geographic entity listed in the World Polygons dataset.  These fields allow for linkage between individual lines in the LSIB and the overall World Polygons dataset. 
+
+Five additional fields in the LSIB expand on the UUID concept and either describe features that have changed across space and time or indicate relationships between previous versions of the feature.
+
+1. The “LSIB_ID” attribute is a UUID value that defines a specific instance of a feature.  Any change to the feature in a lineset requires a new “LSIB_ID.”
+2. The “ANTECIDS,” or antecedent ID, is a UUID that references line geometries from which a given line is descended in time.  It is used when there is a feature that is entirely new, not when there is a new version of a previous feature.  This is generally used to reference countries that have dissolved.
+3. The “PREVIDS,” or Previous ID, is a UUID field that contains old versions of a line.  This is an additive field, that houses all Previous IDs.  A new version of a feature is defined by any change to the feature—either line geometry or attribute—but it is still conceptually the same feature.
+4. The “PARENTID” field introduces a concept of hierarchy into the data model.  This UUID field links related Rank 2 and Rank 3 lines to their corresponding Rank 1 line.  If two political entities share multiple boundary lines of different Rank or Status, this field contains an identifier that assembles all line segments together.
+5. The “PARENTSEG” field, which is a future-use field, contains information pertaining to constituent parts of a boundary line of the same rank or status.
+
+External Data Sources
+
+Certain elements of the LSIB incorporate elements of other published data sources. These include: 
+
+- Geopolitical Entities, Names, and Codes Registry: https://nsgreg.nga.mil/GENC-overview.jsp
+- U.S. Department of State List of Independent States in the World: https://www.state.gov/independent-states-in-the-world/
+- U.S. Department of State List of Dependencies and Areas of Special Sovereignty: https://www.state.gov/dependencies-and-areas-of-special-sovereignty/
+- U.S. Department of State Boundaries and Sovereignty Encyclopedia (BASE): https://statetoday.net/base (USG only)
+
+The LSIB also includes elements of two other NGDAs: 
+
+- The source for the U.S.—Canada international boundary (NGDAID97) is the International Boundary Commission: https://www.internationalboundarycommission.org/en/maps-coordinates/coordinates.php
+- The source for the “International Boundary between the United States of America and the United States of Mexico” (NGDAID82) is the International Boundary and Water Commission: https://catalog.data.gov/dataset?q=usibwc
+
+The Large Scale International Boundaries (LSIB) dataset are a digital georeferenced dataset intended for cartographic and spatial analysis. These data and generalized derivatives are the only international boundary lines approved for U.S. Government use. The contents of this dataset reflect U.S. Government policy on international boundary alignment, political recognition, and dispute status. They do not necessarily reflect de facto limits of control. 
+
+Additional Information: For U.S. government and military users, additional boundaries information and analysis can be accessed through the Boundaries and Sovereignty Encyclopedia (BASE) web application maintained by the Office of the Geographer and Global Issues.  BASE can be accessed on the internet at https://statetoday.net/base . Access requires a username and password which can be requested through the site for users with a .gov or .mil email address.
+
+Changes from Prior Release
+
+The 11.4 release is the fourth update in the version 11 series.
+
+This version of the LSIB contains changes and accuracy refinements for the following line segments.  These changes reflect improvements in spatial accuracy derived from newly available source materials, an ongoing review process, or the publication of new treaties or agreements.  Notable changes to lines include: 
+
+•	ANGOLA / CONGO, DEM. REP. OF THE
+•	ANGOLA / CONGO, REP. OF THE
+•	ARGENTINA / BRAZIL
+•	ARGENTINA / CHILE
+•	AZERBAIJAN / GEORGIA
+•	AZERBAIJAN / IRAN
+•	AZERBAIJAN / RUSSIA
+•	BENIN / TOGO
+•	BOLIVIA / BRAZIL
+•	BOLIVIA / CHILE
+•	BRAZIL / SURINAME
+•	BRAZIL / COLOMBIA
+•	BRAZIL / French Guiana (FR.)
+•	BRAZIL / PERU
+•	BRAZIL / PARAGUAY
+•	BRAZIL / URUGUAY
+•	BRAZIL / URUGUAY
+•	BRAZIL / VENEZUELA
+•	BURMA / THAILAND
+•	CAMBODIA / THAILAND
+•	CAMBODIA / VIETNAM
+•	CAMEROON / CHAD
+•	COLOMBIA / ECUADOR
+•	COLOMBIA / PANAMA
+•	COLOMBIA / PERU
+•	COLOMBIA / VENEZUELA
+•	CONGO, DEM. REP. OF THE / CONGO, REP. OF THE
+•	CONGO, DEM. REP. OF THE / RWANDA
+•	CONGO, DEM. REP. OF THE / UGANDA
+•	EL SALVADOR / HONDURAS
+•	FRANCE / SPAIN
+•	French Guiana (FR.) / SURINAME
+•	GAMBIA, THE / SENEGAL
+•	GREECE / TURKEY
+•	GUINEA / LIBERIA
+•	IRAQ / SAUDI ARABIA
+•	JORDAN / SAUDI ARABIA
+•	KAZAKHSTAN / UZBEKISTAN
+•	KENYA / SOUTH SUDAN
+•	KENYA / UGANDA
+•	KYRGYZSTAN / UZBEKISTAN
+•	MALAYSIA / THAILAND
+•	MOZAMBIQUE / SOUTH AFRICA
+•	OMAN / SAUDI ARABIA
+•	RWANDA / UGANDA
+•	SAUDI ARABIA / UNITED ARAB EMIRATES
+•	SOUTH SUDAN / UGANDA
+•	TAJIKISTAN / UZBEKISTAN
+
+This version also contains tripoint adjustments, land boundary terminus refinements, and other geometry fixes.
+
+Versions 11.0 and 11.1 were updates to boundary lines.  Version 11.2 corrected a few errors in the attribute data and ensured that CC1 and CC2 attributes are in alignment with an updated version of the Geopolitical Entities, Names, and Codes (GENC) Standard, specifically Edition 3 Update 17.  Version 11.3 contained line updates and other technical refines. Version 11.3.1 expanded attribute fields for interoperability with the World Polygons dataset but contained no geometry changes from version 11.3.1
+
+The LSIB generally follows a semantic versioning model.  Major releases happen when there is an addition or removal of a boundary line between countries or a change in political status of a boundary pair.  Attribute changes that are not backwards compatible will also result in a new major version, but the addition of new attribute fields without the removal of a previous field will not.  Minor versions indicate routine, ongoing updates to the alignment of boundaries.  Patch updates are used to correct or update data interoperability in the attribute table; these contain no geometry changes.
+
+Credits
+
+The lines in the LSIB dataset are the product of decades of collaboration between geographers at the Department of State and the National Geospatial-Intelligence Agency with previous contributions from the Central Intelligence Agency and the UK Defence Geographic Centre.  All decisions regarding boundary alignment and release are made by the U.S. Department of State.
+
+Attribution on re-use is welcome:  U.S. Department of State, Office of the Geographer and Global Issues.</abstract>
+  <keywords vocabulary="discipline">
+    <keyword>Geospatial</keyword>
+  </keywords>
+  <keywords vocabulary="gmd:topicCategory">
+    <keyword>Boundaries</keyword>
+  </keywords>
+  <keywords vocabulary="place">
+    <keyword>Global</keyword>
+  </keywords>
+  <keywords vocabulary="theme">
+    <keyword>NGDA</keyword>
+    <keyword>National Geospatial Data Asset</keyword>
+    <keyword>NGDAID194</keyword>
+    <keyword>International Boundaries</keyword>
+  </keywords>
+  <contact>
+    <name>Office of the Geographer</name>
+    <organization>U.S. Department of State</organization>
+    <position>Boundary Analysis</position>
+    <voice></voice>
+    <fax></fax>
+    <email>internationalboundaries@state.gov</email>
+    <role>publisher</role>
+  </contact>
+  <links>
+    <link type="WWW:LINK" name="LSIB Webpage" description="Information about the Large Scale International Boundaries Dataset" url="https://www.geodata.state.gov/geonetwork/srv/eng/catalog.search#/metadata/3bdb81a0-c1b9-439a-a0b1-85dac30c59b2" format="application/http" mimeType="WWW:LINK-1.0-http--link" size=""/>
+    <link type="OGC:WMS" name="lsib:LSIB" description="Large Scale International Boundaries Dataset WMS" url="https://services.geodata.state.gov/geoserver/ows?service=WMS&amp;amp;version=1.3.0&amp;amp;request=GetCapabilities" format="application/http" mimeType="OGC:WMS-1.3.0-http-get-capabilities" size=""/>
+    <link type="WWW:LINK" name="Geopolitical Entities, Names, and Codes Registry" description="The Geopolitical Entities, Names, and Codes (GENC) Registry contains registers of standards for encoding geopolitical names of entities (including countries, dependencies, areas of special sovereignty, and administrative subdivisions) to facilitate information management and information exchange. The Geopolitical Entities, Names, and Codes (GENC) Standard is the U.S. Government profile of ISO 3166, modified only where necessary to comply with U.S. law and U.S. Government recognition policy. The GENC Standard is a combination of entries from the ISO 3166 Countries and Subdivisions Register, and the exceptional entries tracked in the ISO Exclusion, Exception, Extension, and Exigent Countries and Subdivisions Register." url="https://nsgreg.nga.mil/GENC-overview.jsp" format="application/http" mimeType="WWW:LINK-1.0-http--link" size=""/>
+    <link type="WWW:LINK" name="Cartographic Guidance Bulletins" description="The guidance bulletins linked below are issued by the Office of the Geographer at the U.S. Department of State to inform Federal cartographers of changes in mapping policy, mostly with regard to international boundary and sovereignty issues. These policies are intended for use only by the United States Federal Government but are provided for the information of the general public. Users should take care to access the most recent bulletin for a particular country or area, as some of the bulletins are superseded by others." url="https://data.geodata.state.gov/guidance/index.html" format="text/html" mimeType="WWW:LINK-1.0-http--link" size=""/>
+    <link type="WWW:LINK" name="U.S. Department of State List of Independent States in the World" description="" url="https://www.state.gov/independent-states-in-the-world/" format="application/http" mimeType="WWW:LINK-1.0-http--link" size=""/>
+    <link type="WWW:LINK" name="LSIB_Thumbnail.jpg" description="Large Scale International Boundary Thumbnail" url="https://data.geodata.state.gov/LSIB_Thumbnail.jpg" format="image/jpeg" mimeType="WWW:LINK-1.0-http--link" size=""/>
+    <link type="WWW:LINK" name="World Polygons Dataset" description="World Polygons are a collection of polygon datasets that is specifically designed to match the LSIB dataset. The purpose of the World Polygons dataset is to enable geographic visualization, at multiple cartographic scales, which incorporates U.S. Government official international boundary alignment, cartographic styling that reflects the political status of boundaries, and country or area names used by the Department of State and other international standards." url="https://geodata.state.gov/geonetwork/srv/eng/catalog.search#/metadata/a3dfdc5a-9524-4a55-8e66-774690c45d73" format="application/http" mimeType="WWW:LINK-1.0-http--related" size=""/>
+    <link type="WWW:LINK" name="Boundaries and Sovereignty Encyclopedia" description="For U.S. government and military users, additional boundaries information and analysis can be accessed through the Boundaries and Sovereignty Encyclopedia (BASE) web application maintained by the Office of the Geographer and Global Issues. Access requires a .gov or .mil email address." url="https://statetoday.net/base" format="application/http" mimeType="WWW:LINK-1.0-http--link" size=""/>
+    <link type="WWW:LINK" name="LSIB Artifact Checksums" description="Current LSIB Artifacts and their associated SHA256 Checksums" url="https://data.geodata.state.gov/LSIB_SHA256.txt" format="text/plain" mimeType="WWW:LINK-1.0-http--related" size=""/>
+    <link type="WWW:LINK" name="LSIB Metadata Web Accessible Folder" description="Standalone LSIB Metadata XML ISO 19115/19139" url="https://data.geodata.state.gov/waf/iso/lsib.xml" format="application/xml" mimeType="WWW:LINK-1.0-http--related" size=""/>
+    <link type="WWW:DOWNLOAD:GPKG" name="Large Scale International Boundaries Data Only Download" description="This download link provides access to the Large Scale International Boundaries dataset as a geopackage and does not provide any additional information. Please use the Large Scale International Boundaries Full Download for a complete package including example projects, style files, and additional metadata." url="https://data.geodata.state.gov/LSIB.gpkg" format="application/geopackage+sqlite3" mimeType="WWW:DOWNLOAD:GPKG" size="66.4 MB"/>
+    <link type="WWW:DOWNLOAD:ZIP" name="Large Scale International Boundaries Full Download" description="This URL provides a complete download package of the Large Scale International Boundaries dataset including example products, style files, metadata, and multiple file formats. The LSIB.zip package is the authoritative version of this National Geospatial Data Asset." url="https://data.geodata.state.gov/LSIB.zip" format="application/zip" mimeType="WWW:DOWNLOAD:ZIP" size="118 MB"/>
+  </links>
+  <dates>
+    <date type="Published" value="2025-02-24T00:00:00"/>
+  </dates>
+  <fees>other-pd</fees>
+  <constraints type="access">Copyright Notice and Disclaimer 
+
+While U.S. Government works prepared by employees of the U.S. Government as part of their official duties are not subject to Federal copyright protection (see 17 U.S.C. § 105), copyrighted material incorporated in U.S. Government works retains its copyright protection. The works on or made available through download from the U.S. Department of State’s website may not be used in any manner that infringes any intellectual property rights or other proprietary rights held by any third party. Use of any copyrighted material beyond what is allowed by fair use or other exemptions may require appropriate permission from the relevant rightsholder. With respect to works on or made available through download from the U.S. Department of State’s website, neither the U.S. Government nor any of its agencies, employees, agents, or contractors make any representations or warranties—express, implied, or statutory—as to the validity, accuracy, completeness, or fitness for a particular purpose; nor represent that use of such works would not infringe privately owned rights; nor assume any liability resulting from use of such works; and shall in no way be liable for any costs, expenses, claims, or demands arising out of use of such works.</constraints>
+  <constraints type="use">Limitation Not Listed</constraints>
+  <license>Copyright Notice and Disclaimer 
+
+While U.S. Government works prepared by employees of the U.S. Government as part of their official duties are not subject to Federal copyright protection (see 17 U.S.C. § 105), copyrighted material incorporated in U.S. Government works retains its copyright protection. The works on or made available through download from the U.S. Department of State’s website may not be used in any manner that infringes any intellectual property rights or other proprietary rights held by any third party. Use of any copyrighted material beyond what is allowed by fair use or other exemptions may require appropriate permission from the relevant rightsholder. With respect to works on or made available through download from the U.S. Department of State’s website, neither the U.S. Government nor any of its agencies, employees, agents, or contractors make any representations or warranties—express, implied, or statutory—as to the validity, accuracy, completeness, or fitness for a particular purpose; nor represent that use of such works would not infringe privately owned rights; nor assume any liability resulting from use of such works; and shall in no way be liable for any costs, expenses, claims, or demands arising out of use of such works.</license>
+  <encoding>utf8</encoding>
+  <crs>
+    <spatialrefsys nativeFormat="Wkt">
+      <wkt>GEOGCRS["WGS 84",ENSEMBLE["World Geodetic System 1984 ensemble",MEMBER["World Geodetic System 1984 (Transit)"],MEMBER["World Geodetic System 1984 (G730)"],MEMBER["World Geodetic System 1984 (G873)"],MEMBER["World Geodetic System 1984 (G1150)"],MEMBER["World Geodetic System 1984 (G1674)"],MEMBER["World Geodetic System 1984 (G1762)"],MEMBER["World Geodetic System 1984 (G2139)"],MEMBER["World Geodetic System 1984 (G2296)"],ELLIPSOID["WGS 84",6378137,298.257223563,LENGTHUNIT["metre",1]],ENSEMBLEACCURACY[2.0]],PRIMEM["Greenwich",0,ANGLEUNIT["degree",0.0174532925199433]],CS[ellipsoidal,2],AXIS["geodetic latitude (Lat)",north,ORDER[1],ANGLEUNIT["degree",0.0174532925199433]],AXIS["geodetic longitude (Lon)",east,ORDER[2],ANGLEUNIT["degree",0.0174532925199433]],USAGE[SCOPE["Horizontal component of 3D system."],AREA["World."],BBOX[-90,-180,90,180]],ID["EPSG",4326]]</wkt>
+      <proj4>+proj=longlat +datum=WGS84 +no_defs</proj4>
+      <srsid>3452</srsid>
+      <srid>4326</srid>
+      <authid>EPSG:4326</authid>
+      <description>WGS 84</description>
+      <projectionacronym>longlat</projectionacronym>
+      <ellipsoidacronym>EPSG:7030</ellipsoidacronym>
+      <geographicflag>true</geographicflag>
+    </spatialrefsys>
+  </crs>
+  <extent>
+    <spatial crs="EPSG:4326" minx="-141.00185839999994641" miny="-55.15367159999993873" maxy="70.09229320000002872" maxx="141.02215100000000803" dimensions="2" minz="0" maxz="0"/>
+  </extent>
+</qgis>

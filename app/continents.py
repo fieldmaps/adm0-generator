@@ -22,6 +22,6 @@ def main(conn, land, _):
             table_in1=Identifier(f"{land}_land_00"),
             table_in2=Identifier(f"{land}_lines_01"),
             table_out=Identifier(f"{land}_land_01"),
-        )
+        ),
     )
     logger.info(f"{land}_continents")

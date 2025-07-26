@@ -1,0 +1,12 @@
+fix = true
+target-version = "py313"
+
+[format]
+docstring-code-format = true
+
+[lint]
+select = ["ALL"]
+ignore = ["D100", "D104", "INP", "S603", "S607"]
+
+[lint.pydocstyle]
+convention = "google"

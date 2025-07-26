@@ -68,13 +68,13 @@ def check_topology(conn, land):
     has_duplicates = conn.execute(
         SQL(query_5).format(
             table_in=Identifier(f"{land}_voronoi_00"),
-        )
+        ),
     ).fetchone()[0]
     has_gaps = (
         conn.execute(
             SQL(query_6).format(
                 table_in=Identifier(f"{land}_voronoi_00"),
-            )
+            ),
         ).fetchone()[0]
         > 0
     )
@@ -91,33 +91,33 @@ def main(conn, land, _):
         SQL(query_1).format(
             table_in=Identifier(f"{land}_lines_00"),
             table_out=Identifier(f"{land}_lines_01"),
-        )
+        ),
     )
     conn.execute(
         SQL(query_2).format(
             table_in=Identifier(f"{land}_lines_01"),
             table_out=Identifier(f"{land}_voronoi_00_tmp1"),
-        )
+        ),
     )
     conn.execute(
         SQL(query_3).format(
             table_in1=Identifier(f"{land}_voronoi_00_tmp1"),
             table_in2=Identifier(f"{land}_points_00"),
             table_out=Identifier(f"{land}_voronoi_00_tmp2"),
-        )
+        ),
     )
     conn.execute(
         SQL(query_4).format(
             table_in1=Identifier(f"{land}_voronoi_00_tmp2"),
             table_in2=Identifier(f"{land}_attributes_points"),
             table_out=Identifier(f"{land}_voronoi_00"),
-        )
+        ),
     )
     conn.execute(
         SQL(drop_tmp).format(
             table_tmp1=Identifier(f"{land}_voronoi_00_tmp1"),
             table_tmp2=Identifier(f"{land}_voronoi_00_tmp2"),
-        )
+        ),
     )
     check_topology(conn, land)
     logger.info(f"{land}_polygonize")

@@ -45,20 +45,20 @@ def main(conn, land, world):
         SQL(query_1).format(
             table_in=Identifier(f"{land}_polygons_01_p_{world}"),
             table_out=Identifier(f"{land}_points_01_tmp1_{world}"),
-        )
+        ),
     )
     conn.execute(
         SQL(query_2).format(
             table_in1=Identifier(f"{land}_points_01_tmp1_{world}"),
             table_in2=Identifier(f"{land}_attributes_points"),
             table_out=Identifier(f"{land}_points_01_{world}"),
-        )
+        ),
     )
     conn.execute(
         SQL(query_3).format(
             wld=Literal(world),
             table_out=Identifier(f"{land}_points_01_{world}"),
-        )
+        ),
     )
     for wld in world_views:
         conn.execute(
@@ -66,11 +66,11 @@ def main(conn, land, world):
                 polygon=Identifier(f"a_{wld}"),
                 point=Identifier(f"p_{wld}"),
                 table_out=Identifier(f"{land}_points_01_{world}"),
-            )
+            ),
         )
     conn.execute(
         SQL(drop_tmp).format(
             table_tmp1=Identifier(f"{land}_points_01_tmp1_{world}"),
-        )
+        ),
     )
     logger.info(f"{land}_{world}")

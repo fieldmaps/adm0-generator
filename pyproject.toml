@@ -1,0 +1,20 @@
+[project]
+name = "adm0-generator"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx[http2]",
+    "pandas[excel,sql-other]",
+    "psycopg[binary,pool]",
+    "psycopg2-binary",
+]
+
+[dependency-groups]
+dev = ["ruff", "taskipy"]
+
+[tool.taskipy.tasks]
+app = "python -m app"
+export = "uv sync -q && uv export -q -o requirements.txt --no-dev --no-hashes"
+ruff = "ruff format && ruff check && ruff format"
