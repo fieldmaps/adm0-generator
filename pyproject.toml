@@ -9,6 +9,8 @@ dependencies = [
     "pandas[excel,sql-other]",
     "psycopg[binary,pool]",
     "psycopg2-binary",
+    "geopandas",
+    "pyarrow",
 ]
 
 [dependency-groups]

@@ -2,6 +2,7 @@ import logging
 import shutil
 import subprocess
 
+from geopandas import read_file
 from psycopg.sql import SQL, Identifier
 
 from .utils import DATABASE, cwd, zip_path
@@ -56,22 +57,13 @@ def output_ogr(land, layer, wld, geom, geom_type, output_dir, file_out, id):
     zip_path(file_out, file_zip)
 
 
-def output_parquet(land, layer, wld, geom_type, file_out, id):
+def output_parquet(file_in, file_out):
     file_out.parent.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        [
-            "ogr2ogr",
-            "-makevalid",
-            "-overwrite",
-            "-unsetFid",
-            *["-sql", f"SELECT * FROM {land}_{layer}_{wld} ORDER BY {id};"],
-            *["-nlt", geom_type],
-            *["-lco", "COMPRESSION=ZSTD"],
-            *["-lco", "GEOMETRY_NAME=geometry"],
-            file_out,
-            *[f"PG:dbname={DATABASE}", f"{land}_land_00"],
-        ],
-        check=False,
+    read_file(file_in, use_arrow=True).to_parquet(
+        file_out,
+        compression="zstd",
+        write_covering_bbox=True,
+        schema_version="1.1.0",
     )
 
 
@@ -100,9 +92,9 @@ def outputs(conn, land, wld, geom, geom_type, layer):
     if geom in ["clip", "voronoi"]:
         return
     output_ogr(land, layer, wld, geom, geom_type, output_dir, gdb, id)
-    output_parquet(land, layer, wld, geom_type, parquet, id)
     shutil.rmtree(gdb, ignore_errors=True)
     output_xlsx(gpkg, output_dir, file_name)
+    output_parquet(gpkg, parquet)
 
 
 def main(conn, land, wld):

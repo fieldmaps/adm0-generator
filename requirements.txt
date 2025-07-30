@@ -14,10 +14,14 @@ certifi==2025.7.14
     # via
     #   httpcore
     #   httpx
+    #   pyogrio
+    #   pyproj
 defusedxml==0.7.1
     # via odfpy
 et-xmlfile==2.0.0
     # via openpyxl
+geopandas==1.1.1
+    # via adm0-generator
 greenlet==3.2.3 ; (python_full_version < '3.14' and platform_machine == 'AMD64') or (python_full_version < '3.14' and platform_machine == 'WIN32') or (python_full_version < '3.14' and platform_machine == 'aarch64') or (python_full_version < '3.14' and platform_machine == 'amd64') or (python_full_version < '3.14' and platform_machine == 'ppc64le') or (python_full_version < '3.14' and platform_machine == 'win32') or (python_full_version < '3.14' and platform_machine == 'x86_64')
     # via sqlalchemy
 h11==0.16.0
@@ -41,15 +45,24 @@ importlib-resources==6.5.2
     #   adbc-driver-postgresql
     #   adbc-driver-sqlite
 numpy==2.3.2
-    # via pandas
+    # via
+    #   geopandas
+    #   pandas
+    #   pyogrio
+    #   shapely
 odfpy==1.4.1
     # via pandas
 openpyxl==3.1.5
     # via pandas
 packaging==25.0
-    # via python-calamine
+    # via
+    #   geopandas
+    #   pyogrio
+    #   python-calamine
 pandas==2.3.1
-    # via adm0-generator
+    # via
+    #   adm0-generator
+    #   geopandas
 psycopg==3.2.9
     # via adm0-generator
 psycopg-binary==3.2.9 ; implementation_name != 'pypy'
@@ -58,6 +71,12 @@ psycopg-pool==3.2.6
     # via psycopg
 psycopg2-binary==2.9.10
     # via adm0-generator
+pyarrow==21.0.0
+    # via adm0-generator
+pyogrio==0.11.0
+    # via geopandas
+pyproj==3.7.1
+    # via geopandas
 python-calamine==0.4.0
     # via pandas
 python-dateutil==2.9.0.post0
@@ -66,6 +85,8 @@ pytz==2025.2
     # via pandas
 pyxlsb==1.0.10
     # via pandas
+shapely==2.1.1
+    # via geopandas
 six==1.17.0
     # via python-dateutil
 sniffio==1.3.1

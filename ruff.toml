@@ -6,7 +6,7 @@ docstring-code-format = true
 
 [lint]
 select = ["ALL"]
-ignore = ["D100", "D104", "INP", "S603", "S607"]
+ignore = ["D100", "D104", "INP", "S603", "S607", "S608"]
 
 [lint.pydocstyle]
 convention = "google"
