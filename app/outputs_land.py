@@ -45,8 +45,10 @@ def output_parquet(file_in: Path, file_out: Path):
     read_file(file_in, use_arrow=True).to_parquet(
         file_out,
         compression="zstd",
-        write_covering_bbox=True,
+        compression_level=15,
+        row_group_size=50000,
         schema_version="1.1.0",
+        write_covering_bbox=True,
     )
 
 
