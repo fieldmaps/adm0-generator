@@ -2,7 +2,6 @@ import logging
 import shutil
 import subprocess
 
-from geopandas import read_file
 from psycopg.sql import SQL, Identifier
 
 from .utils import DATABASE, cwd, zip_path
@@ -59,13 +58,17 @@ def output_ogr(land, layer, wld, geom, geom_type, output_dir, file_out, id):
 
 def output_parquet(file_in, file_out):
     file_out.parent.mkdir(parents=True, exist_ok=True)
-    read_file(file_in, use_arrow=True).to_parquet(
-        file_out,
-        compression="zstd",
-        compression_level=15,
-        row_group_size=1,
-        schema_version="1.1.0",
-        write_covering_bbox=True,
+    subprocess.run(
+        [
+            *["gdal", "vector", "convert"],
+            *[file_in, file_out],
+            "--lco=COMPRESSION=ZSTD",
+            "--lco=COMPRESSION_LEVEL=15",
+            "--lco=GEOMETRY_NAME=geometry",
+            "--lco=ROW_GROUP_SIZE=1",
+            "--lco=USE_PARQUET_GEO_TYPES=YES",
+        ],
+        check=False,
     )
 
 

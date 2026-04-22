@@ -3,8 +3,6 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from geopandas import read_file
-
 from .utils import DATABASE, cwd, zip_path
 
 logger = logging.getLogger(__name__)
@@ -42,13 +40,16 @@ def output_ogr(land: str, output_dir: Path, file_out: Path):
 
 def output_parquet(file_in: Path, file_out: Path):
     file_out.parent.mkdir(parents=True, exist_ok=True)
-    read_file(file_in, use_arrow=True).to_parquet(
-        file_out,
-        compression="zstd",
-        compression_level=15,
-        row_group_size=50000,
-        schema_version="1.1.0",
-        write_covering_bbox=True,
+    subprocess.run(
+        [
+            *["gdal", "vector", "convert"],
+            *[file_in, file_out],
+            "--lco=COMPRESSION=ZSTD",
+            "--lco=COMPRESSION_LEVEL=15",
+            "--lco=GEOMETRY_NAME=geometry",
+            "--lco=USE_PARQUET_GEO_TYPES=YES",
+        ],
+        check=False,
     )
 
 
