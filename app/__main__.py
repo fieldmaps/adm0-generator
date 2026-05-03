@@ -1,59 +1,18 @@
-from multiprocessing import Pool
+"""Pipeline entry point — runs the configured step(s) sequentially."""
 
-from . import (
-    attributes,
-    cleanup,
-    continents,
-    download,
-    inputs,
-    intersection,
-    lines,
-    meta,
-    outputs,
-    outputs_land,
-    points,
-    polygonize,
-    polygons,
-    preprocessing,
-)
-from .utils import apply_funcs, lands, logging, world_views
+from logging import getLogger
 
-logger = logging.getLogger(__name__)
+from . import build, export, prepare
+from .config import debug, step
 
-funcs_1 = [
-    attributes.main,
-    inputs.main,
-    polygonize.main,
-    continents.main,
-    intersection.main,
-    outputs_land.main,
-]
-funcs_2 = [
-    polygons.main,
-    points.main,
-    lines.main,
-    outputs.main,
-    cleanup.main,
-]
+logger = getLogger(__name__)
 
-
-def run_pool(world_views, funcs):
-    with Pool() as pool:
-        results = []
-        for land in lands:
-            for world in world_views:
-                args = [land, world, *funcs]
-                results.append(pool.apply_async(apply_funcs, args=args))
-        for res in results:
-            res.get()
-
-
-if __name__ == "__main__":
-    logger.info("starting")
-    download.main()
-    meta.main()
-    preprocessing.main()
-    run_pool([None], funcs_1)
-    run_pool(world_views, funcs_2)
-    cleanup.postprocessing()
-    logger.info("finished")
+logger.info("--debug=%s --step=%s", debug, step or "all")
+logger.info("starting")
+if step in (None, "prepare"):
+    prepare.main()
+if step in (None, "build"):
+    build.main()
+if step in (None, "export"):
+    export.main()
+logger.info("finished")

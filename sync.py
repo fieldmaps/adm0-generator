@@ -1,3 +1,5 @@
+"""Sync pipeline outputs to remote storage via rclone."""
+
 import subprocess
 from pathlib import Path
 
@@ -5,7 +7,8 @@ cwd = Path(__file__).parent
 exts = ["json", "csv", "xlsx"]
 
 
-def sync(src, dest):
+def sync(src: Path, dest: str) -> None:
+    """Sync a local directory to a remote rclone destination."""
     subprocess.run(
         [
             "rclone",
@@ -21,7 +24,8 @@ def sync(src, dest):
     )
 
 
-def copy(src, dest):
+def copy(src: Path, dest: str) -> None:
+    """Copy a single file to a remote rclone destination."""
     subprocess.run(
         [
             "rclone",

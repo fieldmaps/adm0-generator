@@ -1,26 +1,28 @@
-import json
-from datetime import date
-from pathlib import Path
+"""Write dataset metadata to JSON, CSV, and XLSX."""
+
+from datetime import UTC, datetime
+from json import dump
+from logging import getLogger
 
 import pandas as pd
 
-from .utils import DATA_URL, get_land_date, lands, logging, world_views
+from app.config import DATA_URL, lands, output_dir, tmp_dir, world_views
 
-logger = logging.getLogger(__name__)
-cwd = Path(__file__).parent
-data = cwd / "../data"
-outputs = cwd / "../outputs"
+logger = getLogger(__name__)
 
 
-def save_date():
-    with open(data / "date.txt", "w") as f:
-        f.write(date.today().isoformat())
+def _save_date() -> None:
+    """Write today's UTC date to the data directory."""
+    with (tmp_dir / "date.txt").open("w") as f:
+        f.write(datetime.now(tz=UTC).date().isoformat())
 
 
-def main():
-    data.mkdir(exist_ok=True, parents=True)
-    outputs.mkdir(exist_ok=True, parents=True)
-    save_date()
+def main() -> None:
+    """Write metadata JSON, CSV, and XLSX files."""
+    tmp_dir.mkdir(exist_ok=True, parents=True)
+    output_dir.mkdir(exist_ok=True, parents=True)
+    _save_date()
+    osm_date = (tmp_dir / "osm_date.txt").read_text()
     rows = []
     for land in lands:
         for wld in world_views:
@@ -29,7 +31,7 @@ def main():
                 "grp": land,
                 "wld": wld,
                 "adm": 0,
-                "date": get_land_date(),
+                "date": osm_date,
                 "a_parquet": f"{DATA_URL}/{land}/{wld}/adm0_polygons.parquet",
                 "a_gpkg": f"{DATA_URL}/{land}/{wld}/adm0_polygons.gpkg.zip",
                 "a_gdb": f"{DATA_URL}/{land}/{wld}/adm0_polygons.gdb.zip",
@@ -50,7 +52,7 @@ def main():
                 "grp": land,
                 "wld": "land",
                 "adm": 0,
-                "date": get_land_date(),
+                "date": osm_date,
                 "a_parquet": f"{DATA_URL}/{land}/land/land_polygons.parquet",
                 "a_gpkg": f"{DATA_URL}/{land}/land/land_polygons.gpkg.zip",
                 "a_gdb": f"{DATA_URL}/{land}/land/land_polygons.gdb.zip",
@@ -62,11 +64,11 @@ def main():
                 "p_gdb": None,
             },
         )
-    with (outputs / "adm0.json").open("w") as f:
-        json.dump(rows, f, separators=(",", ":"))
+    with (output_dir / "adm0.json").open("w") as f:
+        dump(rows, f, separators=(",", ":"))
     df = pd.DataFrame(rows)
     df["date"] = pd.to_datetime(df["date"])
     df["date"] = df["date"].dt.date
-    df.to_csv(outputs / "adm0.csv", index=False)
-    df.to_excel(outputs / "adm0.xlsx", index=False)
+    df.to_csv(output_dir / "adm0.csv", index=False)
+    df.to_excel(output_dir / "adm0.xlsx", index=False)
     logger.info("meta")

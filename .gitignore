@@ -5,5 +5,5 @@ __pycache__
 *.gpkg-shm
 *.gpkg-wal
 *.pdf
-inputs/land
-inputs/lsib
+tmp/
+.claude/settings.local.json

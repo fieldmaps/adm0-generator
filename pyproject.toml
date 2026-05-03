@@ -3,19 +3,20 @@ name = "adm0-generator"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = [
-    "httpx[http2]",
-    "pandas[excel,sql-other]",
-    "psycopg[binary,pool]",
-    "psycopg2-binary",
-    "pyarrow",
-]
+requires-python = ">=3.12"
+dependencies = ["duckdb", "httpx[http2]", "pandas[excel]", "psutil", "pyarrow"]
 
 [dependency-groups]
 dev = ["ruff", "taskipy"]
 
+[tool.ruff]
+fix = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["COM812", "D203", "D213", "INP001", "S603", "S607", "S608"]
+
 [tool.taskipy.tasks]
 app = "python -m app"
-export = "uv sync -q && uv export -q -o requirements.txt --no-dev --no-hashes"
-ruff = "ruff format && ruff check && ruff format"
+db = "uv run python db.py"
+ruff = "ruff format && ruff check"

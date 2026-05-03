@@ -1,26 +1,22 @@
-FROM ubuntu:25.04
+FROM alpine:edge
 
-ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /srv
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-  gdal-bin postgresql-postgis \
-  python3-pip python3-venv \
-  && rm -rf /var/lib/apt/lists/*
-
-RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+ENV PYTHONUNBUFFERED=1
 
-RUN service postgresql start \
-  && runuser -l postgres -c 'createuser -s root' \
-  && createdb app \
-  && psql -d app -c "CREATE EXTENSION postgis;"
-
-WORKDIR /usr/src/app
-
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN apk add --no-cache \
+        -X https://dl-cdn.alpinelinux.org/alpine/edge/testing \
+        gdal-tools \
+        py3-duckdb \
+        python3 && \
+    python -m venv --system-site-packages /opt/venv && \
+    pip install --no-cache-dir \
+        "httpx[http2]" \
+        "pandas[excel]" \
+        pyarrow && \
+    python -c "import duckdb; conn = duckdb.connect(); conn.execute('INSTALL spatial;')"
 
 COPY app ./app
 
-CMD service postgresql start && python -m app
+ENTRYPOINT ["python", "-m", "app"]
