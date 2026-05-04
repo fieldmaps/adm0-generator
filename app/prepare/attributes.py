@@ -6,17 +6,14 @@ import pandas as pd
 from duckdb import DuckDBPyConnection
 
 from app.config import input_dir
+from app.dates import get_source_dates
 
 logger = getLogger(__name__)
 
 
 def main(conn: DuckDBPyConnection, land: str) -> None:
     """Load attribute tables for the given land source."""
-    osm_date, lsib_date = conn.execute(
-        "SELECT osm_date, lsib_date FROM dates"
-    ).fetchall()[0]
-    osm_date = osm_date.isoformat()
-    lsib_date = lsib_date.isoformat()
+    osm_date, lsib_date = get_source_dates()
     for geom in ["points", "lines"]:
         file = input_dir / f"adm0_{geom}.csv"
         df = pd.read_csv(file, keep_default_na=False, na_values=["", "#N/A"])

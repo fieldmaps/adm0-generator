@@ -12,7 +12,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 import psutil
 from duckdb import DuckDBPyConnection, connect
 
-from .config import PARQUET_OPTS, debug, tmp_dir
+from .config import ALL_LANDS, PARQUET_OPTS, debug, tmp_dir
 
 _PROCESS = psutil.Process()
 logger = getLogger(__name__)
@@ -160,14 +160,21 @@ class ProfiledConnection:
         return getattr(self._conn, name)
 
 
-def get_conn(name: str = "app", *, reset: bool = True) -> ProfiledConnection:
+def get_conn(
+    name: str, land: str | None = None, *, reset: bool = True
+) -> ProfiledConnection:
     """Create a file-based DuckDB connection with the spatial extension loaded.
+
+    The DB file is ``tmp/{name}.duckdb`` or ``tmp/{land}_{name}.duckdb`` when
+    ``land`` is given (land-first to mirror the land-outer loop), so each
+    step × land combination is fully isolated.
 
     With ``reset=True`` (default), the .duckdb file is deleted first. Pass
     ``reset=False`` to attach to an existing file (e.g. a snapshot restored via
     ``cp``) for sub-step iteration via ``iter.py``.
     """
-    db_path = tmp_dir / f"{name}.duckdb"
+    prefix = f"{land}_" if land else ""
+    db_path = tmp_dir / f"{prefix}{name}.duckdb"
     tmp_dir.mkdir(parents=True, exist_ok=True)
     if reset:
         db_path.unlink(missing_ok=True)
@@ -215,26 +222,43 @@ def discard(conn: DuckDBPyConnection, table: str) -> None:
 
 
 def export_debug_tables(
-    conn: DuckDBPyConnection, name: str, only: set[str] | None = None
+    conn: DuckDBPyConnection,
+    name: str,
+    land: str | None = None,
+    only: set[str] | None = None,
 ) -> None:
-    """Export every table in the connection to tmp/debug/{name}_{table}.parquet."""
+    """Export tables under ``tmp/debug/`` mirroring the land-outer loop.
+
+    Per-land tables go to ``tmp/debug/{land}/{name}/{table}.parquet`` (with the
+    ``{land}_`` prefix stripped from the filename); shared tables go to
+    ``tmp/debug/{name}/{table}.parquet``. Only the land and step are folders.
+    """
     debug_dir = tmp_dir / "debug"
-    debug_dir.mkdir(parents=True, exist_ok=True)
+    land_base = debug_dir / land / name if land else None
+    shared_base = debug_dir / name
+    other_prefixes = tuple(f"{l}_" for l in ALL_LANDS if l != land)
     tables = conn.execute(
         "SELECT table_name FROM information_schema.tables "
         "WHERE table_schema = 'main' ORDER BY table_name"
     ).fetchall()
+    prefix = f"{land}_" if land else None
     for (table,) in tables:
         if only is not None and table not in only:
             continue
-        out = debug_dir / f"{name}_{table}.parquet"
+        if table.startswith(other_prefixes):
+            continue
+        if prefix and table.startswith(prefix):
+            out = land_base / f"{table[len(prefix) :]}.parquet"
+        else:
+            out = shared_base / f"{table}.parquet"
+        out.parent.mkdir(parents=True, exist_ok=True)
         has_geom = conn.execute(
             "SELECT COUNT(*) > 0 FROM information_schema.columns "
             f"WHERE table_name = '{table}' AND data_type = 'GEOMETRY'"
         ).fetchall()[0][0]
         opts = PARQUET_OPTS if has_geom else _PARQUET_PLAIN
         conn.execute(f"COPY \"{table}\" TO '{out}' {opts}")
-        logger.info("debug export: %s", out.name)
+        logger.info("debug export: %s", out.relative_to(tmp_dir))
 
 
 def zip_path(file: Path, file_zip: Path) -> None:

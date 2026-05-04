@@ -12,7 +12,7 @@ logger = getLogger(__name__)
 
 def main(conn: DuckDBPyConnection, land: str) -> None:
     """Load input lines and points GeoPackages and append LSIB to lines."""
-    prepare_db = tmp_dir / "prepare.duckdb"
+    prepare_db = tmp_dir / f"{land}_prepare.duckdb"
     for table in ["lsib_00", f"{land}_land_00", f"{land}_attributes_points"]:
         copy_from_db(conn, prepare_db, table)
     for layer, file in [

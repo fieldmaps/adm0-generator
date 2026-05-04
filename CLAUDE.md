@@ -12,31 +12,36 @@ Batch ETL pipeline that generates Administrative Level 0 (country-level) boundar
 
 ## Pipeline overview
 
-Each stage creates its own DuckDB connection (`get_conn("prepare")`, etc.) and closes it when done.
+`app/__main__.py` runs `download.main()` once, then iterates `for land in lands` invoking each step's `main(land)` end-to-end before moving on to the next land. Each step × land combination owns its own DuckDB file at `tmp/{land}_{step}.duckdb` (land-first to mirror the loop; created fresh on entry), so `--step` and `--land` are fully isolated and can be re-run independently. After the land loop, `export.finalize()` writes the metadata catalog.
 
-**`prepare`** (`app/prepare/`):
+**`download`** (`app/download.py`):
 
-1. `dates.main(conn)` — fetches OSM and LSIB publication dates via HTTP
-2. `download.main()` — downloads OSM land zip, USGS land zip, LSIB GeoPackage
-3. `preprocessing.main(conn)` — loads land and LSIB into DuckDB via `ST_Read()`
-4. For each `land`: `attributes.main(conn, land)` — loads CSV attribute tables
+- Downloads OSM land zip, USGS land zip, LSIB GeoPackage into `tmp/download/`. Captures source publication dates atomically with each download (OSM Last-Modified header, LSIB metadata XML) and writes them to `tmp/download/{osm,lsib}/.date`. Idempotent per source: a source is fetched only when its expected extracted file (and `.date` for OSM/LSIB) is missing. To force a refresh: `rm -rf tmp/download/` (or just one source subdir).
 
-**`build`** (`app/build/`): For each `land` in `["osm", "usgs"]`:
+**`prepare.main(land)`** (`app/prepare/`):
 
-1. `inputs.main(conn, land)` — loads adm0 lines/points GeoPackages; appends LSIB to lines
+1. `preprocessing.main(conn, land)` — loads LSIB then `ST_Read`s the requested land source
+2. `attributes.main(conn, land)` — loads CSV attribute tables for the requested land
+
+Source publication dates are read from the cached `.date` files via `app.dates.get_source_dates()` (no DuckDB table); see `app/dates.py`.
+
+**`build.main(land)`** (`app/build/`):
+
+1. `inputs.main(conn, land)` — copies `lsib_00`/`{land}_*` from `{land}_prepare.duckdb`; loads adm0 lines/points GeoPackages; appends LSIB to lines
 2. `polygonize.main(conn, land)` — unions lines → `ST_Polygonize` → joins polygons to points
 3. `continents.main(conn, land)` — identifies land masses crossed by boundary lines
 4. `intersection.main(conn, land)` — clips voronoi polygons to land (per-row to cap GEOS memory)
 
-**`export`** (`app/export/`):
+**`export.main(land)`** (`app/export/`):
 
-1. For each `land`: `outputs_land.main(conn, land)` — exports land polygons
-2. For each `land × world` in `["osm","usgs"] × ["intl","all"]`:
+1. `outputs_land.main(conn, land)` — exports land polygons (reads from `{land}_prepare.duckdb` and `{land}_build.duckdb`)
+2. For each `world` in `["intl", "all"]`:
    - `polygons.main`, `points.main`, `lines.main` — final output tables
    - `outputs.main` — exports GPKG + GDB + Parquet + XLSX
    - `cleanup.main` — drops per-world tables
-3. `cleanup.postprocessing(conn)` — drops remaining intermediate tables
-4. `meta.main()` — writes metadata JSON/CSV/XLSX catalog
+3. `cleanup.postprocessing_land(conn, land)` — drops this land's remaining intermediate tables
+
+**`export.finalize()`** — runs once after all land iterations: calls `meta.main()` to write the metadata JSON/CSV/XLSX catalog. (No cross-land cleanup is needed — each per-land DuckDB file is self-contained.)
 
 ## Key patterns
 
@@ -44,7 +49,7 @@ Each stage creates its own DuckDB connection (`get_conn("prepare")`, etc.) and c
 
 ```python
 from .utils import get_conn
-conn = get_conn("prepare")  # creates tmp/prepare.duckdb, deletes if exists
+conn = get_conn("prepare", land)  # creates tmp/{land}_prepare.duckdb, deletes if exists
 ```
 
 ### Table naming
@@ -130,7 +135,8 @@ docker compose run app
 Local dev (requires DuckDB spatial + GDAL installed):
 
 ```bash
-uv run python -m app                              # all steps
+uv run python -m app                              # all steps (download is fast on re-runs)
+uv run python -m app --step download              # fetch sources only (skips files already in tmp/download/)
 uv run python -m app --step prepare               # single step
 uv run python -m app --step build --debug         # profile + preserve intermediates + dump to tmp/debug/
 uv run python -m app --step build --land usgs     # iterate on one land source
@@ -138,9 +144,11 @@ STEP=build DEBUG=1 LAND=usgs uv run python -m app   # also via env vars
 ```
 
 Flags:
-- `--debug` / `DEBUG=1` — wraps DuckDB connection (logs wall-clock, peak RSS, duckdb-memory delta per query, coalescing consecutive same-label executes into `query xN ...` summaries); `discard()` becomes a no-op (intermediate tables persist); every table is dumped to `tmp/debug/{step}_{table}.parquet` before the connection closes.
-- `--step {prepare,build,export}` / `STEP=...` — run only the named step; default runs all three.
-- `--land {osm,usgs}` / `LAND=...` — process only one land source (default: both). Use for fast iteration; verify with both before merging.
+- `--debug` / `DEBUG=1` — wraps DuckDB connection (logs wall-clock, peak RSS, duckdb-memory delta per query, coalescing consecutive same-label executes into `query xN ...` summaries); `discard()` becomes a no-op (intermediate tables persist); after each `step.main(land)`, tables are dumped under `tmp/debug/`. Layout mirrors the land-outer loop, with only the land and step as folders: per-land tables go to `tmp/debug/{land}/{step}/{table}.parquet` (with the `{land}_` prefix stripped from the filename); shared tables go to `tmp/debug/{step}/{table}.parquet`. Examples: `osm_attributes_lines` → `tmp/debug/osm/prepare/attributes_lines.parquet`; `osm_polygons_01_a_intl` → `tmp/debug/osm/export/polygons_01_a_intl.parquet`; `lsib_00` → `tmp/debug/prepare/lsib_00.parquet`; `dates` → `tmp/debug/prepare/dates.parquet`. Implied by `--step` and `--land` (any partial run is treated as iteration).
+- `--step {download,prepare,build,export}` / `STEP=...` — run only the named step; default runs all four. Implies `--debug`.
+- `--land {osm,usgs}` / `LAND=...` — process only one land source (default: both). Use for fast iteration; verify with both before merging. Implies `--debug`.
+
+To refresh source data, delete the cache: `rm -rf tmp/download/`. The next run (default or `--step download`) re-fetches everything. Compare the `dates: osm=... lsib=...` log line at the top of prepare to spot drift between cached files and current source publication dates.
 
 ### Sub-step iteration with `iter.py`
 
@@ -148,14 +156,14 @@ To iterate on one sub-step (e.g. `app/build/intersection.py`) without re-running
 
 ```bash
 # one-time, after a successful --debug run (intermediate tables preserved):
-cp tmp/build.duckdb tmp/build.snap.duckdb
+cp tmp/usgs_build.duckdb tmp/usgs_build.snap.duckdb
 
 # per iteration: restores the snapshot then calls the named sub-step's main(conn, land) directly
 uv run iter.py build intersection usgs
 DEBUG=1 uv run iter.py build intersection usgs   # with profile output
 ```
 
-Re-snapshot after intentional pipeline changes (`uv run python -m app --step build --debug` then re-`cp`).
+Re-snapshot after intentional pipeline changes (`uv run python -m app --step build --land usgs --debug` then re-`cp`).
 
 ## Coding preferences
 

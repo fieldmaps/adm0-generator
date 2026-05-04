@@ -106,8 +106,8 @@ def _output_parquet(
 
 def main(conn: DuckDBPyConnection, land: str) -> None:
     """Export land polygon outputs for the given land source."""
-    prepare_db = tmp_dir / "prepare.duckdb"
-    build_db = tmp_dir / "build.duckdb"
+    prepare_db = tmp_dir / f"{land}_prepare.duckdb"
+    build_db = tmp_dir / f"{land}_build.duckdb"
     for table in [f"{land}_attributes_points", f"{land}_attributes_lines"]:
         copy_from_db(conn, prepare_db, table)
     for table in [

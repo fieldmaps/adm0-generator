@@ -6,4 +6,4 @@ __pycache__
 *.gpkg-wal
 *.pdf
 tmp/
-.claude/settings.local.json
+.claude

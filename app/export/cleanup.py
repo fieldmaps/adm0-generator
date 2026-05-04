@@ -22,10 +22,3 @@ def postprocessing_land(conn: DuckDBPyConnection, land: str) -> None:
     for layer in LAYERS_INTERMEDIATE:
         discard(conn, f"{land}_{layer}")
     logger.info("%s_postprocessing", land)
-
-
-def postprocessing(conn: DuckDBPyConnection) -> None:
-    """Drop any remaining shared tables after all land sources are processed."""
-    for table in ["osm_land_00", "usgs_land_00", "lsib_00"]:
-        discard(conn, table)
-    logger.info("postprocessing")

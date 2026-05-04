@@ -28,7 +28,7 @@ parser.add_argument("--debug", **_bool_flag("DEBUG"))
 parser.add_argument(
     "--step",
     default=getenv("STEP"),
-    choices=["prepare", "build", "export"],
+    choices=["download", "prepare", "build", "export"],
 )
 parser.add_argument(
     "--land",
@@ -38,8 +38,8 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-debug = args.debug
 step = args.step
+debug = args.debug or step is not None or args.land is not None
 
 # --- XML namespaces for LSIB metadata parsing ---
 LSIB_NS = {
@@ -61,7 +61,8 @@ PARQUET_OPTS = "(COMPRESSION ZSTD, GEOPARQUET_VERSION V2)"
 GEOM_PRECISION = 0.000000001
 
 # --- Pipeline dimensions ---
-lands = [args.land] if args.land else ["osm", "usgs"]
+ALL_LANDS = ("osm", "usgs")
+lands = [args.land] if args.land else list(ALL_LANDS)
 world_views = ["intl", "all"]
 geoms = ["polygons", "lines", "points"]
 

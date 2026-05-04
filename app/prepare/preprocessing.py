@@ -1,11 +1,11 @@
 """Load OSM land, USGS land, and LSIB files into DuckDB."""
 
 from logging import getLogger
-from shutil import rmtree
 
 from duckdb import DuckDBPyConnection
 
-from app.config import download_dir, lands
+from app.config import download_dir
+from app.dates import get_source_dates
 
 logger = getLogger(__name__)
 
@@ -20,30 +20,43 @@ def _fix_lsib(conn: DuckDBPyConnection) -> None:
 
 def _fix_land(conn: DuckDBPyConnection, land: str) -> None:
     """Add wld_update column to land table."""
-    date = conn.execute("SELECT osm_date FROM dates").fetchall()[0][0]
+    osm_date, _ = get_source_dates()
     conn.execute(f"""--sql
         ALTER TABLE "{land}_land_00"
-        ADD COLUMN IF NOT EXISTS wld_update DATE DEFAULT '{date}'
+        ADD COLUMN IF NOT EXISTS wld_update DATE DEFAULT '{osm_date}'
     """)
 
 
-def main(conn: DuckDBPyConnection) -> None:
-    """Load and fix all source layers."""
-    osm_path = next((download_dir / "land_osm").rglob("land_polygons.shp"))
-    usgs_path = download_dir / "land_usgs/land_polygons.gpkg"
+def _load_lsib(conn: DuckDBPyConnection) -> None:
     lsib_path = download_dir / "lsib/LSIB.gpkg"
     conn.execute(
-        f"CREATE OR REPLACE TABLE osm_land_00 AS SELECT * EXCLUDE OGC_FID FROM ST_Read('{osm_path}')"
+        f"CREATE TABLE IF NOT EXISTS lsib_00 AS SELECT * FROM ST_Read('{lsib_path}')"
     )
+    _fix_lsib(conn)
+
+
+def _load_osm(conn: DuckDBPyConnection) -> None:
+    osm_path = next((download_dir / "osm").rglob("land_polygons.shp"))
+    conn.execute(
+        f"CREATE OR REPLACE TABLE osm_land_00 AS "
+        f"SELECT * EXCLUDE OGC_FID FROM ST_Read('{osm_path}')"
+    )
+
+
+def _load_usgs(conn: DuckDBPyConnection) -> None:
+    usgs_path = download_dir / "usgs/land_polygons.gpkg"
     conn.execute(f"""--sql
         CREATE OR REPLACE TABLE usgs_land_00 AS
         SELECT row_number() OVER () AS "FID", * FROM ST_Read('{usgs_path}')
     """)
-    conn.execute(
-        f"CREATE OR REPLACE TABLE lsib_00 AS SELECT * FROM ST_Read('{lsib_path}')"
-    )
-    rmtree(download_dir)
-    _fix_lsib(conn)
-    for land in lands:
-        _fix_land(conn, land)
-    logger.info("preprocessing")
+
+
+def main(conn: DuckDBPyConnection, land: str) -> None:
+    """Load shared LSIB plus the given land source into DuckDB."""
+    _load_lsib(conn)
+    if land == "osm":
+        _load_osm(conn)
+    elif land == "usgs":
+        _load_usgs(conn)
+    _fix_land(conn, land)
+    logger.info("preprocessing %s", land)

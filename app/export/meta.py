@@ -7,6 +7,7 @@ from logging import getLogger
 import pandas as pd
 
 from app.config import DATA_URL, lands, output_dir, tmp_dir, world_views
+from app.dates import get_source_dates
 
 logger = getLogger(__name__)
 
@@ -22,7 +23,7 @@ def main() -> None:
     tmp_dir.mkdir(exist_ok=True, parents=True)
     output_dir.mkdir(exist_ok=True, parents=True)
     _save_date()
-    osm_date = (tmp_dir / "osm_date.txt").read_text()
+    osm_date, _ = get_source_dates()
     rows = []
     for land in lands:
         for wld in world_views:

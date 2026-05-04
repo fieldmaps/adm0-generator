@@ -4,3 +4,4 @@ services:
     volumes:
       - ./inputs:/srv/inputs
       - ./outputs:/srv/outputs
+      - ./tmp:/srv/tmp
