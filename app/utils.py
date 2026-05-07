@@ -12,7 +12,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 import psutil
 from duckdb import DuckDBPyConnection, connect
 
-from .config import ALL_LANDS, PARQUET_OPTS, debug, tmp_dir
+from .config import ALL_LANDS, PARQUET_OPTS, debug, download_dir, tmp_dir
 
 _PROCESS = psutil.Process()
 logger = getLogger(__name__)
@@ -259,6 +259,13 @@ def export_debug_tables(
         opts = PARQUET_OPTS if has_geom else _PARQUET_PLAIN
         conn.execute(f"COPY \"{table}\" TO '{out}' {opts}")
         logger.info("debug export: %s", out.relative_to(tmp_dir))
+
+
+def get_source_dates() -> tuple[str, str]:
+    """Return ``(osm_date, lsib_date)`` as ISO date strings."""
+    osm_date = (download_dir / "osm/.date").read_text().strip()
+    lsib_date = (download_dir / "lsib/.date").read_text().strip()
+    return osm_date, lsib_date
 
 
 def zip_path(file: Path, file_zip: Path) -> None:

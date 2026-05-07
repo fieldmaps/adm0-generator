@@ -3,17 +3,17 @@
 Workflow:
 
     # one-time, after a successful run with --debug (intermediate tables preserved):
-    cp tmp/usgs_build.duckdb tmp/usgs_build.snap.duckdb
+    cp tmp/usgs__03_build.duckdb tmp/usgs__03_build.snap.duckdb
 
     # per iteration (~5 sec restore + the function under test):
-    uv run iter.py build intersection usgs
-    uv run iter.py build polygonize usgs
+    uv run iter.py _03_build _03d_intersection usgs
+    uv run iter.py _03_build _03b_polygonize usgs
 
 The snapshot is restored to ``tmp/{land}_{step}.duckdb`` then the named sub-step's
 ``main(conn, land)`` is called directly, skipping every prior sub-step.
 
 To take a fresh snapshot after intentional pipeline changes, re-run the full
-step (``uv run python -m app --step build --land usgs --debug``) and re-copy.
+step (``uv run python -m app --step _03_build --land usgs --debug``) and re-copy.
 """
 
 # `app.config` parses sys.argv at import time, so consume iter.py's args
@@ -22,10 +22,10 @@ from argparse import ArgumentParser
 from sys import argv
 
 _parser = ArgumentParser(description=__doc__)
-_parser.add_argument("step", choices=["build", "export"])
+_parser.add_argument("step", choices=["_03_build", "_04_export"])
 _parser.add_argument(
     "substep",
-    help="Module under app/{step}/ to invoke (e.g. intersection).",
+    help="Module under app/{step}/ to invoke (e.g. _03d_intersection).",
 )
 _parser.add_argument("land", choices=["osm", "usgs"])
 _args = _parser.parse_args()

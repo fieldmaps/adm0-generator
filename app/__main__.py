@@ -2,7 +2,7 @@
 
 from logging import getLogger
 
-from . import build, download, export, prepare
+from . import _01_download, _02_prepare, _03_build, _04_export
 from .config import debug, lands, step
 
 logger = getLogger(__name__)
@@ -13,24 +13,24 @@ def _should_run(name: str) -> bool:
 
 
 def _process_land(land: str) -> None:
-    if _should_run("prepare"):
-        prepare.main(land)
-    if _should_run("build"):
-        build.main(land)
-    if _should_run("export"):
-        export.main(land)
+    if _should_run("_02_prepare"):
+        _02_prepare.main(land)
+    if _should_run("_03_build"):
+        _03_build.main(land)
+    if _should_run("_04_export"):
+        _04_export.main(land)
 
 
 logger.info("--debug=%s --step=%s --lands=%s", debug, step or "all", ",".join(lands))
 logger.info("starting")
 
-if _should_run("download"):
-    download.main()
+if _should_run("_01_download"):
+    _01_download.main()
 
 for land in lands:
     _process_land(land)
 
-if _should_run("export"):
-    export.finalize()
+if _should_run("_04_export"):
+    _04_export.finalize()
 
 logger.info("finished")

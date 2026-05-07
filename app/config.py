@@ -28,7 +28,7 @@ parser.add_argument("--debug", **_bool_flag("DEBUG"))
 parser.add_argument(
     "--step",
     default=getenv("STEP"),
-    choices=["download", "prepare", "build", "export"],
+    choices=["_01_download", "_02_prepare", "_03_build", "_04_export"],
 )
 parser.add_argument(
     "--land",

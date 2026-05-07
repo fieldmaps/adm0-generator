@@ -7,7 +7,7 @@ from logging import getLogger
 import pandas as pd
 
 from app.config import DATA_URL, lands, output_dir, tmp_dir, world_views
-from app.dates import get_source_dates
+from app.utils import get_source_dates
 
 logger = getLogger(__name__)
 

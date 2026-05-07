@@ -5,7 +5,7 @@ from logging import getLogger
 from duckdb import DuckDBPyConnection
 
 from app.config import download_dir
-from app.dates import get_source_dates
+from app.utils import get_source_dates
 
 logger = getLogger(__name__)
 

@@ -1,10 +1,8 @@
 """Download OSM land polygons, USGS land polygons, and LSIB boundary lines.
 
-Idempotent per source: a source is fetched only when its expected extracted
-file (and, for OSM/LSIB, its sibling ``.date`` stamp) is missing from
-``tmp/download/``. Source publication dates are captured atomically with the
-download so a cached file and its date never drift apart. To force a refresh,
-delete the cache (``rm -rf tmp/download/``) or just one source subdir.
+Always fetches fresh data. Source publication dates are captured atomically
+with each download (OSM Last-Modified header, LSIB metadata XML) and written
+to ``tmp/download/{osm,lsib}/.date``.
 """
 
 from concurrent.futures import ThreadPoolExecutor
@@ -83,47 +81,17 @@ def _fetch_usgs(usgs: Path) -> None:
     _download_zip(usgs, LAND_USGS_URL)
 
 
-def _lsib_cached(lsib: Path) -> bool:
-    return (lsib / "LSIB.gpkg").exists() and (lsib / ".date").exists()
-
-
-def _osm_cached(osm: Path) -> bool:
-    return (
-        next(osm.rglob("land_polygons.shp"), None) is not None
-        and (osm / ".date").exists()
-    )
-
-
-def _usgs_cached(usgs: Path) -> bool:
-    return (usgs / "land_polygons.gpkg").exists()
-
-
 def main() -> None:
-    """Download required input datasets, skipping any that are already cached."""
+    """Download required input datasets."""
     osm = download_dir / "osm"
     usgs = download_dir / "usgs"
     lsib = download_dir / "lsib"
     for d in [osm, usgs, lsib]:
         d.mkdir(parents=True, exist_ok=True)
 
-    jobs = []
-    cached = 0
-    if _lsib_cached(lsib):
-        cached += 1
-    else:
-        jobs.append((_fetch_lsib, lsib))
-    if _osm_cached(osm):
-        cached += 1
-    else:
-        jobs.append((_fetch_osm, osm))
-    if _usgs_cached(usgs):
-        cached += 1
-    else:
-        jobs.append((_fetch_usgs, usgs))
-
-    if jobs:
-        with ThreadPoolExecutor(max_workers=len(jobs)) as pool:
-            futures = [pool.submit(fn, arg) for fn, arg in jobs]
-        for f in futures:
-            f.result()
-    logger.info("download: %d fetched, %d cached", len(jobs), cached)
+    jobs = [(_fetch_lsib, lsib), (_fetch_osm, osm), (_fetch_usgs, usgs)]
+    with ThreadPoolExecutor(max_workers=len(jobs)) as pool:
+        futures = [pool.submit(fn, arg) for fn, arg in jobs]
+    for f in futures:
+        f.result()
+    logger.info("download: %d fetched", len(jobs))
