@@ -4,8 +4,15 @@ from logging import getLogger
 
 from . import _01_download, _02_prepare, _03_build, _04_export
 from .config import debug, lands, step
+from .utils import log_file
 
 logger = getLogger(__name__)
+
+_LAND_STEPS = (
+    ("_02_prepare", _02_prepare.main),
+    ("_03_build", _03_build.main),
+    ("_04_export", _04_export.main),
+)
 
 
 def _should_run(name: str) -> bool:
@@ -13,12 +20,10 @@ def _should_run(name: str) -> bool:
 
 
 def _process_land(land: str) -> None:
-    if _should_run("_02_prepare"):
-        _02_prepare.main(land)
-    if _should_run("_03_build"):
-        _03_build.main(land)
-    if _should_run("_04_export"):
-        _04_export.main(land)
+    for name, fn in _LAND_STEPS:
+        if _should_run(name):
+            with log_file(f"{land}_{name}"):
+                fn(land)
 
 
 logger.info("--debug=%s --step=%s --lands=%s", debug, step or "all", ",".join(lands))

@@ -18,7 +18,7 @@ def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
 
 
 def postprocessing_land(conn: DuckDBPyConnection, land: str) -> None:
-    """Drop all intermediate tables for one land source after its world views are done."""
+    """Drop all intermediate tables for one land after its world views are done."""
     for layer in LAYERS_INTERMEDIATE:
         discard(conn, f"{land}_{layer}")
     logger.info("%s_postprocessing", land)

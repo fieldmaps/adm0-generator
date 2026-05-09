@@ -1,5 +1,6 @@
 """Pipeline-wide constants and configuration."""
 
+import os
 from argparse import ArgumentParser
 from logging import INFO, basicConfig
 from os import getenv
@@ -52,13 +53,14 @@ DATA_URL = "https://data.fieldmaps.io/adm0"
 LAND_OSM_URL = (
     "https://osmdata.openstreetmap.de/download/land-polygons-complete-4326.zip"
 )
-LAND_USGS_URL = "https://data.fieldmaps.io/adm0/usgs/land/land_polygons.gpkg.zip"
+LAND_USGS_URL = "https://data.geodata.state.gov/WorldPolygons.zip"
 LSIB_URL = "https://data.geodata.state.gov/LSIB.gpkg"
 LSIB_META_URL = "https://geodata.state.gov/geonetwork/srv/api/records/3bdb81a0-c1b9-439a-a0b1-85dac30c59b2"
 
 # --- Export options ---
-PARQUET_OPTS = "(COMPRESSION ZSTD, GEOPARQUET_VERSION V2)"
+PARQUET_OPTS = "(COMPRESSION ZSTD, COMPRESSION_LEVEL 15, GEOPARQUET_VERSION V2)"
 GEOM_PRECISION = 0.000000001
+os.environ["OGR_ORGANIZE_POLYGONS"] = "ONLY_CCW"
 
 # --- Pipeline dimensions ---
 ALL_LANDS = ("osm", "usgs")

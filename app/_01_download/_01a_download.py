@@ -79,6 +79,10 @@ def _fetch_osm(osm: Path) -> None:
 
 def _fetch_usgs(usgs: Path) -> None:
     _download_zip(usgs, LAND_USGS_URL)
+    inner = next(usgs.rglob("WorldPolygon*.zip"))
+    with ZipFile(inner) as z:
+        z.extractall(usgs)
+    inner.unlink()
 
 
 def main() -> None:

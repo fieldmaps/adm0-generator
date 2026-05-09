@@ -4,9 +4,11 @@ import contextlib
 import re
 import threading
 import time
-from logging import getLogger
+from collections.abc import Iterator
+from logging import FileHandler, Formatter, getLogger
 from pathlib import Path
 from shutil import make_archive
+from typing import cast
 from zipfile import ZIP_DEFLATED, ZipFile
 
 import psutil
@@ -160,14 +162,35 @@ class ProfiledConnection:
         return getattr(self._conn, name)
 
 
+@contextlib.contextmanager
+def log_file(name: str) -> Iterator[None]:
+    """Tee root logger to ``tmp/{name}.log`` for the duration of the block.
+
+    Pair the ``name`` with the matching ``get_conn()`` name so each .duckdb
+    file written has a sibling .log capturing every log line for that scope.
+    """
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+    handler = FileHandler(tmp_dir / f"{name}.log", mode="w")
+    handler.setFormatter(
+        Formatter("%(asctime)s - %(name)s - %(message)s", "%Y-%m-%d %H:%M:%S")
+    )
+    root = getLogger()
+    root.addHandler(handler)
+    try:
+        yield
+    finally:
+        root.removeHandler(handler)
+        handler.close()
+
+
 def get_conn(
     name: str, land: str | None = None, *, reset: bool = True
-) -> ProfiledConnection:
+) -> DuckDBPyConnection:
     """Create a file-based DuckDB connection with the spatial extension loaded.
 
     The DB file is ``tmp/{name}.duckdb`` or ``tmp/{land}_{name}.duckdb`` when
     ``land`` is given (land-first to mirror the land-outer loop), so each
-    step × land combination is fully isolated.
+    step x land combination is fully isolated.
 
     With ``reset=True`` (default), the .duckdb file is deleted first. Pass
     ``reset=False`` to attach to an existing file (e.g. a snapshot restored via
@@ -189,7 +212,7 @@ def get_conn(
     ).fetchone()[0]
     value, unit = raw.split()
     conn.execute(f"SET memory_limit = '{float(value) * 0.75:.2f} {unit}'")
-    return ProfiledConnection(conn)
+    return cast("DuckDBPyConnection", ProfiledConnection(conn))
 
 
 def write_parquet(
@@ -236,7 +259,7 @@ def export_debug_tables(
     debug_dir = tmp_dir / "debug"
     land_base = debug_dir / land / name if land else None
     shared_base = debug_dir / name
-    other_prefixes = tuple(f"{l}_" for l in ALL_LANDS if l != land)
+    other_prefixes = tuple(f"{ln}_" for ln in ALL_LANDS if ln != land)
     tables = conn.execute(
         "SELECT table_name FROM information_schema.tables "
         "WHERE table_schema = 'main' ORDER BY table_name"

@@ -1,14 +1,13 @@
 # adm0-generator
 
-Batch ETL pipeline that generates Administrative Level 0 (country-level) boundary datasets by combining OpenStreetMap land polygons and USGS land polygons with the U.S. State Department's LSIB political boundary lines. Outputs GeoPackage, OpenFileGDB, GeoParquet, and XLSX for each combination of land source × world view.
+Batch ETL pipeline that generates Administrative Level 0 (country-level) boundary datasets by combining OpenStreetMap land polygons and the U.S. State Department's World Polygons (GSV-derived; pipeline id `usgs`) with the State Department's LSIB political boundary lines. Outputs GeoPackage, OpenFileGDB, GeoParquet, and XLSX for each combination of land source × world view.
 
 ## Stack
 
-- **DuckDB** with spatial extension — all spatial processing
-- **gdal vector convert** — GDB and XLSX export (reads from generated GeoPackage)
+- **DuckDB** with spatial extension — all spatial processing and all output formats (GPKG, OpenFileGDB, GeoParquet, XLSX) via `COPY TO ... FORMAT GDAL`
 - **pandas** — reads attribute CSVs, registered into DuckDB via `conn.register()`
 - **httpx** — downloads input data
-- **Docker** — single-service image, no database server
+- **Docker** — single-service image (`python:3.14-slim` + pip-installed DuckDB), no database server
 
 ## Pipeline overview
 
@@ -88,28 +87,45 @@ SELECT UNNEST(ST_Dump(ST_Polygonize(list(geom)))).geom AS geom FROM ...
 
 ### Exporting
 
-**GeoPackage** — DuckDB COPY TO (driver name is `GPKG`, not `GeoPackage`):
+All exports go through DuckDB `COPY TO`. The spatial extension bundles GDAL, so no system GDAL is required.
+
+**GeoPackage** — driver name is `GPKG`, not `GeoPackage`:
 
 ```sql
 COPY (SELECT * EXCLUDE id FROM "table" ORDER BY adm0_id)
-TO 'file.gpkg' (FORMAT GDAL, DRIVER 'GPKG', LAYER_CREATION_OPTIONS 'GEOMETRY_NAME=geom')
+TO 'file.gpkg' (FORMAT GDAL, DRIVER 'GPKG')
 ```
 
-**GeoParquet** — DuckDB COPY TO:
+**OpenFileGDB** — wrap geom in `ST_MakeValid` and pin `GEOMETRY_TYPE` (driver requires a single geometry type per layer):
+
+```sql
+COPY (
+    SELECT * EXCLUDE (id, geom), ST_MakeValid(geom) AS geom
+    FROM "table" ORDER BY adm0_id
+)
+TO 'file.gdb' (FORMAT GDAL, DRIVER 'OpenFileGDB', GEOMETRY_TYPE 'MULTIPOLYGON')
+```
+
+**GeoParquet**:
 
 ```sql
 COPY (SELECT * EXCLUDE (id, geom), geom AS geometry FROM "table" ORDER BY adm0_id)
 TO 'file.parquet' (COMPRESSION ZSTD, GEOPARQUET_VERSION V2, ROW_GROUP_SIZE 1)
 ```
 
-**GDB / XLSX** — `gdal vector convert` reading from the generated GeoPackage.
+**XLSX** — attributes only (drop geom):
+
+```sql
+COPY (SELECT * EXCLUDE (id, geom) FROM "table" ORDER BY adm0_id)
+TO 'file.xlsx' (FORMAT GDAL, DRIVER 'XLSX')
+```
 
 ## Input sources
 
 | Constant        | Source                                                     |
 | --------------- | ---------------------------------------------------------- |
 | `LAND_OSM_URL`  | osmdata.openstreetmap.de — land-polygons-complete-4326.zip |
-| `LAND_USGS_URL` | data.fieldmaps.io — USGS land GeoPackage                   |
+| `LAND_USGS_URL` | data.geodata.state.gov — World Polygons (GSV-derived)      |
 | `LSIB_URL`      | data.geodata.state.gov — LSIB GeoPackage                   |
 
 ## Output structure
@@ -132,7 +148,7 @@ docker compose build
 docker compose run app
 ```
 
-Local dev (requires DuckDB spatial + GDAL installed):
+Local dev (DuckDB spatial extension auto-installs on first run):
 
 ```bash
 uv run python -m app                                    # all steps
@@ -165,7 +181,6 @@ Re-snapshot after intentional pipeline changes (`uv run python -m app --step _03
 
 ## Coding preferences
 
-- **GDAL CLI** — use `gdal vector convert` for vector format conversions, not `ogr2ogr`
-- **Verify options against docs** — before writing any non-obvious option name (DuckDB COPY TO drivers, GDAL flags, etc.), check official docs (duckdb.org, gdal.org); never infer from analogous APIs
+- **Verify options against docs** — before writing any non-obvious option name (DuckDB COPY TO drivers, GDAL driver options exposed via DuckDB, etc.), check official docs (duckdb.org, gdal.org); never infer from analogous APIs
 - **DuckDB spatial OOM** — avoid vectorized spatial joins on large GEOS geometries; use per-row Python loops passing geometry as a WKB parameter (`ST_GeomFromWKB($1)`) so DuckDB creates one GEOS object per `execute()` call instead of N per chunk; see memory for full patterns and benchmarks
 - **Scalar subquery vs WKB param** — `WHERE ST_Crosses(a.geom, (SELECT geom FROM t))` OOMs but `WHERE ST_Crosses(a.geom, ST_GeomFromWKB($1))` with the WKB fetched once in Python does not: DuckDB re-evaluates a scalar subquery per vectorized chunk, creating an extra GEOS object each time; a bound param is materialized once for the whole query

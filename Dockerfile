@@ -1,21 +1,14 @@
-FROM alpine:edge
+FROM python:3.14-slim
 
 WORKDIR /srv
 
-ENV PATH="/opt/venv/bin:$PATH"
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1 \
+    PATH="/srv/.venv/bin:$PATH"
 
-RUN apk add --no-cache \
-        -X https://dl-cdn.alpinelinux.org/alpine/edge/testing \
-        gdal-tools \
-        py3-duckdb \
-        python3 && \
-    python -m venv --system-site-packages /opt/venv && \
-    pip install --no-cache-dir \
-        "httpx[http2]" \
-        "pandas[excel]" \
-        pyarrow && \
-    python -c "import duckdb; conn = duckdb.connect(); conn.execute('INSTALL spatial;')"
+COPY pyproject.toml uv.lock ./
+RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
+    uv sync --frozen --no-dev --no-install-project && \
+    python -c "import duckdb; duckdb.connect().execute('INSTALL spatial')"
 
 COPY app ./app
 

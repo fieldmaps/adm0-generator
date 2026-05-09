@@ -27,23 +27,44 @@ def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
         )
     """)
 
+    # Per-pair INSERT: vectorizing ST_Intersection across all lines for a
+    # continent-size land polygon balloons GEOS memory (each chunk x thread
+    # deserializes the bound polygon WKB). Bbox-prefilter candidates with
+    # ST_Envelope (5-point rect) then loop one (line, land) pair per execute,
+    # bound as WKB. Same pattern as _03d_intersection.py.
     fids = [
         r[0] for r in conn.execute(f'SELECT DISTINCT "FID" FROM "{land_01}"').fetchall()
     ]
     for fid in fids:
         land_wkb = conn.execute(
             f'SELECT ST_AsWKB(geom) FROM "{land_01}" WHERE "FID" = $1', [fid]
-        ).fetchone()[0]
-        conn.execute(
+        ).fetchall()[0][0]
+        env_wkb = conn.execute(
+            f'SELECT ST_AsWKB(ST_Envelope(geom)) FROM "{land_01}" WHERE "FID" = $1',
+            [fid],
+        ).fetchall()[0][0]
+        candidates = conn.execute(
             f"""--sql
-            INSERT INTO "{tmp}"
-            SELECT country1, country2, rank, label,
-                   ST_CollectionExtract(ST_Intersection(a.geom, ST_GeomFromWKB($1)), 2) AS geom
-            FROM "{lines_00}" AS a
-            WHERE ST_Intersects(a.geom, ST_GeomFromWKB($1))
-        """,
-            [land_wkb],
-        )
+            SELECT country1, country2, rank, label, ST_AsWKB(geom)
+            FROM "{lines_00}"
+            WHERE ST_Intersects(ST_Envelope(geom), ST_GeomFromWKB($1))
+            """,
+            [env_wkb],
+        ).fetchall()
+        for c1, c2, rank, label, line_wkb in candidates:
+            conn.execute(
+                f"""--sql
+                INSERT INTO "{tmp}"
+                SELECT $1, $2, $3, $4,
+                       ST_CollectionExtract(
+                           ST_Intersection(
+                               ST_GeomFromWKB($5),
+                               ST_GeomFromWKB($6)
+                           ), 2
+                       )
+                """,
+                [c1, c2, rank, label, line_wkb, land_wkb],
+            )
 
     conn.execute(f"""--sql
         CREATE OR REPLACE TABLE "{out}" AS

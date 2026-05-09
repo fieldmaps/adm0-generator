@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = ["duckdb", "httpx[http2]", "pandas[excel]", "psutil", "pyarrow"]
 
 [dependency-groups]
-dev = ["ruff", "taskipy"]
+dev = ["ruff"]
 
 [tool.ruff]
 fix = true
@@ -15,8 +15,3 @@ fix = true
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = ["COM812", "D203", "D213", "INP001", "S603", "S607", "S608"]
-
-[tool.taskipy.tasks]
-app = "python -m app"
-db = "uv run python db.py"
-ruff = "ruff format && ruff check"

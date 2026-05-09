@@ -17,7 +17,7 @@ docker compose build
 docker compose up
 ```
 
-On first run, spatial source data (OpenStreetMap land polygons, USGS land polygons, and the LSIB boundary lines) is downloaded into `tmp/download/` and then processed into the `outputs` directory. Subsequent runs reuse the cached downloads in place, so re-running the pipeline is fast. To refresh sources with newer upstream releases, delete the cache and run again: `rm -rf tmp/download/`. Per-source granularity is supported — deleting just `tmp/download/osm/` (for example) will cause only OpenStreetMap land polygons to be re-fetched on the next run. The hand-curated ADM0 line and point templates live in `inputs/` and can be edited locally to use custom boundaries, so long as they follow the same naming conventions and schemas as the originals.
+On first run, spatial source data (OpenStreetMap land polygons, U.S. State Department World Polygons, and the LSIB boundary lines) is downloaded into `tmp/download/` and then processed into the `outputs` directory. Subsequent runs reuse the cached downloads in place, so re-running the pipeline is fast. To refresh sources with newer upstream releases, delete the cache and run again: `rm -rf tmp/download/`. Per-source granularity is supported — deleting just `tmp/download/osm/` (for example) will cause only OpenStreetMap land polygons to be re-fetched on the next run. The hand-curated ADM0 line and point templates live in `inputs/` and can be edited locally to use custom boundaries, so long as they follow the same naming conventions and schemas as the originals.
 
 ## Methodology
 
