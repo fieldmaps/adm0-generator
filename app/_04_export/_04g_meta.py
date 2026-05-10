@@ -47,24 +47,6 @@ def main() -> None:
                 "p_xlsx": f"{DATA_URL}/{land}/{wld}/adm0_points.xlsx",
             }
             rows.append(row)
-        rows.append(
-            {
-                "id": f"{land}_land_polygons",
-                "grp": land,
-                "wld": "land",
-                "adm": 0,
-                "date": osm_date,
-                "a_parquet": f"{DATA_URL}/{land}/land/land_polygons.parquet",
-                "a_gpkg": f"{DATA_URL}/{land}/land/land_polygons.gpkg.zip",
-                "a_gdb": f"{DATA_URL}/{land}/land/land_polygons.gdb.zip",
-                "a_xlsx": None,
-                "l_gpkg": None,
-                "l_gdb": None,
-                "p_xlsx": None,
-                "p_gpkg": None,
-                "p_gdb": None,
-            },
-        )
     with (output_dir / "adm0.json").open("w") as f:
         dump(rows, f, separators=(",", ":"))
     df = pd.DataFrame(rows)

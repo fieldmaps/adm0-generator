@@ -4,7 +4,6 @@ from app.config import debug, world_views
 from app.utils import export_debug_tables, get_conn
 
 from . import (
-    _04a_outputs_land,
     _04b_lines,
     _04c_polygons,
     _04d_points,
@@ -17,7 +16,6 @@ from . import (
 def main(land: str) -> None:
     """Run the export stage for one land source."""
     conn = get_conn("_04_export", land)
-    _04a_outputs_land.main(conn, land)
     for world in world_views:
         _04b_lines.main(conn, land, world)
         _04c_polygons.main(conn, land, world)

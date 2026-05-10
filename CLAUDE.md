@@ -33,12 +33,11 @@ Source publication dates are read from the `.date` files written during download
 
 **`_04_export.main(land)`** (`app/_04_export/`):
 
-1. `_04a_outputs_land.main(conn, land)` — exports land polygons (reads from `{land}__02_prepare.duckdb` and `{land}__03_build.duckdb`)
-2. For each `world` in `["intl", "all"]`:
+1. For each `world` in `["intl", "all"]`:
    - `_04b_lines.main`, `_04c_polygons.main`, `_04d_points.main` — final output tables
    - `_04e_outputs.main` — exports GPKG + GDB + Parquet + XLSX
    - `_04f_cleanup.main` — drops per-world tables
-3. `_04f_cleanup.postprocessing_land(conn, land)` — drops this land's remaining intermediate tables
+2. `_04f_cleanup.postprocessing_land(conn, land)` — drops this land's remaining intermediate tables
 
 **`_04_export.finalize()`** — runs once after all land iterations: calls `_04g_meta.main()` to write the metadata JSON/CSV/XLSX catalog. (No cross-land cleanup is needed — each per-land DuckDB file is self-contained.)
 
@@ -137,8 +136,6 @@ outputs/adm0/{osm,usgs}/{intl,all}/
   adm0_points.{gpkg,gdb,parquet,xlsx}
   adm0_voronoi.gpkg.zip      (intl only)
   adm0_clip.gpkg.zip         (intl only)
-outputs/adm0/{osm,usgs}/land/
-  land_polygons.{gpkg,gdb,parquet}
 ```
 
 ## Running
