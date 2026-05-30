@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = ["duckdb", "httpx[http2]", "pandas[excel]", "psutil", "pyarrow"]
 
 [dependency-groups]
-dev = ["ruff"]
+dev = ["obstore", "python-dotenv", "ruff"]
 
 [tool.ruff]
 fix = true
