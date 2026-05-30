@@ -32,7 +32,8 @@ def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
                     FROM renamed
                     GROUP BY id
                 )
-                SELECT b.* EXCLUDE wld_view, '{world}' AS wld_view, a.geom
+                SELECT b.* EXCLUDE (wld_view, wld_notes),
+                       '{world}' AS wld_view, b.wld_notes, a.geom
                 FROM dissolved AS a
                 LEFT JOIN "{attrs}" AS b ON a.id = b.id
             """)

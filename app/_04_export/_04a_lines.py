@@ -90,7 +90,7 @@ def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
         ON a.country1 = b.country1
         AND a.country2 = b.country2
         AND a.rank = b.rank
-        AND a.label = b.label
+        AND a.label IS NOT DISTINCT FROM b.label
         WHERE COALESCE("rank_{world}", a.rank) > 0
     """)
 

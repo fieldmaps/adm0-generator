@@ -36,7 +36,7 @@ def _output_gpkg(
     """)
 
 
-def _output_gdb(
+def _output_gdb(  # noqa: PLR0913
     conn: DuckDBPyConnection,
     table: str,
     id_col: str,

@@ -1,7 +1,7 @@
 """Export stage modules."""
 
-from app.config import debug, world_views
-from app.utils import export_debug_tables, get_conn
+from app.config import debug, tmp_dir, world_views
+from app.utils import copy_from_db, export_debug_tables, get_conn
 
 from . import (
     _04a_lines,
@@ -16,6 +16,17 @@ from . import (
 def main(land: str) -> None:
     """Run the export stage for one land source."""
     conn = get_conn("_04_export", land)
+    prepare_db = tmp_dir / f"{land}__02_prepare.duckdb"
+    build_db = tmp_dir / f"{land}__03_build.duckdb"
+    for table in [f"{land}_attributes_points", f"{land}_attributes_lines"]:
+        copy_from_db(conn, prepare_db, table)
+    for table in [
+        f"{land}_land_01",
+        f"{land}_lines_00",
+        f"{land}_polygons_00",
+        f"{land}_voronoi_00",
+    ]:
+        copy_from_db(conn, build_db, table)
     for world in world_views:
         _04a_lines.main(conn, land, world)
         _04b_polygons.main(conn, land, world)

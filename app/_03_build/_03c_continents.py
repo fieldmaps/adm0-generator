@@ -23,7 +23,7 @@ def main(conn: DuckDBPyConnection, land: str) -> None:
         CREATE OR REPLACE TABLE "{table_out}" AS
         SELECT *
         FROM "{table_in1}" AS a
-        WHERE ST_Crosses(a.geom, ST_GeomFromWKB($1))
+        WHERE ST_Intersects(a.geom, ST_GeomFromWKB($1))
         """,
         [boundary_wkb],
     )

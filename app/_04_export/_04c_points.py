@@ -25,7 +25,8 @@ def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
                    ) AS geom
             FROM "{polygons_in}"
         )
-        SELECT b.* EXCLUDE wld_view, '{world}' AS wld_view, a.geom
+        SELECT b.* EXCLUDE (wld_view, wld_notes),
+               '{world}' AS wld_view, b.wld_notes, a.geom
         FROM centers AS a
         JOIN "{attrs}" AS b ON a.id = b.id
     """)
