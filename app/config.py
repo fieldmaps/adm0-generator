@@ -87,19 +87,6 @@ LAYERS_WORLD = [
     "voronoi_01_p",
 ]
 
-# --- Intermediate table suffixes dropped after all world-views ---
-LAYERS_INTERMEDIATE = [
-    "attributes_lines",
-    "attributes_points",
-    "lines_00",
-    "lines_01",
-    "points_00",
-    "polygons_00",
-    "polygons_01",
-    "voronoi_00",
-    "land_01",
-]
-
 # --- Directories ---
 cwd = Path(__file__).parent
 tmp_dir = cwd / "../tmp"

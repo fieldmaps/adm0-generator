@@ -4,12 +4,12 @@ from app.config import debug, world_views
 from app.utils import export_debug_tables, get_conn
 
 from . import (
-    _04b_lines,
-    _04c_polygons,
-    _04d_points,
-    _04e_outputs,
-    _04f_cleanup,
-    _04g_meta,
+    _04a_lines,
+    _04b_polygons,
+    _04c_points,
+    _04d_outputs,
+    _04e_cleanup,
+    _04f_meta,
 )
 
 
@@ -17,12 +17,11 @@ def main(land: str) -> None:
     """Run the export stage for one land source."""
     conn = get_conn("_04_export", land)
     for world in world_views:
-        _04b_lines.main(conn, land, world)
-        _04c_polygons.main(conn, land, world)
-        _04d_points.main(conn, land, world)
-        _04e_outputs.main(conn, land, world)
-        _04f_cleanup.main(conn, land, world)
-    _04f_cleanup.postprocessing_land(conn, land)
+        _04a_lines.main(conn, land, world)
+        _04b_polygons.main(conn, land, world)
+        _04c_points.main(conn, land, world)
+        _04d_outputs.main(conn, land, world)
+        _04e_cleanup.main(conn, land, world)
     if debug:
         export_debug_tables(conn, "_04_export", land)
     conn.close()
@@ -30,4 +29,4 @@ def main(land: str) -> None:
 
 def finalize() -> None:
     """Write metadata after all lands processed."""
-    _04g_meta.main()
+    _04f_meta.main()
