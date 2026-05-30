@@ -7,6 +7,7 @@ to ``tmp/download/{osm,lsib}/.date``.
 
 from concurrent.futures import ThreadPoolExecutor
 from email.utils import parsedate_to_datetime
+from fnmatch import filter as fnfilter
 from logging import getLogger
 from pathlib import Path
 from xml.etree import ElementTree as ET
@@ -36,12 +37,13 @@ def _stream_to_file(dest: Path, url: str) -> None:
             f.writelines(r.iter_bytes(chunk_size=4 * 1024 * 1024))
 
 
-def _download_zip(output: Path, url: str) -> None:
+def _download_zip(output: Path, url: str, only: str | None = None) -> None:
     tmp = output / ".tmp"
     try:
         _stream_to_file(tmp, url)
         with ZipFile(tmp) as z:
-            z.extractall(output)
+            members = fnfilter(z.namelist(), only) if only else None
+            z.extractall(output, members)
     finally:
         tmp.unlink(missing_ok=True)
 
@@ -78,7 +80,9 @@ def _fetch_osm(osm: Path) -> None:
 
 
 def _fetch_usgs(usgs: Path) -> None:
-    _download_zip(usgs, LAND_USGS_URL)
+    # The outer zip also ships a Deflate64 hash .txt that Python's zipfile
+    # can't decompress; extract only the inner land-polygons zip we need.
+    _download_zip(usgs, LAND_USGS_URL, only="*WorldPolygon*.zip")
     inner = next(usgs.rglob("WorldPolygon*.zip"))
     with ZipFile(inner) as z:
         z.extractall(usgs)
