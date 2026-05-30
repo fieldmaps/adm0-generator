@@ -1,6 +1,7 @@
 """Sync output files to Cloudflare R2 via obstore."""
 
 import os
+import time
 from pathlib import Path
 
 import obstore as obs
@@ -13,6 +14,31 @@ exts = ["json", "csv", "xlsx"]
 load_dotenv()
 
 BUCKET = "fieldmaps-data"
+
+# R2 multipart uploads grow flaky with many parallel TLS streams (intermittent
+# 500s / TLS BadRecordMac), so cap concurrency, use larger parts, and retry —
+# obstore's built-in retries don't cover the TLS errors seen on large parquets.
+CHUNK_SIZE = 64 * 1024 * 1024
+MAX_CONCURRENCY = 4
+MAX_RETRIES = 8
+
+
+def put(store: S3Store, key: str, src: Path) -> None:
+    """Upload one file with reduced concurrency, retrying transient failures."""
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            obs.put(
+                store,
+                key,
+                src,
+                chunk_size=CHUNK_SIZE,
+                max_concurrency=MAX_CONCURRENCY,
+            )
+            return
+        except Exception:
+            if attempt == MAX_RETRIES:
+                raise
+            time.sleep(3)
 
 
 def get_store() -> S3Store:
@@ -46,7 +72,7 @@ def sync(src: Path, dest_prefix: str) -> None:
     for rel, size in local.items():
         if remote.get(rel) != size:
             key = f"{dest_prefix}/{rel}"
-            obs.put(store, key, src / rel)
+            put(store, key, src / rel)
 
     for rel in remote:
         if rel not in local:
@@ -57,7 +83,7 @@ def sync(src: Path, dest_prefix: str) -> None:
 def copy(src: Path, dest_key: str) -> None:
     """Upload a single file to the given R2 key."""
     store = get_store()
-    obs.put(store, dest_key, src)
+    put(store, dest_key, src)
 
 
 if __name__ == "__main__":
