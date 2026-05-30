@@ -209,7 +209,7 @@ def get_conn(
     conn.execute("SET threads = 4")
     raw = conn.execute(
         "SELECT value FROM duckdb_settings() WHERE name = 'memory_limit'"
-    ).fetchone()[0]
+    ).fetchall()[0][0]
     value, unit = raw.split()
     conn.execute(f"SET memory_limit = '{float(value) * 0.75:.2f} {unit}'")
     return cast("DuckDBPyConnection", ProfiledConnection(conn))
