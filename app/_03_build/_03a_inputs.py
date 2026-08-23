@@ -16,12 +16,12 @@ def main(conn: DuckDBPyConnection, land: str) -> None:
     for table in ["lsib_00", f"{land}_land_00", f"{land}_attributes_points"]:
         copy_from_db(conn, prepare_db, table)
     for layer, file in [
-        (f"{land}_lines_00", "adm0_lines.gpkg"),
-        (f"{land}_points_00", "adm0_points.gpkg"),
+        (f"{land}_lines_00", "adm0_lines.parquet"),
+        (f"{land}_points_00", "adm0_points.parquet"),
     ]:
         path = input_dir / file
         conn.execute(
-            f"CREATE OR REPLACE TABLE \"{layer}\" AS SELECT * FROM ST_Read('{path}')"
+            f'CREATE OR REPLACE TABLE "{layer}" AS SELECT * FROM read_parquet(\'{path}\')'
         )
     cols = [row[0] for row in conn.execute(f'DESCRIBE "{land}_lines_00"').fetchall()]
     col_list = ", ".join(f'"{c}"' for c in cols)
