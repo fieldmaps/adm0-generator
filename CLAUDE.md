@@ -34,11 +34,12 @@ Source publication dates are read from the `.date` files written during download
 **`_04_export.main(land)`** (`app/_04_export/`):
 
 1. For each `world` in `["intl", "all"]`:
-   - `_04a_lines.main`, `_04b_polygons.main`, `_04c_points.main` — final output tables
-   - `_04d_outputs.main` — exports GPKG + GDB + Parquet + XLSX
-   - `_04e_cleanup.main` — drops per-world tables to free memory before the next world iteration
+   - `_04a_lines.main`, `_04b_polygons.main`, `_04c_points.main`: final output tables
+   - `_04d_outputs.main`: exports GPKG + GDB + Parquet + XLSX; verifies each written file's row count against its source table
+   - `_04e_validate.main`: checks final lines/polygons/points tables (geometry validity, lon/lat bounds, ID uniqueness, attribute-join completeness, polygon topology, points-to-polygons row parity) before world-scoped tables are dropped
+   - `_04f_cleanup.main`: drops per-world tables to free memory before the next world iteration
 
-**`_04_export.finalize()`** — runs once after all land iterations: calls `_04f_meta.main()` to write the metadata JSON/CSV/XLSX catalog. (No cross-land cleanup is needed — each per-land DuckDB file is self-contained.)
+**`_04_export.finalize()`** runs once after all land iterations, calling `_04g_meta.main()` to write the metadata JSON/CSV/XLSX catalog. (No cross-land cleanup is needed since each per-land DuckDB file is self-contained.)
 
 ## Key patterns
 

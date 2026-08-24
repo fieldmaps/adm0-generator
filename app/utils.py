@@ -244,6 +244,25 @@ def discard(conn: DuckDBPyConnection, table: str) -> None:
     conn.execute(f'DROP TABLE IF EXISTS "{table}"')
 
 
+def has_invalid_coverage(conn: DuckDBPyConnection, table: str) -> bool:
+    """Return True if the polygons in ``table`` have overlaps or gaps."""
+    return bool(
+        conn.execute(f"""--sql
+            SELECT ST_CoverageInvalidEdges_Agg(geom) IS NOT NULL
+            FROM "{table}"
+        """).fetchall()[0][0]
+    )
+
+
+def raise_issues(issues: list[str], context: str) -> None:
+    """Log and raise a single RuntimeError if any issues were collected."""
+    if not issues:
+        return
+    for issue in issues:
+        logger.info("%s: %s", context, issue)
+    raise RuntimeError(f"{context}: {len(issues)} issue(s), {'; '.join(issues)}")
+
+
 def export_debug_tables(
     conn: DuckDBPyConnection,
     name: str,

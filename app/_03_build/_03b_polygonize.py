@@ -4,7 +4,7 @@ from logging import getLogger
 
 from duckdb import DuckDBPyConnection
 
-from app.utils import discard
+from app.utils import discard, has_invalid_coverage
 
 logger = getLogger(__name__)
 
@@ -13,12 +13,7 @@ def _check_topology(conn: DuckDBPyConnection, land: str) -> None:
     """Raise if voronoi polygons have invalid edges or missing polygons."""
     table = f"{land}_voronoi_00"
     points = f"{land}_points_00"
-    has_invalid_edges = bool(
-        conn.execute(f"""--sql
-            SELECT ST_CoverageInvalidEdges_Agg(geom) IS NOT NULL
-            FROM "{table}"
-        """).fetchall()[0][0]
-    )
+    has_invalid_edges = has_invalid_coverage(conn, table)
     voronoi_count, points_count = conn.execute(f"""--sql
         SELECT
             (SELECT COUNT(*) FROM "{table}"),

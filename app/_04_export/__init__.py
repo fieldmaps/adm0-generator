@@ -8,8 +8,9 @@ from . import (
     _04b_polygons,
     _04c_points,
     _04d_outputs,
-    _04e_cleanup,
-    _04f_meta,
+    _04e_validate,
+    _04f_cleanup,
+    _04g_meta,
 )
 
 
@@ -32,7 +33,8 @@ def main(land: str) -> None:
         _04b_polygons.main(conn, land, world)
         _04c_points.main(conn, land, world)
         _04d_outputs.main(conn, land, world)
-        _04e_cleanup.main(conn, land, world)
+        _04e_validate.main(conn, land, world)
+        _04f_cleanup.main(conn, land, world)
     if debug:
         export_debug_tables(conn, "_04_export", land)
     conn.close()
@@ -40,4 +42,4 @@ def main(land: str) -> None:
 
 def finalize() -> None:
     """Write metadata after all lands processed."""
-    _04f_meta.main()
+    _04g_meta.main()
