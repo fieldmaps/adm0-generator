@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_id": "international",
+  "created": "2026-10-06T22:13:51.017177+00:00",
+  "collections": {
+    "odbl/humanitarian/adm0-polygons": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T00:57:33.284549+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 777727794
+    },
+    "odbl/humanitarian/adm0-lines": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T00:58:24.272654+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 39117796
+    },
+    "odbl/humanitarian/adm0-points": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T00:58:27.028650+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 309441
+    },
+    "odbl/disaggregated/adm0-polygons": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:01:02.756359+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 778738585
+    },
+    "odbl/disaggregated/adm0-lines": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:01:53.930910+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 39166026
+    },
+    "odbl/disaggregated/adm0-points": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:01:56.698108+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 310848
+    },
+    "cc0/humanitarian/adm0-polygons": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:36:03.605884+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 710663571
+    },
+    "cc0/humanitarian/adm0-lines": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:36:44.753670+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 49897395
+    },
+    "cc0/humanitarian/adm0-points": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:37:28.853895+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 303382
+    },
+    "cc0/disaggregated/adm0-polygons": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:39:55.651003+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 711658474
+    },
+    "cc0/disaggregated/adm0-lines": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:40:38.616613+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 49966960
+    },
+    "cc0/disaggregated/adm0-points": {
+      "current_version": "1.1.0",
+      "updated": "2026-10-07T01:41:23.843961+00:00",
+      "asset_count": 2,
+      "total_size_bytes": 305090
+    }
+  },
+  "updated": "2026-10-07T01:41:23.843961+00:00"
+}

@@ -1,0 +1,46 @@
+{
+  "type": "Catalog",
+  "id": "odbl",
+  "stac_version": "1.1.0",
+  "title": "ODbL (OpenStreetMap)",
+  "description": "Coastlines from OpenStreetMap land polygons. ODbL-1.0: attribution and share-alike apply to derived databases.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "child",
+      "href": "./humanitarian/catalog.json",
+      "type": "application/json",
+      "title": "Humanitarian view"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "child",
+      "href": "./disaggregated/catalog.json",
+      "type": "application/json",
+      "title": "Disaggregated view"
+    }
+  ],
+  "stac_extensions": [
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json"
+  ]
+}

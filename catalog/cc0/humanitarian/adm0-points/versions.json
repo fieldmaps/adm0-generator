@@ -1,0 +1,68 @@
+{
+  "spec_version": "1.0.0",
+  "current_version": "1.1.0",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "created": "2026-10-07T01:37:28.787633Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "59bd6a0e9a812efd38e3bcfa16a0e47d84da8186c82ea42ff8fafe0ee1e89eb3",
+          "size_bytes": 276517,
+          "href": "cc0/humanitarian/adm0-points/adm0_points.pmtiles",
+          "mtime": 1791337047.9356897
+        },
+        "adm0_points.parquet": {
+          "sha256": "d1a6ccf028c6d01cbe22ba29d2cffbf233e97313da965ac198825952225f371a",
+          "size_bytes": 26865,
+          "href": "cc0/humanitarian/adm0-points/adm0_points.parquet",
+          "source_mtime": 1791335824.608753,
+          "mtime": 1791335824.608753,
+          "feature_count": 321,
+          "schema_fingerprint": "041f60a1cf19665e"
+        }
+      },
+      "changes": [
+        "adm0_points.pmtiles",
+        "adm0_points.parquet"
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "created": "2026-10-07T01:37:28.853528Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "59bd6a0e9a812efd38e3bcfa16a0e47d84da8186c82ea42ff8fafe0ee1e89eb3",
+          "size_bytes": 276517,
+          "href": "cc0/humanitarian/adm0-points/adm0_points.pmtiles",
+          "mtime": 1791337047.9356897
+        },
+        "adm0_points.parquet": {
+          "sha256": "d1a6ccf028c6d01cbe22ba29d2cffbf233e97313da965ac198825952225f371a",
+          "size_bytes": 26865,
+          "href": "cc0/humanitarian/adm0-points/adm0_points.parquet",
+          "mtime": 1791335824.608753
+        },
+        "adm0_points.thumb.jpg": {
+          "sha256": "e8e7986f8f2e0e786137394a3ce401469fd05805b84836dccb7df1d14e588391",
+          "size_bytes": 8189,
+          "href": "cc0/humanitarian/adm0-points/adm0_points.thumb.jpg",
+          "mtime": 1791337049.2669637
+        }
+      },
+      "changes": [
+        "adm0_points.thumb.jpg"
+      ],
+      "schema": {
+        "type": "unknown",
+        "fingerprint": {
+          "columns": [],
+          "types": {}
+        }
+      },
+      "message": ""
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "type": "Catalog",
+  "id": "international",
+  "stac_version": "1.1.0",
+  "description": "Admin level 0 boundaries built from the U.S. Department of State's LSIB boundary lines combined with either State Department World Polygons (CC0) or OpenStreetMap land polygons (ODbL). Each source comes in a humanitarian and a disaggregated view, as GeoParquet polygons, lines and points with PMTiles. Catalog metadata is CC0-1.0; data licenses are set per folder: cc0/ is CC0-1.0, odbl/ is ODbL-1.0.",
+  "links": [
+    {
+      "rel": "self",
+      "href": "https://data.source.coop/fieldmaps/international/catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "root",
+      "href": "./catalog.json",
+      "type": "application/json",
+      "title": "FieldMaps International Administrative Boundaries"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "related",
+      "href": "https://source.coop/fieldmaps/subnational",
+      "type": "text/html"
+    },
+    {
+      "rel": "child",
+      "href": "./odbl/catalog.json",
+      "type": "application/json",
+      "title": "ODbL (OpenStreetMap)"
+    },
+    {
+      "rel": "child",
+      "href": "./cc0/catalog.json",
+      "type": "application/json",
+      "title": "CC0 (State Department World Polygons)"
+    }
+  ],
+  "title": "FieldMaps International Administrative Boundaries",
+  "stac_extensions": [
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json"
+  ],
+  "updated": "2026-10-07T01:41:23Z"
+}

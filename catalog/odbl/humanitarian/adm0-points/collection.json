@@ -1,0 +1,145 @@
+{
+  "type": "Collection",
+  "id": "odbl/humanitarian/adm0-points",
+  "stac_version": "1.1.0",
+  "description": "One label point per admin level 0 area. Humanitarian view: disputed and autonomous areas grouped with a neighbouring area. Coastlines from OpenStreetMap land polygons, licensed ODbL-1.0.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../../catalog.json",
+      "type": "application/json",
+      "title": "FieldMaps International Administrative Boundaries"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "pmtiles",
+      "href": "./adm0_points.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "pmtiles:layers": [
+        "adm0_points"
+      ]
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json"
+  ],
+  "updated": "2026-10-07T00:58:26Z",
+  "pmtiles:min_zoom": 0,
+  "pmtiles:max_zoom": 6,
+  "pmtiles:tile_type": "mvt",
+  "pmtiles:center": [
+    0.3082512,
+    1.4623211,
+    3
+  ],
+  "pmtiles:layers": [
+    "adm0_points"
+  ],
+  "title": "ADM0 points (humanitarian view, ODbL)",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -177.3784925,
+          -77.9021863,
+          177.9949951,
+          80.8268285
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "license": "ODbL-1.0",
+  "providers": [
+    {
+      "name": "U.S. Department of State, Office of the Geographer and Global Issues",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://geodata.state.gov"
+    },
+    {
+      "name": "OpenStreetMap contributors",
+      "roles": [
+        "producer",
+        "licensor"
+      ],
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "name": "FieldMaps",
+      "roles": [
+        "producer",
+        "processor",
+        "host"
+      ],
+      "url": "https://fieldmaps.io"
+    }
+  ],
+  "assets": {
+    "adm0_points": {
+      "href": "./adm0_points.parquet",
+      "type": "application/vnd.apache.parquet",
+      "file:size": 26846,
+      "file:checksum": "1220b08cb2d94d13ca5676f27f9c14b8a39981966cbad9c8736f76a6b383c2773223",
+      "roles": [
+        "data"
+      ]
+    },
+    "adm0_points-tiles": {
+      "href": "./adm0_points.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "title": "adm0_points (vector tiles)",
+      "roles": [
+        "visual"
+      ],
+      "file:size": 282595,
+      "file:checksum": "12206e91d8a413bbcf6cb34fdfda6e0510650c437f5c6be0c623343c75d52ebf1d7e"
+    },
+    "styles/default": {
+      "href": "./styles/default.json",
+      "type": "application/vnd.mapbox.style+json",
+      "roles": [
+        "style",
+        "default"
+      ],
+      "title": "Default",
+      "file:size": 460,
+      "file:checksum": "1220e3e5ed5462d406cffe530535f8e942e4561d60f3fa9849739a4febfbd0161f5d"
+    },
+    "thumbnail": {
+      "href": "./adm0_points.thumb.jpg",
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "file:size": 8119,
+      "file:checksum": "1220dee02f9e2cce9a45789258b90528a8394adc559ff4c2d64c75bd9724de4d5da9"
+    }
+  }
+}

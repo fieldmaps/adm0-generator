@@ -1,0 +1,52 @@
+{
+  "type": "Catalog",
+  "id": "odbl/disaggregated",
+  "stac_version": "1.1.0",
+  "title": "Disaggregated view",
+  "description": "Disputed and autonomous areas are separate features: Abkhazia, Ajaria, Vojvodina, Kosovo, Azad Kashmir and Northern Areas, Siachen-Saltoro, Golan Heights, Hala'ib Triangle, Ilemi Triangle, Kafia Kingi and Bi'r Tawīl.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-polygons/collection.json",
+      "type": "application/json",
+      "title": "ADM0 polygons (disaggregated view, ODbL)"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-lines/collection.json",
+      "type": "application/json",
+      "title": "ADM0 lines (disaggregated view, ODbL)"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-points/collection.json",
+      "type": "application/json",
+      "title": "ADM0 points (disaggregated view, ODbL)"
+    }
+  ],
+  "stac_extensions": [
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json"
+  ]
+}

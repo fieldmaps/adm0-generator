@@ -1,0 +1,137 @@
+{
+  "type": "Collection",
+  "id": "cc0/disaggregated/adm0-polygons",
+  "stac_version": "1.1.0",
+  "description": "Admin level 0 areas, one feature per row group, so filtering on `iso_3` or `adm0_id` reads only the matching rows. Disaggregated view: disputed and autonomous areas as separate features. Coastlines from U.S. Department of State World Polygons, licensed CC0-1.0.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../../catalog.json",
+      "type": "application/json",
+      "title": "FieldMaps International Administrative Boundaries"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "pmtiles",
+      "href": "./adm0_polygons.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "pmtiles:layers": [
+        "adm0_polygons"
+      ]
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json"
+  ],
+  "updated": "2026-10-07T01:39:54Z",
+  "pmtiles:min_zoom": 0,
+  "pmtiles:max_zoom": 6,
+  "pmtiles:tile_type": "mvt",
+  "pmtiles:center": [
+    0.0,
+    -0.6918748,
+    3
+  ],
+  "pmtiles:layers": [
+    "adm0_polygons"
+  ],
+  "title": "ADM0 polygons (disaggregated view, CC0)",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -180.0,
+          -85.05,
+          180.0,
+          83.6662504
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "license": "CC0-1.0",
+  "providers": [
+    {
+      "name": "U.S. Department of State, Office of the Geographer and Global Issues",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://geodata.state.gov"
+    },
+    {
+      "name": "FieldMaps",
+      "roles": [
+        "producer",
+        "processor",
+        "host"
+      ],
+      "url": "https://fieldmaps.io"
+    }
+  ],
+  "assets": {
+    "adm0_polygons": {
+      "href": "./adm0_polygons.parquet",
+      "type": "application/vnd.apache.parquet",
+      "file:size": 693690228,
+      "file:checksum": "1220463cccb9d7b60b636209c10e6c5b29953cdcd98f4e37777bb413dbe2e8e41b7f",
+      "roles": [
+        "data"
+      ]
+    },
+    "adm0_polygons-tiles": {
+      "href": "./adm0_polygons.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "title": "adm0_polygons (vector tiles)",
+      "roles": [
+        "visual"
+      ],
+      "file:size": 17968246,
+      "file:checksum": "12201017157a2734c25d74aad8624c4038846a700f20e74b9d1c8460737df7a227eb"
+    },
+    "styles/default": {
+      "href": "./styles/default.json",
+      "type": "application/vnd.mapbox.style+json",
+      "roles": [
+        "style",
+        "default"
+      ],
+      "title": "Default",
+      "file:size": 471,
+      "file:checksum": "1220b6aea72470a8d143fb223699c4b4a3f4bb4c3b7f53d95686d1a853e1c654711f"
+    },
+    "thumbnail": {
+      "href": "./adm0_polygons.thumb.jpg",
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "file:size": 15936,
+      "file:checksum": "1220a74a94968e0687a7d42abd63abc91fa354f0a7f89e70e0dc1e242fe545f48180"
+    }
+  }
+}

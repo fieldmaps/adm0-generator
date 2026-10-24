@@ -5,5 +5,14 @@ __pycache__
 *.gpkg-shm
 *.gpkg-wal
 *.pdf
-inputs/land
-inputs/lsib
+tmp/
+.claude/*
+!.claude/settings.json
+
+.env*
+!.env.example
+
+catalog/**/*.parquet
+catalog/**/*.pmtiles
+catalog/**/*.thumb.*
+catalog/.portolan/.versions.lock

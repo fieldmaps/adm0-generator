@@ -1,26 +1,21 @@
-FROM ubuntu:25.04
+FROM python:3.14-slim
 
-ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /srv
 
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-  gdal-bin postgresql-postgis \
-  python3-pip python3-venv \
-  && rm -rf /var/lib/apt/lists/*
+ENV PYTHONUNBUFFERED=1 \
+    PATH="/srv/.venv/bin:$PATH"
 
-RUN python3 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# portolan requires tippecanoe on PATH even though tylertoo builds the PMTiles
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends tippecanoe && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN service postgresql start \
-  && runuser -l postgres -c 'createuser -s root' \
-  && createdb app \
-  && psql -d app -c "CREATE EXTENSION postgis;"
-
-WORKDIR /usr/src/app
-
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN --mount=from=ghcr.io/astral-sh/uv,source=/uv,target=/bin/uv \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    uv sync --frozen --no-dev --no-install-project && \
+    python -c "import duckdb; duckdb.connect().execute('INSTALL spatial')"
 
 COPY app ./app
 
-CMD service postgresql start && python -m app
+ENTRYPOINT ["python", "-m", "app"]

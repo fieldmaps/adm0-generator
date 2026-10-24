@@ -1,9 +1,7 @@
 services:
   app:
     build: .
-    sysctls:
-      - net.ipv4.tcp_keepalive_time=200
     volumes:
-      - ./data:/usr/src/app/data
-      - ./inputs:/usr/src/app/inputs
-      - ./outputs:/usr/src/app/outputs
+      - ./inputs:/srv/inputs
+      - ./outputs:/srv/outputs
+      - ./tmp:/srv/tmp

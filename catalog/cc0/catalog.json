@@ -1,0 +1,46 @@
+{
+  "type": "Catalog",
+  "id": "cc0",
+  "stac_version": "1.1.0",
+  "title": "CC0 (State Department World Polygons)",
+  "description": "Coastlines from U.S. Department of State World Polygons. Public domain, CC0-1.0.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "child",
+      "href": "./humanitarian/catalog.json",
+      "type": "application/json",
+      "title": "Humanitarian view"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "child",
+      "href": "./disaggregated/catalog.json",
+      "type": "application/json",
+      "title": "Disaggregated view"
+    }
+  ],
+  "stac_extensions": [
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json"
+  ]
+}

@@ -1,0 +1,122 @@
+# .portolan/metadata.yaml
+#
+# Human-enrichable metadata that supplements STAC.
+# Columns and bands are auto-extracted from data files.
+#
+# Only contact and license are REQUIRED here.
+
+# -----------------------------------------------------------------------------
+# OPTIONAL: Human-readable title / description override (Issue #502)
+# Portolan auto-derives a human-readable title from the collection id
+# (e.g. "publico_arbolado" -> "Publico Arbolado"). Set these to override it
+# with a better name/description; leave blank to keep the auto-derived value.
+# At the catalog root they name the catalog itself. A subcatalog names itself
+# the same way. They apply to this object alone. A child never inherits a
+# title or a description from its parent.
+# -----------------------------------------------------------------------------
+
+title: "FieldMaps International Administrative Boundaries"
+description: "Admin level 0 boundaries built from the U.S. Department of State's LSIB boundary lines combined with either State Department World Polygons (CC0) or OpenStreetMap land polygons (ODbL). Each source comes in a humanitarian and a disaggregated view, as GeoParquet polygons, lines and points with PMTiles. Catalog metadata is CC0-1.0; data licenses are set per folder: cc0/ is CC0-1.0, odbl/ is ODbL-1.0."
+
+# -----------------------------------------------------------------------------
+# REQUIRED: Accountability
+# -----------------------------------------------------------------------------
+
+contact:
+  name: "Maxym Malynowsky"          # Person or team name
+  email: "fieldmaps@maxmalynowsky.com"  # Contact email
+
+license: "CC0-1.0"                  # SPDX identifier (e.g., "CC-BY-4.0", "MIT")
+
+# -----------------------------------------------------------------------------
+# Providers: who made this data, and who maintains this copy of it
+#
+# Name the organization that originally created the data with the "producer"
+# role. Add "licensor" and "processor" where they apply. Roles may be combined,
+# so a self-published collection is one entry holding both producer and host.
+#
+# The "host" is whoever maintains this catalog, not the cloud vendor storing it:
+# a catalog on S3 run by a city GIS office lists the office, never AWS. Leave the
+# host out and it is taken from `contact` above. Order does not matter; Portolan
+# writes the host last, as the spec requires.
+#
+# Producer and host together decide what kind of catalog this is. Same
+# organization means official, this catalog being the data's canonical home.
+# Different organizations mean a mirror, and Portolan then links back to
+# `source_url` below and records each sync.
+# -----------------------------------------------------------------------------
+
+providers:
+  - name: "FieldMaps"
+    roles: ["producer", "processor", "host"]
+    url: "https://fieldmaps.io"
+  - name: "U.S. Department of State, Office of the Geographer and Global Issues"
+    roles: ["producer"]
+    url: "https://geodata.state.gov"
+
+# providers:
+#   - name: "National Statistics Institute"
+#     roles: ["producer", "licensor"]
+#     url: "https://stats.example.org"
+#   - name: "City GIS Office"       # omit to derive this from `contact`
+#     roles: ["host"]
+#     url: "https://gis.example.org"   # a url or an email is required on the host
+
+# -----------------------------------------------------------------------------
+# OPTIONAL: Discovery and citation
+# -----------------------------------------------------------------------------
+
+license_url: ""                     # optional - URL to full license text
+citation: ""                        # optional - Academic citation text
+doi: ""                             # optional - Zenodo/DataCite DOI
+keywords: []                        # optional - Discovery tags
+attribution: "U.S. Department of State, FieldMaps"  # optional - Required attribution text for maps
+
+# -----------------------------------------------------------------------------
+# OPTIONAL: Data lifecycle
+# -----------------------------------------------------------------------------
+
+source_url: ""                      # optional - Original data source URL
+processing_notes: ""                # optional - How data was processed/transformed
+known_issues: ""                    # optional - Known limitations or caveats
+
+# -----------------------------------------------------------------------------
+# OPTIONAL: Data defaults (when auto-extraction fails or needs override)
+# These values apply to items where the source file lacks the metadata.
+# Useful for data where nodata or temporal info wasn't set upstream.
+# -----------------------------------------------------------------------------
+
+# defaults:
+#   temporal:
+#     year: 2025                    # Year range (Jan 1 - Dec 31)
+#     # Or explicit bounds:
+#     # start: "2025-04-15"         # ISO date (YYYY-MM-DD)
+#     # end: "2025-05-30"
+#   raster:
+#     nodata: 0                     # Uniform nodata for all bands
+#     # Or per-band:
+#     # nodata: [0, 0, 255]         # Per-band nodata values
+
+# -----------------------------------------------------------------------------
+# OPTIONAL: Consumption examples
+# -----------------------------------------------------------------------------
+# Add collection-specific query examples, especially when structure is unusual
+# (multiple related files, required joins, non-obvious column meanings).
+# Default examples (DuckDB SQL + GeoPandas) are auto-generated if omitted.
+#
+# examples:
+#   - engine: duckdb                # duckdb | python | r | other
+#     description: "Join census data with geographic boundaries"
+#     code: |
+#       SELECT r.*, c.population
+#       FROM read_parquet('https://.../radios.parquet') r
+#       JOIN read_parquet('https://.../census-data.parquet') c
+#         ON r.cod_2022 = c.id_geo
+#   - engine: python
+#     description: "Load and merge with GeoPandas"
+#     code: |
+#       import geopandas as gpd
+#       import pandas as pd
+#       radios = gpd.read_parquet('https://.../radios.parquet')
+#       census = pd.read_parquet('https://.../census-data.parquet')
+#       merged = radios.merge(census, left_on='cod_2022', right_on='id_geo')
