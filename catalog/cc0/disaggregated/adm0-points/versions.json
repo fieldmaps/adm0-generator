@@ -1,0 +1,68 @@
+{
+  "spec_version": "1.0.0",
+  "current_version": "1.1.0",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "created": "2026-10-07T01:41:23.776476Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "60292879d9342c0ec86509519f9afdfdd0093b42ccc3ef6976b4bfb2c86a6b65",
+          "size_bytes": 277982,
+          "href": "cc0/disaggregated/adm0-points/adm0_points.pmtiles",
+          "mtime": 1791337282.8954127
+        },
+        "adm0_points.parquet": {
+          "sha256": "3dbb7e0a5436e63216f319078d550ab51a8888748bb7ba2cf51300212731cded",
+          "size_bytes": 27108,
+          "href": "cc0/disaggregated/adm0-points/adm0_points.parquet",
+          "source_mtime": 1791336480.5425928,
+          "mtime": 1791336480.5425928,
+          "feature_count": 328,
+          "schema_fingerprint": "041f60a1cf19665e"
+        }
+      },
+      "changes": [
+        "adm0_points.pmtiles",
+        "adm0_points.parquet"
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "created": "2026-10-07T01:41:23.843593Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "60292879d9342c0ec86509519f9afdfdd0093b42ccc3ef6976b4bfb2c86a6b65",
+          "size_bytes": 277982,
+          "href": "cc0/disaggregated/adm0-points/adm0_points.pmtiles",
+          "mtime": 1791337282.8954127
+        },
+        "adm0_points.parquet": {
+          "sha256": "3dbb7e0a5436e63216f319078d550ab51a8888748bb7ba2cf51300212731cded",
+          "size_bytes": 27108,
+          "href": "cc0/disaggregated/adm0-points/adm0_points.parquet",
+          "mtime": 1791336480.5425928
+        },
+        "adm0_points.thumb.jpg": {
+          "sha256": "739195c7ca35e43654614bdd15ec59767fa11ba9394521b6a79ad677910bc285",
+          "size_bytes": 8236,
+          "href": "cc0/disaggregated/adm0-points/adm0_points.thumb.jpg",
+          "mtime": 1791337284.3091116
+        }
+      },
+      "changes": [
+        "adm0_points.thumb.jpg"
+      ],
+      "schema": {
+        "type": "unknown",
+        "fingerprint": {
+          "columns": [],
+          "types": {}
+        }
+      },
+      "message": ""
+    }
+  ]
+}

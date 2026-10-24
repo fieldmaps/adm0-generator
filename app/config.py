@@ -29,7 +29,7 @@ parser.add_argument("--debug", **_bool_flag("DEBUG"))
 parser.add_argument(
     "--step",
     default=getenv("STEP"),
-    choices=["_01_download", "_02_prepare", "_03_build", "_04_export"],
+    choices=["_01_download", "_02_prepare", "_03_build", "_04_catalog", "_05_export"],
 )
 parser.add_argument(
     "--land",
@@ -74,7 +74,6 @@ EXPORT_LAYERS = [
     ("points", "Point", "points_01"),
     ("polygons", "MultiPolygon", "polygons_01_a"),
     ("voronoi", "MultiPolygon", "voronoi_01_a"),
-    ("clip", "MultiPolygon", "polygons_01_p"),
 ]
 
 # --- Intermediate table suffixes dropped after each world-view ---
@@ -84,8 +83,11 @@ LAYERS_WORLD = [
     "polygons_01_a",
     "polygons_01_p",
     "voronoi_01_a",
-    "voronoi_01_p",
 ]
+
+# --- Catalog path segments: land -> license folder, world -> view folder ---
+LICENSE_DIR = {"usgs": "cc0", "osm": "odbl"}
+VIEW_DIR = {"intl": "humanitarian", "all": "disaggregated"}
 
 # --- Directories ---
 cwd = Path(__file__).parent
@@ -93,3 +95,4 @@ tmp_dir = cwd / "../tmp"
 download_dir = tmp_dir / "download"
 input_dir = cwd / "../inputs"
 output_dir = cwd / "../outputs"
+catalog_dir = cwd / "../catalog"

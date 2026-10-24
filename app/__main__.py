@@ -2,7 +2,7 @@
 
 from logging import getLogger
 
-from . import _01_download, _02_prepare, _03_build, _04_export
+from . import _01_download, _02_prepare, _03_build, _04_catalog, _05_export
 from .config import debug, lands, step
 from .utils import log_file
 
@@ -11,7 +11,8 @@ logger = getLogger(__name__)
 _LAND_STEPS = (
     ("_02_prepare", _02_prepare.main),
     ("_03_build", _03_build.main),
-    ("_04_export", _04_export.main),
+    ("_04_catalog", _04_catalog.main),
+    ("_05_export", _05_export.main),
 )
 
 
@@ -35,7 +36,10 @@ if _should_run("_01_download"):
 for land in lands:
     _process_land(land)
 
-if _should_run("_04_export"):
-    _04_export.finalize()
+if _should_run("_04_catalog"):
+    _04_catalog.finalize()
+
+if _should_run("_05_export"):
+    _05_export.finalize()
 
 logger.info("finished")

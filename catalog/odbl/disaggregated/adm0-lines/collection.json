@@ -1,0 +1,154 @@
+{
+  "type": "Collection",
+  "id": "odbl/disaggregated/adm0-lines",
+  "stac_version": "1.1.0",
+  "description": "Land boundary lines between admin level 0 areas. Coastlines are not included. Disaggregated view: disputed and autonomous areas as separate features. Coastlines from OpenStreetMap land polygons, licensed ODbL-1.0.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../../catalog.json",
+      "type": "application/json",
+      "title": "FieldMaps International Administrative Boundaries"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "pmtiles",
+      "href": "./adm0_lines.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "pmtiles:layers": [
+        "adm0_lines"
+      ]
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json"
+  ],
+  "updated": "2026-10-07T01:01:53Z",
+  "pmtiles:min_zoom": 0,
+  "pmtiles:max_zoom": 6,
+  "pmtiles:tile_type": "mvt",
+  "pmtiles:center": [
+    0.0101463,
+    7.5991906,
+    3
+  ],
+  "pmtiles:layers": [
+    "adm0_lines"
+  ],
+  "title": "ADM0 lines (disaggregated view, ODbL)",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -141.0018584,
+          -54.8939119,
+          141.022151,
+          70.0922932
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "license": "ODbL-1.0",
+  "providers": [
+    {
+      "name": "U.S. Department of State, Office of the Geographer and Global Issues",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://geodata.state.gov"
+    },
+    {
+      "name": "OpenStreetMap contributors",
+      "roles": [
+        "producer",
+        "licensor"
+      ],
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "name": "FieldMaps",
+      "roles": [
+        "producer",
+        "processor",
+        "host"
+      ],
+      "url": "https://fieldmaps.io"
+    }
+  ],
+  "assets": {
+    "adm0_lines": {
+      "href": "./adm0_lines.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "file:size": 1788677,
+      "file:checksum": "12203615585b91467eb08080dff533c0b3af63f90edf428e1d11102c569078395756",
+      "roles": [
+        "data"
+      ]
+    },
+    "adm0_lines.parquet": {
+      "href": "./adm0_lines.parquet",
+      "type": "application/vnd.apache.parquet",
+      "file:size": 37377349,
+      "file:checksum": "122067a48388e111677518bfa798f605f76f2e6e8d8889a060d6aa8e0e84b1c279a2",
+      "roles": [
+        "data"
+      ]
+    },
+    "adm0_lines.parquet-tiles": {
+      "href": "./adm0_lines.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "title": "adm0_lines.parquet (vector tiles)",
+      "roles": [
+        "visual"
+      ],
+      "file:size": 1788677,
+      "file:checksum": "12203615585b91467eb08080dff533c0b3af63f90edf428e1d11102c569078395756"
+    },
+    "styles/default": {
+      "href": "./styles/default.json",
+      "type": "application/vnd.mapbox.style+json",
+      "roles": [
+        "style",
+        "default"
+      ],
+      "title": "Default",
+      "file:size": 446,
+      "file:checksum": "1220042e288c445509dfb3ec2d2f31d0603ea5cca779acef54b257117c13ed784626"
+    },
+    "thumbnail": {
+      "href": "./adm0_lines.thumb.jpg",
+      "type": "image/jpeg",
+      "roles": [
+        "thumbnail"
+      ],
+      "file:size": 9645,
+      "file:checksum": "122021763f25f403281c9a91f53d797169cfb8b5ea2f45d04c077b3c555cdac57c11"
+    }
+  }
+}

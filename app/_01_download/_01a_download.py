@@ -1,15 +1,18 @@
 """Download OSM land polygons, USGS land polygons, and LSIB boundary lines.
 
 Always fetches fresh data. Source publication dates are captured atomically
-with each download (OSM Last-Modified header, LSIB metadata XML) and written
-to ``tmp/download/{osm,lsib}/.date``.
+with each download (OSM Last-Modified header, LSIB metadata XML, World Polygons
+folder name) and written to ``tmp/download/{osm,usgs,lsib}/.date``.
 """
 
+import re
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 from email.utils import parsedate_to_datetime
 from fnmatch import filter as fnfilter
 from logging import getLogger
 from pathlib import Path
+from shutil import rmtree
 from xml.etree import ElementTree as ET
 from zipfile import ZipFile
 
@@ -79,7 +82,19 @@ def _fetch_osm(osm: Path) -> None:
     (osm / ".date").write_text(date)
 
 
+def _usgs_date(usgs: Path) -> str:
+    """Parse the release date from the folder name, e.g. ``..._24Feb2025``."""
+    gpkg = next(usgs.rglob("WorldPolygons*.gpkg"))
+    match = re.search(r"_(\d{1,2}[A-Za-z]{3}\d{4})$", gpkg.parent.name)
+    if match is None:
+        msg = f"World Polygons date not found in folder name: {gpkg.parent.name}"
+        raise ValueError(msg)
+    return datetime.strptime(match[1], "%d%b%Y").date().isoformat()  # noqa: DTZ007
+
+
 def _fetch_usgs(usgs: Path) -> None:
+    rmtree(usgs)
+    usgs.mkdir()
     # The outer zip also ships a Deflate64 hash .txt that Python's zipfile
     # can't decompress; extract only the inner land-polygons zip we need.
     _download_zip(usgs, LAND_USGS_URL, only="*WorldPolygon*.zip")
@@ -87,6 +102,7 @@ def _fetch_usgs(usgs: Path) -> None:
     with ZipFile(inner) as z:
         z.extractall(usgs)
     inner.unlink()
+    (usgs / ".date").write_text(_usgs_date(usgs))
 
 
 def main() -> None:

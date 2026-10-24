@@ -1,0 +1,68 @@
+{
+  "spec_version": "1.0.0",
+  "current_version": "1.1.0",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "created": "2026-10-07T01:36:02.318316Z",
+      "breaking": false,
+      "assets": {
+        "adm0_polygons.pmtiles": {
+          "sha256": "0d078c431f02e5779d2381220f8fb99d6144c718fa5b553fe3c88812227640ec",
+          "size_bytes": 17951850,
+          "href": "cc0/humanitarian/adm0-polygons/adm0_polygons.pmtiles",
+          "mtime": 1791336960.3223917
+        },
+        "adm0_polygons.parquet": {
+          "sha256": "86da0cceffd1a6f1d041f892710fa24c009209c0b5e7e95e110d3abf5b6afc48",
+          "size_bytes": 692711721,
+          "href": "cc0/humanitarian/adm0-polygons/adm0_polygons.parquet",
+          "source_mtime": 1791335994.9858754,
+          "mtime": 1791335994.9858754,
+          "feature_count": 315,
+          "schema_fingerprint": "e7727fd8589f28c1"
+        }
+      },
+      "changes": [
+        "adm0_polygons.pmtiles",
+        "adm0_polygons.parquet"
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "created": "2026-10-07T01:36:03.605167Z",
+      "breaking": false,
+      "assets": {
+        "adm0_polygons.pmtiles": {
+          "sha256": "0d078c431f02e5779d2381220f8fb99d6144c718fa5b553fe3c88812227640ec",
+          "size_bytes": 17951850,
+          "href": "cc0/humanitarian/adm0-polygons/adm0_polygons.pmtiles",
+          "mtime": 1791336960.3223917
+        },
+        "adm0_polygons.parquet": {
+          "sha256": "86da0cceffd1a6f1d041f892710fa24c009209c0b5e7e95e110d3abf5b6afc48",
+          "size_bytes": 692711721,
+          "href": "cc0/humanitarian/adm0-polygons/adm0_polygons.parquet",
+          "mtime": 1791335994.9858754
+        },
+        "adm0_polygons.thumb.jpg": {
+          "sha256": "898f2f9a8f43c8a299f1868239cd43a76a24ad4bff40179bc446c2d8453d57e0",
+          "size_bytes": 15957,
+          "href": "cc0/humanitarian/adm0-polygons/adm0_polygons.thumb.jpg",
+          "mtime": 1791336999.028796
+        }
+      },
+      "changes": [
+        "adm0_polygons.thumb.jpg"
+      ],
+      "schema": {
+        "type": "unknown",
+        "fingerprint": {
+          "columns": [],
+          "types": {}
+        }
+      },
+      "message": ""
+    }
+  ]
+}

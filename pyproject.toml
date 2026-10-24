@@ -4,7 +4,16 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["duckdb", "httpx[http2]", "pandas[excel]", "psutil", "pyarrow"]
+dependencies = [
+    "duckdb",
+    "geoparquet-io>=1.4.0",
+    "httpx[http2]",
+    "pandas[excel]",
+    "portolan-cli>=0.8.0",
+    "psutil",
+    "pyarrow",
+    "tylertoo>=0.7.1",
+]
 
 [dependency-groups]
 dev = ["obstore", "python-dotenv", "ruff"]

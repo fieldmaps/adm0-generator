@@ -8,7 +8,7 @@ from pathlib import Path
 from duckdb import DuckDBPyConnection
 
 from app.config import download_dir
-from app.utils import get_source_dates
+from app.utils import get_source_date
 
 logger = getLogger(__name__)
 
@@ -23,10 +23,10 @@ def _fix_lsib(conn: DuckDBPyConnection) -> None:
 
 def _fix_land(conn: DuckDBPyConnection, land: str) -> None:
     """Add wld_update column to land table."""
-    osm_date, _ = get_source_dates()
+    land_date = get_source_date(land)
     conn.execute(f"""--sql
         ALTER TABLE "{land}_land_00"
-        ADD COLUMN IF NOT EXISTS wld_update DATE DEFAULT '{osm_date}'
+        ADD COLUMN IF NOT EXISTS wld_update DATE DEFAULT '{land_date}'
     """)
 
 

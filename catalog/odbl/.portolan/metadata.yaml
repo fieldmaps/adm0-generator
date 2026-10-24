@@ -1,0 +1,14 @@
+title: "ODbL (OpenStreetMap)"
+description: "Coastlines from OpenStreetMap land polygons. ODbL-1.0: attribution and share-alike apply to derived databases."
+license: "ODbL-1.0"
+providers:
+  - name: "FieldMaps"
+    roles: ["producer", "processor", "host"]
+    url: "https://fieldmaps.io"
+  - name: "U.S. Department of State, Office of the Geographer and Global Issues"
+    roles: ["producer"]
+    url: "https://geodata.state.gov"
+  - name: "OpenStreetMap contributors"
+    roles: ["producer", "licensor"]
+    url: "https://www.openstreetmap.org/copyright"
+attribution: "© OpenStreetMap contributors, U.S. Department of State, FieldMaps"

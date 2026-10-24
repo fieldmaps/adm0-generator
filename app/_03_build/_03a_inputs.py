@@ -21,7 +21,7 @@ def main(conn: DuckDBPyConnection, land: str) -> None:
     ]:
         path = input_dir / file
         conn.execute(
-            f'CREATE OR REPLACE TABLE "{layer}" AS SELECT * FROM read_parquet(\'{path}\')'
+            f"CREATE OR REPLACE TABLE \"{layer}\" AS SELECT * FROM read_parquet('{path}')"
         )
     cols = [row[0] for row in conn.execute(f'DESCRIBE "{land}_lines_00"').fetchall()]
     col_list = ", ".join(f'"{c}"' for c in cols)

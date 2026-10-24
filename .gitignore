@@ -11,3 +11,7 @@ tmp/
 
 .env*
 !.env.example
+
+catalog/**/*.parquet
+catalog/**/*.pmtiles
+catalog/**/*.thumb.*

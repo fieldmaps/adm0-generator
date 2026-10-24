@@ -303,11 +303,9 @@ def export_debug_tables(
         logger.info("debug export: %s", out.relative_to(tmp_dir))
 
 
-def get_source_dates() -> tuple[str, str]:
-    """Return ``(osm_date, lsib_date)`` as ISO date strings."""
-    osm_date = (download_dir / "osm/.date").read_text().strip()
-    lsib_date = (download_dir / "lsib/.date").read_text().strip()
-    return osm_date, lsib_date
+def get_source_date(source: str) -> str:
+    """Return the publication date of ``osm``, ``usgs`` or ``lsib`` as ISO string."""
+    return (download_dir / f"{source}/.date").read_text().strip()
 
 
 def zip_path(file: Path, file_zip: Path) -> None:

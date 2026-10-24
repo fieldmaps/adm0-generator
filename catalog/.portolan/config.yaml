@@ -1,0 +1,8 @@
+# Portolan configuration
+conversion:
+  vector:
+    add_bbox: false
+    sort: none
+check:
+  disabled:
+    - PTL-BBX-001

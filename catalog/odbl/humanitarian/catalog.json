@@ -1,0 +1,52 @@
+{
+  "type": "Catalog",
+  "id": "odbl/humanitarian",
+  "stac_version": "1.1.0",
+  "title": "Humanitarian view",
+  "description": "Disputed and autonomous areas are grouped with a neighbouring area, matching common humanitarian practice: Kosovo with Serbia, Golan Heights with Syria, Ilemi Triangle with South Sudan and Kenya. Jammu and Kashmir is one disputed area.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-polygons/collection.json",
+      "type": "application/json",
+      "title": "ADM0 polygons (humanitarian view, ODbL)"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-lines/collection.json",
+      "type": "application/json",
+      "title": "ADM0 lines (humanitarian view, ODbL)"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-points/collection.json",
+      "type": "application/json",
+      "title": "ADM0 points (humanitarian view, ODbL)"
+    }
+  ],
+  "stac_extensions": [
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json"
+  ]
+}
