@@ -62,10 +62,10 @@ def main(conn: DuckDBPyConnection, land: str, wld: str) -> None:
             overwrite=True,
         )
         staged.unlink()
-        expected = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchone()[0]
+        expected = conn.execute(f'SELECT COUNT(*) FROM "{table}"').fetchall()[0][0]
         actual = conn.execute(
             f"SELECT COUNT(*) FROM read_parquet('{file_out}')"
-        ).fetchone()[0]
+        ).fetchall()[0][0]
         if actual != expected:
             issues.append(f"{file_out}: wrote {actual} rows, {table} has {expected}")
     raise_issues(issues, f"{land}_{wld}_parquet")

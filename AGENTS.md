@@ -6,7 +6,7 @@ Batch ETL pipeline that generates Administrative Level 0 (country-level) boundar
 
 - **DuckDB** with spatial extension — all spatial processing and all output formats (GPKG, OpenFileGDB, GeoParquet, XLSX) via `COPY TO ... FORMAT GDAL`
 - **pandas** — reads attribute CSVs, registered into DuckDB via `conn.register()`
-- **httpx** — downloads input data
+- **httpx2** — downloads input data
 - **geoparquet-io**, **tylertoo**, **portolan-cli** — catalog GeoParquet writing, PMTiles, and STAC catalog management (portolan needs `tippecanoe` on PATH)
 - **Docker** — single-service image (`python:3.14-slim` + pip-installed DuckDB), no database server
 

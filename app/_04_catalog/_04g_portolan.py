@@ -44,7 +44,7 @@ def main(conn: DuckDBPyConnection, land: str) -> None:
             overview.unlink()
             wld_date = conn.execute(
                 f"SELECT max(wld_date) FROM read_parquet('{parquet}')"
-            ).fetchone()[0]
+            ).fetchall()[0][0]
             _portolan(
                 "add",
                 str(parquet.parent.relative_to(catalog_dir)),

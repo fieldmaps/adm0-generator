@@ -16,7 +16,7 @@ from shutil import rmtree
 from xml.etree import ElementTree as ET
 from zipfile import ZipFile
 
-from httpx import Client, Timeout
+from httpx2 import Client, Timeout
 
 from app.config import (
     LAND_OSM_URL,
