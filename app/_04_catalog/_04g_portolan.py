@@ -7,7 +7,7 @@ from logging import getLogger
 import tylertoo
 from duckdb import DuckDBPyConnection
 
-from app.config import catalog_dir, geoms, tmp_dir, world_views
+from app.config import catalog_dir, geoms, tmp_dir, views_of
 
 from ._04d_parquet import catalog_parquet
 
@@ -31,7 +31,7 @@ def _portolan(*args: str) -> dict:
 
 def main(conn: DuckDBPyConnection, land: str) -> None:
     """Write PMTiles beside each catalog parquet, then `portolan add` its collection."""
-    for wld in world_views:
+    for wld in views_of(land):
         for geom in geoms:
             parquet = catalog_parquet(land, wld, geom)
             overview = tmp_dir / f"{land}/{wld}/adm0_{geom}_overview.parquet"

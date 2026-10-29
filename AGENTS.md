@@ -183,6 +183,35 @@ DEBUG=1 uv run iter.py _03_build _03d_intersection usgs   # with profile output
 
 Re-snapshot after intentional pipeline changes (`uv run python -m app --step _03_build --land usgs --debug` then re-`cp`).
 
+## Publishing
+
+The catalog publishes to Source Cooperative at `s3://fieldmaps/international/`. Credentials are the temporary keys from the source.coop website, pasted into the repo-root `.env` as `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN` (with `AWS_DEFAULT_REGION="us-east-1"`, `AWS_ENDPOINT_URL="https://data.source.coop"`). Service-account `sck_` API keys can read but not write `fieldmaps/international`.
+
+Check the keys (expect `assumed-role/_default/...`):
+
+```bash
+env -i HOME=$HOME PATH=$PATH bash -c 'set -a; source .env; set +a; aws sts get-caller-identity --endpoint-url https://data.source.coop/.sts'
+```
+
+Push from `catalog/`:
+
+```bash
+env -i HOME=$HOME PATH=$PATH bash -c 'set -a; source ../.env; set +a; exec ../.venv/bin/portolan push s3://fieldmaps/international/ -v --max-connections 32'
+```
+
+Large files (about 100 MB and up) fail in `portolan push`: connections to `data.source.coop` drop mid-upload (TLS read failure), obstore does not retry them, and the follow-up abort fails with `SignatureDoesNotMatch` / `NoSuchBucket`, which hides the real error. For a collection that fails this way, upload its assets and `versions.json` with the AWS CLI using `aws.config` (retries, classic transfer client), then rerun the push above, which skips them and syncs metadata:
+
+```bash
+c=odbl/gaul/adm0-polygons g=polygons
+env -i HOME=$HOME PATH=$PATH AWS_CONFIG_FILE=$PWD/aws.config bash -c "set -a; source .env; set +a; for f in adm0_$g.parquet adm0_$g.pmtiles adm0_$g.thumb.jpg versions.json; do aws s3 cp catalog/$c/\$f s3://fieldmaps/international/$c/\$f --only-show-errors; done"
+```
+
+`portolan push` skips some metadata (collections with no new version, intermediate `AGENTS.md`), so finish every publish by syncing all `.json`/`.md` except `versions.json`:
+
+```bash
+env -i HOME=$HOME PATH=$PATH bash -c 'set -a; source .env; set +a; aws s3 sync catalog/ s3://fieldmaps/international/ --exclude "*" --include "*.json" --include "*.md" --exclude ".portolan/*" --exclude "*/.portolan/*" --exclude "*versions.json"'
+```
+
 ## Coding preferences
 
 - **Verify options against docs** — before writing any non-obvious option name (DuckDB COPY TO drivers, GDAL driver options exposed via DuckDB, etc.), check official docs (duckdb.org, gdal.org); never infer from analogous APIs

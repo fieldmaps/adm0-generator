@@ -4,27 +4,21 @@ from logging import getLogger
 
 from duckdb import DuckDBPyConnection
 
-from app.config import GEOM_PRECISION, world_views
+from app.config import GEOM_PRECISION, bounds_of, world_views
 
 logger = getLogger(__name__)
 
 
-def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
-    """Clip boundary lines to land and filter by world view."""
+def _clip(conn: DuckDBPyConnection, land: str, keys: list[str], tmp: str) -> None:
+    """Clip each boundary line to each crossed land mass into ``tmp``."""
     lines_00 = f"{land}_lines_00"
     land_01 = f"{land}_land_01"
-    attrs = f"{land}_attributes_lines"
-    out = f"{land}_lines_02_{world}"
-    tmp = f"{land}_lines_clipped"
-
+    key_list = ", ".join(f'"{k}"' for k in keys)
+    params = ", ".join(f"${i}" for i in range(1, len(keys) + 1))
+    n = len(keys)
     conn.execute(f"""--sql
-        CREATE OR REPLACE TABLE "{tmp}" (
-            country1 VARCHAR,
-            country2 VARCHAR,
-            rank BIGINT,
-            label VARCHAR,
-            geom GEOMETRY
-        )
+        CREATE OR REPLACE TABLE "{tmp}" AS
+        SELECT {key_list}, geom FROM "{lines_00}" LIMIT 0
     """)
 
     # Per-pair INSERT: vectorizing ST_Intersection across all lines for a
@@ -45,42 +39,74 @@ def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
         ).fetchall()[0][0]
         candidates = conn.execute(
             f"""--sql
-            SELECT country1, country2, rank, label, ST_AsWKB(geom)
+            SELECT {key_list}, ST_AsWKB(geom)
             FROM "{lines_00}"
             WHERE ST_Intersects(ST_Envelope(geom), ST_GeomFromWKB($1))
             """,
             [env_wkb],
         ).fetchall()
-        for c1, c2, rank, label, line_wkb in candidates:
+        for *vals, line_wkb in candidates:
             conn.execute(
                 f"""--sql
                 INSERT INTO "{tmp}"
-                SELECT $1, $2, $3, $4,
+                SELECT {params},
                        ST_CollectionExtract(
                            ST_Intersection(
-                               ST_GeomFromWKB($5),
-                               ST_GeomFromWKB($6)
+                               ST_GeomFromWKB(${n + 1}),
+                               ST_GeomFromWKB(${n + 2})
                            ), 2
                        )
                 """,
-                [c1, c2, rank, label, line_wkb, land_wkb],
+                [*vals, line_wkb, land_wkb],
             )
+
+
+def _dissolve_sql(keys: list[str], tmp: str) -> str:
+    key_list = ", ".join(f'"{k}"' for k in keys)
+    return f"""--sql
+        SELECT
+            {key_list},
+            ST_Multi(
+                ST_ReducePrecision(ST_Union_Agg(geom), {GEOM_PRECISION})
+            ) AS geom
+        FROM "{tmp}"
+        WHERE NOT ST_IsEmpty(geom)
+        GROUP BY {key_list}
+    """
+
+
+def _gaul(conn: DuckDBPyConnection, land: str, world: str) -> None:
+    """Clip GAUL lines to land, dropping world-frame closure segments."""
+    attrs = f"{land}_attributes_lines"
+    out = f"{land}_lines_02_{world}"
+    tmp = f"{land}_lines_clipped"
+    _clip(conn, land, ["adm_id"], tmp)
+    conn.execute(f"""--sql
+        CREATE OR REPLACE TABLE "{out}" AS
+        WITH clipped AS ({_dissolve_sql(["adm_id"], tmp)})
+        SELECT b.*, '{world}' AS wld_view, a.geom
+        FROM clipped AS a
+        JOIN "{attrs}" AS b ON a.adm_id = b.adm_id
+        WHERE b.kind != 'frame'
+    """)
+    conn.execute(f'DROP TABLE IF EXISTS "{tmp}"')
+
+
+def main(conn: DuckDBPyConnection, land: str, world: str) -> None:
+    """Clip boundary lines to land and filter by world view."""
+    if bounds_of(land) == "gaul":
+        _gaul(conn, land, world)
+        logger.info("%s_%s", land, world)
+        return
+    attrs = f"{land}_attributes_lines"
+    out = f"{land}_lines_02_{world}"
+    tmp = f"{land}_lines_clipped"
+    keys = ["country1", "country2", "rank", "label"]
+    _clip(conn, land, keys, tmp)
 
     conn.execute(f"""--sql
         CREATE OR REPLACE TABLE "{out}" AS
-        WITH clipped AS (
-            SELECT
-                country1,
-                country2,
-                rank,
-                label,
-                ST_Multi(
-                    ST_ReducePrecision(ST_Union_Agg(geom), {GEOM_PRECISION})
-                ) AS geom
-            FROM "{tmp}"
-            WHERE NOT ST_IsEmpty(geom)
-            GROUP BY country1, country2, rank, label
-        )
+        WITH clipped AS ({_dissolve_sql(keys, tmp)})
         SELECT
             b.*,
             '{world}' AS wld_view,

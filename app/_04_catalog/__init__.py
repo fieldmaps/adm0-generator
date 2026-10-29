@@ -1,6 +1,6 @@
 """Catalog stage modules."""
 
-from app.config import debug, tmp_dir, world_views
+from app.config import debug, tmp_dir, views_of
 from app.utils import copy_from_db, export_debug_tables, get_conn
 
 from . import (
@@ -28,7 +28,7 @@ def main(land: str) -> None:
         f"{land}_voronoi_00",
     ]:
         copy_from_db(conn, build_db, table)
-    for world in world_views:
+    for world in views_of(land):
         _04a_lines.main(conn, land, world)
         _04b_polygons.main(conn, land, world)
         _04c_points.main(conn, land, world)

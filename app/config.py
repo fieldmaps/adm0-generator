@@ -37,10 +37,18 @@ parser.add_argument(
     choices=["osm", "usgs"],
     help="Process only one land source (default: both). Speeds up iteration.",
 )
+parser.add_argument(
+    "--bounds",
+    default=getenv("BOUNDS"),
+    choices=["lsib", "gaul"],
+    help="Process only one boundary source (default: both).",
+)
 args = parser.parse_args()
 
 step = args.step
-debug = args.debug or step is not None or args.land is not None
+debug = (
+    args.debug or step is not None or args.land is not None or args.bounds is not None
+)
 
 # --- XML namespaces for LSIB metadata parsing ---
 LSIB_NS = {
@@ -63,9 +71,30 @@ GEOM_PRECISION = 0.000000001
 os.environ["OGR_ORGANIZE_POLYGONS"] = "ONLY_CCW"
 
 # --- Pipeline dimensions ---
+# A land key is the land source, suffixed "_gaul" for the GAUL boundary variant.
 ALL_LANDS = ("osm", "usgs")
-lands = [args.land] if args.land else list(ALL_LANDS)
-world_views = ["intl", "all"]
+ALL_BOUNDS = ("lsib", "gaul")
+_bounds = [args.bounds] if args.bounds else list(ALL_BOUNDS)
+_lands = [args.land] if args.land else list(ALL_LANDS)
+lands = [ln if b == "lsib" else f"{ln}_gaul" for b in _bounds for ln in _lands]
+world_views = ["intl", "all", "gaul"]
+
+
+def land_of(key: str) -> str:
+    """Return the land source (``osm`` or ``usgs``) of a land key."""
+    return key.removesuffix("_gaul")
+
+
+def bounds_of(key: str) -> str:
+    """Return the boundary source (``lsib`` or ``gaul``) of a land key."""
+    return "gaul" if key.endswith("_gaul") else "lsib"
+
+
+def views_of(key: str) -> list[str]:
+    """Return the world views built for a land key."""
+    return ["gaul"] if bounds_of(key) == "gaul" else ["intl", "all"]
+
+
 geoms = ["polygons", "lines", "points"]
 
 # --- Output layer definitions: (geom_name, geom_type, table_suffix) ---
@@ -85,14 +114,21 @@ LAYERS_WORLD = [
     "voronoi_01_a",
 ]
 
-# --- Catalog path segments: land -> license folder, world -> view folder ---
-LICENSE_DIR = {"usgs": "cc0", "osm": "odbl"}
-VIEW_DIR = {"intl": "humanitarian", "all": "disaggregated"}
+# --- Catalog folder per (land key, world view) ---
+CATALOG_DIR = {
+    ("usgs", "intl"): "cc0/humanitarian",
+    ("usgs", "all"): "cc0/disaggregated",
+    ("osm", "intl"): "odbl/humanitarian",
+    ("osm", "all"): "odbl/disaggregated",
+    ("usgs_gaul", "gaul"): "cc-by/gaul",
+    ("osm_gaul", "gaul"): "odbl/gaul",
+}
 
 # --- Directories ---
 cwd = Path(__file__).parent
 tmp_dir = cwd / "../tmp"
 download_dir = tmp_dir / "download"
 input_dir = cwd / "../inputs"
+gaul_input_dir = input_dir / "gaul"
 output_dir = cwd / "../outputs"
 catalog_dir = cwd / "../catalog"
