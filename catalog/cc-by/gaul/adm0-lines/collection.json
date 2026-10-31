@@ -1,0 +1,155 @@
+{
+  "type": "Collection",
+  "id": "cc-by/gaul/adm0-lines",
+  "stac_version": "1.1.0",
+  "description": "Land boundary lines between admin level 0 areas. Coastlines are not included. GAUL view: areas and attributes following FAO GAUL. Coastlines from U.S. Department of State World Polygons, licensed CC-BY-4.0.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../../catalog.json",
+      "type": "application/json",
+      "title": "FieldMaps International Administrative Boundaries"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json",
+      "title": "GAUL view"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "pmtiles",
+      "href": "./adm0_lines.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "pmtiles:layers": [
+        "adm0_lines"
+      ]
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json"
+  ],
+  "pmtiles:min_zoom": 0,
+  "pmtiles:max_zoom": 6,
+  "pmtiles:tile_type": "mvt",
+  "pmtiles:center": [
+    0.0087321,
+    13.4417647,
+    3
+  ],
+  "pmtiles:layers": [
+    "adm0_lines"
+  ],
+  "title": "ADM0 lines (GAUL view, CC BY)",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -178.297976,
+          -54.9573378,
+          162.3853581,
+          81.793294
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "license": "CC-BY-4.0",
+  "providers": [
+    {
+      "name": "U.S. Department of State, Office of the Geographer and Global Issues",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://geodata.state.gov"
+    },
+    {
+      "name": "FieldMaps",
+      "roles": [
+        "producer",
+        "processor",
+        "host"
+      ],
+      "url": "https://fieldmaps.io"
+    }
+  ],
+  "assets": {
+    "adm0_lines": {
+      "href": "./adm0_lines.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "file:size": 1555988,
+      "file:checksum": "1220f74a367718c03b5887c886fd80a6ae3cb48ff9b721509619c3e8caf95ad829d9",
+      "roles": [
+        "data"
+      ]
+    },
+    "adm0_lines.parquet": {
+      "href": "./adm0_lines.parquet",
+      "type": "application/vnd.apache.parquet",
+      "file:size": 19084489,
+      "file:checksum": "12203694ef89d3c9fa868dde7121adb406814ed999079c38c5bba83b3020be5f708e",
+      "roles": [
+        "data"
+      ]
+    },
+    "adm0_lines.parquet-tiles": {
+      "href": "./adm0_lines.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "title": "adm0_lines.parquet (vector tiles)",
+      "file:size": 1555988,
+      "file:checksum": "1220f74a367718c03b5887c886fd80a6ae3cb48ff9b721509619c3e8caf95ad829d9",
+      "roles": [
+        "visual"
+      ]
+    },
+    "styles/default": {
+      "href": "./styles/default.json",
+      "type": "application/vnd.mapbox.style+json",
+      "title": "Default",
+      "file:size": 446,
+      "file:checksum": "1220042e288c445509dfb3ec2d2f31d0603ea5cca779acef54b257117c13ed784626",
+      "roles": [
+        "style",
+        "default"
+      ]
+    },
+    "thumbnail": {
+      "href": "./adm0_lines.thumb.jpg",
+      "type": "image/jpeg",
+      "file:size": 10100,
+      "file:checksum": "12207c5f510060d237833611be2a47c41a154a4abf09880c311e605fe78adf79a2aa",
+      "roles": [
+        "thumbnail"
+      ]
+    },
+    "documentation": {
+      "href": "./README.md",
+      "type": "text/markdown",
+      "file:size": 641,
+      "file:checksum": "12206665b3252ebe6a7cca7092c0b9e8e494ebe4ba6c58ae5a3aca10fb524e46ad19",
+      "roles": [
+        "documentation"
+      ]
+    }
+  }
+}

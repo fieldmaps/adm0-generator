@@ -1,0 +1,52 @@
+{
+  "type": "Catalog",
+  "id": "odbl/gaul",
+  "stac_version": "1.1.0",
+  "title": "GAUL view",
+  "description": "Admin level 0 areas and attributes following FAO GAUL.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-polygons/collection.json",
+      "type": "application/json",
+      "title": "ADM0 polygons (GAUL view, ODbL)"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-lines/collection.json",
+      "type": "application/json",
+      "title": "ADM0 lines (GAUL view, ODbL)"
+    },
+    {
+      "rel": "child",
+      "href": "./adm0-points/collection.json",
+      "type": "application/json",
+      "title": "ADM0 points (GAUL view, ODbL)"
+    }
+  ],
+  "stac_extensions": [
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json"
+  ]
+}
