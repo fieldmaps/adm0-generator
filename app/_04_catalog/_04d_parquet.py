@@ -7,11 +7,11 @@ from duckdb import DuckDBPyConnection
 from geoparquet_io.api.table import read
 
 from app.config import (
+    CATALOG_DIR,
     EXPORT_LAYERS,
-    LICENSE_DIR,
     PARQUET_OPTS,
-    VIEW_DIR,
     catalog_dir,
+    land_of,
     output_dir,
     tmp_dir,
 )
@@ -22,7 +22,7 @@ logger = getLogger(__name__)
 
 def catalog_parquet(land: str, wld: str, geom: str) -> Path:
     """Return the catalog GeoParquet path for a land, world view, and layer."""
-    collection = catalog_dir / LICENSE_DIR[land] / VIEW_DIR[wld] / f"adm0-{geom}"
+    collection = catalog_dir / CATALOG_DIR[land, wld] / f"adm0-{geom}"
     return collection / f"adm0_{geom}.parquet"
 
 
@@ -45,8 +45,10 @@ def main(conn: DuckDBPyConnection, land: str, wld: str) -> None:
         table = f"{land}_{layer}_{wld}"
         has_id = geom != "lines"
         if geom == "voronoi":
-            if wld == "intl":
-                voronoi = output_dir / f"adm0/{land}/{wld}/adm0_voronoi.parquet"
+            if wld in ("intl", "gaul"):
+                voronoi = (
+                    output_dir / f"adm0/{land_of(land)}/{wld}/adm0_voronoi.parquet"
+                )
                 _copy_parquet(conn, table, voronoi, has_id=has_id)
             continue
         staged = tmp_dir / f"{land}/{wld}/adm0_{geom}.parquet"

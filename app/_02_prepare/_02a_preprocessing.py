@@ -7,7 +7,7 @@ from pathlib import Path
 
 from duckdb import DuckDBPyConnection
 
-from app.config import download_dir
+from app.config import bounds_of, download_dir, land_of
 from app.utils import get_source_date
 
 logger = getLogger(__name__)
@@ -38,10 +38,10 @@ def _load_lsib(conn: DuckDBPyConnection) -> None:
     _fix_lsib(conn)
 
 
-def _load_osm(conn: DuckDBPyConnection) -> None:
+def _load_osm(conn: DuckDBPyConnection, table: str) -> None:
     osm_path = next((download_dir / "osm").rglob("land_polygons.shp"))
     conn.execute(
-        f"CREATE OR REPLACE TABLE osm_land_00 AS "
+        f'CREATE OR REPLACE TABLE "{table}" AS '
         f"SELECT * EXCLUDE OGC_FID FROM ST_Read('{osm_path}')"
     )
 
@@ -58,12 +58,12 @@ def _wp_layer(gpkg: Path) -> str:
         )
 
 
-def _load_usgs(conn: DuckDBPyConnection) -> None:
+def _load_usgs(conn: DuckDBPyConnection, table: str) -> None:
     # Caspian Sea is the only DoS_WP_* feature without a WP_Name; filter it out.
     usgs_path = next((download_dir / "usgs").rglob("WorldPolygons*.gpkg"))
     layer = _wp_layer(usgs_path)
     conn.execute(f"""--sql
-        CREATE OR REPLACE TABLE usgs_land_00 AS
+        CREATE OR REPLACE TABLE "{table}" AS
         SELECT row_number() OVER () AS "FID", geom
         FROM (
             SELECT UNNEST(ST_Dump(geom)).geom AS geom
@@ -74,11 +74,10 @@ def _load_usgs(conn: DuckDBPyConnection) -> None:
 
 
 def main(conn: DuckDBPyConnection, land: str) -> None:
-    """Load shared LSIB plus the given land source into DuckDB."""
-    _load_lsib(conn)
-    if land == "osm":
-        _load_osm(conn)
-    elif land == "usgs":
-        _load_usgs(conn)
+    """Load LSIB (unless GAUL bounds) plus the given land source into DuckDB."""
+    if bounds_of(land) == "lsib":
+        _load_lsib(conn)
+    loader = {"osm": _load_osm, "usgs": _load_usgs}[land_of(land)]
+    loader(conn, f"{land}_land_00")
     _fix_land(conn, land)
     logger.info("preprocessing %s", land)

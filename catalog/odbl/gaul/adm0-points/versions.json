@@ -1,0 +1,229 @@
+{
+  "spec_version": "1.0.0",
+  "current_version": "1.3.0",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "created": "2026-10-27T06:51:29.214549Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "d576b62af1eb856f2ba4330da170489f479d153a3beac6e13800f6dac00c5062",
+          "size_bytes": 200688,
+          "href": "odbl/gaul/adm0-points/adm0_points.pmtiles",
+          "mtime": 1793083888.4676235
+        },
+        "adm0_points.parquet": {
+          "sha256": "feb375e8e77ba225abe57e850e44b094c528d57af8bb8451e3a3e2804abbeea5",
+          "size_bytes": 14450,
+          "href": "odbl/gaul/adm0-points/adm0_points.parquet",
+          "source_mtime": 1793083202.6737792,
+          "mtime": 1793083202.6737792,
+          "feature_count": 270,
+          "schema_fingerprint": "4cf25b60c0eb8453"
+        }
+      },
+      "changes": [
+        "adm0_points.pmtiles",
+        "adm0_points.parquet"
+      ]
+    },
+    {
+      "version": "1.1.0",
+      "created": "2026-10-27T06:51:29.264808Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "d576b62af1eb856f2ba4330da170489f479d153a3beac6e13800f6dac00c5062",
+          "size_bytes": 200688,
+          "href": "odbl/gaul/adm0-points/adm0_points.pmtiles",
+          "mtime": 1793083888.4676235
+        },
+        "adm0_points.parquet": {
+          "sha256": "feb375e8e77ba225abe57e850e44b094c528d57af8bb8451e3a3e2804abbeea5",
+          "size_bytes": 14450,
+          "href": "odbl/gaul/adm0-points/adm0_points.parquet",
+          "mtime": 1793083202.6737792
+        },
+        "adm0_points.thumb.jpg": {
+          "sha256": "cacc9fd71b4bb5767a365e7d3b984cca7bb03ccb690c7c71db96f8d755892f09",
+          "size_bytes": 7522,
+          "href": "odbl/gaul/adm0-points/adm0_points.thumb.jpg",
+          "mtime": 1793083889.6887863
+        }
+      },
+      "changes": [
+        "adm0_points.thumb.jpg"
+      ],
+      "schema": {
+        "type": "unknown",
+        "fingerprint": {
+          "columns": [],
+          "types": {}
+        }
+      },
+      "message": ""
+    },
+    {
+      "version": "1.1.1",
+      "created": "2026-10-28T00:21:19.309293Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "e95ad56cabae52719b3adb2087b38b3b4e6568f170a70f25cb2d47fa00809cc6",
+          "size_bytes": 200090,
+          "href": "odbl/gaul/adm0-points/adm0_points.pmtiles",
+          "mtime": 1793146878.4712217
+        },
+        "adm0_points.parquet": {
+          "sha256": "802c0229f4f58633f261164a88951da69445030bcb6150bb30f61a323d3bb05b",
+          "size_bytes": 14279,
+          "href": "odbl/gaul/adm0-points/adm0_points.parquet",
+          "source_mtime": 1793146140.9028606,
+          "mtime": 1793146140.9028606,
+          "feature_count": 270,
+          "schema_fingerprint": "4cf25b60c0eb8453"
+        },
+        "adm0_points.thumb.jpg": {
+          "sha256": "cacc9fd71b4bb5767a365e7d3b984cca7bb03ccb690c7c71db96f8d755892f09",
+          "size_bytes": 7522,
+          "href": "odbl/gaul/adm0-points/adm0_points.thumb.jpg",
+          "mtime": 1793083889.6887863
+        },
+        "README.md": {
+          "sha256": "1cba65f409f4c4634da0d3c8844119fa3897ae585f539e7eee66e7a5e8743e67",
+          "size_bytes": 801,
+          "href": "odbl/gaul/adm0-points/README.md",
+          "mtime": 1793083889.2621605
+        }
+      },
+      "changes": [
+        "adm0_points.pmtiles",
+        "README.md",
+        "adm0_points.parquet"
+      ]
+    },
+    {
+      "version": "1.2.0",
+      "created": "2026-10-28T00:21:19.366481Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "e95ad56cabae52719b3adb2087b38b3b4e6568f170a70f25cb2d47fa00809cc6",
+          "size_bytes": 200090,
+          "href": "odbl/gaul/adm0-points/adm0_points.pmtiles",
+          "mtime": 1793146878.4712217
+        },
+        "adm0_points.parquet": {
+          "sha256": "802c0229f4f58633f261164a88951da69445030bcb6150bb30f61a323d3bb05b",
+          "size_bytes": 14279,
+          "href": "odbl/gaul/adm0-points/adm0_points.parquet",
+          "mtime": 1793146140.9028606
+        },
+        "adm0_points.thumb.jpg": {
+          "sha256": "a7e162d06c5e1d6701097addc7c3b976269033ec957ed246cd0d1f0cf2a7d9ce",
+          "size_bytes": 7513,
+          "href": "odbl/gaul/adm0-points/adm0_points.thumb.jpg",
+          "mtime": 1793148593.4251652
+        },
+        "README.md": {
+          "sha256": "1cba65f409f4c4634da0d3c8844119fa3897ae585f539e7eee66e7a5e8743e67",
+          "size_bytes": 801,
+          "href": "odbl/gaul/adm0-points/README.md",
+          "mtime": 1793083889.2621605
+        }
+      },
+      "changes": [
+        "adm0_points.thumb.jpg"
+      ],
+      "schema": {
+        "type": "unknown",
+        "fingerprint": {
+          "columns": [],
+          "types": {}
+        }
+      },
+      "message": ""
+    },
+    {
+      "version": "1.2.1",
+      "created": "2026-10-28T22:44:41.170754Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "c339f9191caace4c9df49d306178810b81e95a1618126cfe5124656f768909fe",
+          "size_bytes": 199817,
+          "href": "odbl/gaul/adm0-points/adm0_points.pmtiles",
+          "mtime": 1793227480.3447082
+        },
+        "adm0_points.parquet": {
+          "sha256": "ddaf7d1842175037f6fc56e5e1774c74b51f6f1bc9266cf15507e993af94c1a3",
+          "size_bytes": 14279,
+          "href": "odbl/gaul/adm0-points/adm0_points.parquet",
+          "source_mtime": 1793226784.2476254,
+          "mtime": 1793226784.2476254,
+          "feature_count": 270,
+          "schema_fingerprint": "4cf25b60c0eb8453"
+        },
+        "adm0_points.thumb.jpg": {
+          "sha256": "a7e162d06c5e1d6701097addc7c3b976269033ec957ed246cd0d1f0cf2a7d9ce",
+          "size_bytes": 7513,
+          "href": "odbl/gaul/adm0-points/adm0_points.thumb.jpg",
+          "mtime": 1793148593.4251652
+        },
+        "README.md": {
+          "sha256": "1cba65f409f4c4634da0d3c8844119fa3897ae585f539e7eee66e7a5e8743e67",
+          "size_bytes": 801,
+          "href": "odbl/gaul/adm0-points/README.md",
+          "mtime": 1793083889.2621605
+        }
+      },
+      "changes": [
+        "adm0_points.pmtiles",
+        "adm0_points.parquet"
+      ]
+    },
+    {
+      "version": "1.3.0",
+      "created": "2026-10-28T22:44:41.227669Z",
+      "breaking": false,
+      "assets": {
+        "adm0_points.pmtiles": {
+          "sha256": "c339f9191caace4c9df49d306178810b81e95a1618126cfe5124656f768909fe",
+          "size_bytes": 199817,
+          "href": "odbl/gaul/adm0-points/adm0_points.pmtiles",
+          "mtime": 1793227480.3447082
+        },
+        "adm0_points.parquet": {
+          "sha256": "ddaf7d1842175037f6fc56e5e1774c74b51f6f1bc9266cf15507e993af94c1a3",
+          "size_bytes": 14279,
+          "href": "odbl/gaul/adm0-points/adm0_points.parquet",
+          "mtime": 1793226784.2476254
+        },
+        "adm0_points.thumb.jpg": {
+          "sha256": "f9083b63ac7be195c4493365dbee7e062d9db758e777945f0f0d5e048c798471",
+          "size_bytes": 7515,
+          "href": "odbl/gaul/adm0-points/adm0_points.thumb.jpg",
+          "mtime": 1793229141.7501118
+        },
+        "README.md": {
+          "sha256": "1cba65f409f4c4634da0d3c8844119fa3897ae585f539e7eee66e7a5e8743e67",
+          "size_bytes": 801,
+          "href": "odbl/gaul/adm0-points/README.md",
+          "mtime": 1793083889.2621605
+        }
+      },
+      "changes": [
+        "adm0_points.thumb.jpg"
+      ],
+      "schema": {
+        "type": "unknown",
+        "fingerprint": {
+          "columns": [],
+          "types": {}
+        }
+      },
+      "message": ""
+    }
+  ]
+}

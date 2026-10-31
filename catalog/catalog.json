@@ -43,6 +43,12 @@
       "href": "./cc0/catalog.json",
       "type": "application/json",
       "title": "CC0 (State Department World Polygons)"
+    },
+    {
+      "rel": "child",
+      "href": "./cc-by/catalog.json",
+      "type": "application/json",
+      "title": "CC BY (State Department World Polygons)"
     }
   ],
   "title": "FieldMaps International Administrative Boundaries",

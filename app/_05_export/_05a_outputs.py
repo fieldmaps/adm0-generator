@@ -7,7 +7,7 @@ from shutil import copy2, rmtree
 from duckdb import DuckDBPyConnection
 
 from app._04_catalog._04d_parquet import catalog_parquet
-from app.config import EXPORT_LAYERS, output_dir, tmp_dir
+from app.config import EXPORT_LAYERS, land_of, output_dir, tmp_dir
 from app.utils import raise_issues, zip_path
 
 logger = getLogger(__name__)
@@ -88,11 +88,11 @@ def _output_layer(
     conn: DuckDBPyConnection, land: str, wld: str, spec: tuple[str, str, str]
 ) -> list[str]:
     geom, geom_type, _ = spec
-    if geom == "voronoi" and wld != "intl":
+    if geom == "voronoi" and wld not in ("intl", "gaul"):
         return []
     data_dir = tmp_dir / f"{land}/{wld}"
     data_dir.mkdir(exist_ok=True, parents=True)
-    out_dir = output_dir / f"adm0/{land}/{wld}"
+    out_dir = output_dir / f"adm0/{land_of(land)}/{wld}"
     out_dir.mkdir(exist_ok=True, parents=True)
     file_name = f"adm0_{geom}"
     gpkg = data_dir / f"{file_name}.gpkg"

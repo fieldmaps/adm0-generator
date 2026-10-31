@@ -38,6 +38,12 @@
       "href": "./disaggregated/catalog.json",
       "type": "application/json",
       "title": "Disaggregated view"
+    },
+    {
+      "rel": "child",
+      "href": "./gaul/catalog.json",
+      "type": "application/json",
+      "title": "GAUL view"
     }
   ],
   "stac_extensions": [

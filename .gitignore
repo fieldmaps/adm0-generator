@@ -8,6 +8,8 @@ __pycache__
 tmp/
 .claude/*
 !.claude/settings.json
+.playwright-cli/
+inputs/gaul/
 
 .env*
 !.env.example

@@ -14,7 +14,15 @@ from zipfile import ZIP_DEFLATED, ZipFile
 import psutil
 from duckdb import DuckDBPyConnection, connect
 
-from .config import ALL_LANDS, PARQUET_OPTS, debug, download_dir, tmp_dir
+from .config import (
+    ALL_LANDS,
+    PARQUET_OPTS,
+    debug,
+    download_dir,
+    gaul_input_dir,
+    land_of,
+    tmp_dir,
+)
 
 _PROCESS = psutil.Process()
 logger = getLogger(__name__)
@@ -287,10 +295,10 @@ def export_debug_tables(
     for (table,) in tables:
         if only is not None and table not in only:
             continue
-        if table.startswith(other_prefixes):
-            continue
         if prefix and table.startswith(prefix):
             out = land_base / f"{table[len(prefix) :]}.parquet"
+        elif table.startswith(other_prefixes):
+            continue
         else:
             out = shared_base / f"{table}.parquet"
         out.parent.mkdir(parents=True, exist_ok=True)
@@ -304,8 +312,10 @@ def export_debug_tables(
 
 
 def get_source_date(source: str) -> str:
-    """Return the publication date of ``osm``, ``usgs`` or ``lsib`` as ISO string."""
-    return (download_dir / f"{source}/.date").read_text().strip()
+    """Return the publication date of a land key, ``lsib`` or ``gaul`` as ISO string."""
+    if source == "gaul":
+        return (gaul_input_dir / ".date").read_text().strip()
+    return (download_dir / f"{land_of(source)}/.date").read_text().strip()
 
 
 def zip_path(file: Path, file_zip: Path) -> None:

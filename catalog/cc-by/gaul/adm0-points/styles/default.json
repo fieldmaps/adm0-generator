@@ -1,0 +1,25 @@
+{
+  "version": 8,
+  "name": "Default",
+  "sources": {
+    "data": {
+      "type": "vector",
+      "url": "pmtiles://../adm0_points.pmtiles",
+      "minzoom": 0,
+      "maxzoom": 6
+    }
+  },
+  "layers": [
+    {
+      "id": "adm0_points-circle",
+      "type": "circle",
+      "source": "data",
+      "source-layer": "adm0_points",
+      "paint": {
+        "circle-color": "#3388ff",
+        "circle-radius": 4,
+        "circle-opacity": 0.8
+      }
+    }
+  ]
+}

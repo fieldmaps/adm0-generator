@@ -6,7 +6,7 @@ from logging import getLogger
 
 import pandas as pd
 
-from app.config import DATA_URL, lands, output_dir, tmp_dir, world_views
+from app.config import DATA_URL, land_of, lands, output_dir, tmp_dir, views_of
 from app.utils import get_source_date
 
 logger = getLogger(__name__)
@@ -24,14 +24,15 @@ def main() -> None:
     output_dir.mkdir(exist_ok=True, parents=True)
     _save_date()
     rows = []
-    for land in lands:
-        for wld in world_views:
+    for key in lands:
+        land = land_of(key)
+        for wld in views_of(key):
             row = {
                 "id": f"{land}_{wld}_adm0",
                 "grp": land,
                 "wld": wld,
                 "adm": 0,
-                "date": get_source_date(land),
+                "date": get_source_date(key),
                 "a_parquet": f"{DATA_URL}/{land}/{wld}/adm0_polygons.parquet",
                 "a_gpkg": f"{DATA_URL}/{land}/{wld}/adm0_polygons.gpkg.zip",
                 "a_gdb": f"{DATA_URL}/{land}/{wld}/adm0_polygons.gdb.zip",
@@ -51,6 +52,6 @@ def main() -> None:
     df = pd.DataFrame(rows)
     df["date"] = pd.to_datetime(df["date"])
     df["date"] = df["date"].dt.date
-    df.to_csv(output_dir / "adm0.csv", index=False)
+    df.to_csv(output_dir / "adm0.csv", index=False, encoding="utf-8-sig")
     df.to_excel(output_dir / "adm0.xlsx", index=False)
     logger.info("meta")

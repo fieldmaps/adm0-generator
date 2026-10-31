@@ -1,0 +1,154 @@
+{
+  "type": "Collection",
+  "id": "odbl/gaul/adm0-polygons",
+  "stac_version": "1.1.0",
+  "description": "Admin level 0 areas, one feature per row group, so filtering on `iso_3` or `adm0_id` reads only the matching rows. GAUL view: areas and attributes following FAO GAUL. Coastlines from OpenStreetMap land polygons, licensed ODbL-1.0.",
+  "links": [
+    {
+      "rel": "root",
+      "href": "../../../catalog.json",
+      "type": "application/json",
+      "title": "FieldMaps International Administrative Boundaries"
+    },
+    {
+      "rel": "parent",
+      "href": "../catalog.json",
+      "type": "application/json",
+      "title": "GAUL view"
+    },
+    {
+      "rel": "agents",
+      "href": "./AGENTS.md",
+      "type": "text/markdown",
+      "title": "Agent/LLM usage guide"
+    },
+    {
+      "rel": "describedby",
+      "href": "./README.md",
+      "type": "text/markdown",
+      "title": "Human-readable documentation"
+    },
+    {
+      "rel": "pmtiles",
+      "href": "./adm0_polygons.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "pmtiles:layers": [
+        "adm0_polygons"
+      ]
+    }
+  ],
+  "stac_extensions": [
+    "https://stac-extensions.github.io/file/v2.1.0/schema.json",
+    "https://schemas.portolan-sdi.org/portolan/v0.2.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json"
+  ],
+  "pmtiles:min_zoom": 0,
+  "pmtiles:max_zoom": 6,
+  "pmtiles:tile_type": "mvt",
+  "pmtiles:center": [
+    0.0,
+    -0.693008,
+    3
+  ],
+  "pmtiles:layers": [
+    "adm0_polygons"
+  ],
+  "title": "ADM0 polygons (GAUL view, ODbL)",
+  "extent": {
+    "spatial": {
+      "bbox": [
+        [
+          -180.0,
+          -85.0511287,
+          180.0,
+          83.6651126
+        ]
+      ]
+    },
+    "temporal": {
+      "interval": [
+        [
+          null,
+          null
+        ]
+      ]
+    }
+  },
+  "license": "ODbL-1.0",
+  "providers": [
+    {
+      "name": "U.S. Department of State, Office of the Geographer and Global Issues",
+      "roles": [
+        "producer"
+      ],
+      "url": "https://geodata.state.gov"
+    },
+    {
+      "name": "OpenStreetMap contributors",
+      "roles": [
+        "producer",
+        "licensor"
+      ],
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "name": "FieldMaps",
+      "roles": [
+        "producer",
+        "processor",
+        "host"
+      ],
+      "url": "https://fieldmaps.io"
+    }
+  ],
+  "assets": {
+    "adm0_polygons": {
+      "href": "./adm0_polygons.parquet",
+      "type": "application/vnd.apache.parquet",
+      "file:size": 701821403,
+      "file:checksum": "12205ba95563a9a58c72fa39f59e93b5f989e440fd2d73151041e00ebe0f288fe6ce",
+      "roles": [
+        "data"
+      ]
+    },
+    "adm0_polygons-tiles": {
+      "href": "./adm0_polygons.pmtiles",
+      "type": "application/vnd.pmtiles",
+      "title": "adm0_polygons (vector tiles)",
+      "file:size": 15266687,
+      "file:checksum": "12205a1bc5d0f29570367c364a7676583a471dfd6a5fa4379be37d92f2825190b384",
+      "roles": [
+        "visual"
+      ]
+    },
+    "styles/default": {
+      "href": "./styles/default.json",
+      "type": "application/vnd.mapbox.style+json",
+      "title": "Default",
+      "file:size": 471,
+      "file:checksum": "1220b6aea72470a8d143fb223699c4b4a3f4bb4c3b7f53d95686d1a853e1c654711f",
+      "roles": [
+        "style",
+        "default"
+      ]
+    },
+    "thumbnail": {
+      "href": "./adm0_polygons.thumb.jpg",
+      "type": "image/jpeg",
+      "file:size": 16149,
+      "file:checksum": "12206eb1427c44d8d24d0068eee50e4279b122f823f206aad1a4a804df5f427ecb83",
+      "roles": [
+        "thumbnail"
+      ]
+    },
+    "documentation": {
+      "href": "./README.md",
+      "type": "text/markdown",
+      "file:size": 798,
+      "file:checksum": "12203795bf5f9f43afaab5ceb60945d58248c672fb6fcec306ed42a97cdffbd3e733",
+      "roles": [
+        "documentation"
+      ]
+    }
+  }
+}
